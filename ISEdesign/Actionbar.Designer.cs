@@ -83,6 +83,7 @@
             // 
             // _listShareholder
             // 
+            this._listShareholder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._listShareholder.FormattingEnabled = true;
             this._listShareholder.Location = new System.Drawing.Point(333, 22);
             this._listShareholder.Name = "_listShareholder";

@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "INTECH STOCK EXCHANGE", "IN
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{A24510D5-96C6-4388-AEA6-13D10339DF3B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ISEdesign", "ISEdesign\ISEdesign.csproj", "{D38E7D9F-4009-4F9C-B617-88333414DB02}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{A24510D5-96C6-4388-AEA6-13D10339DF3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A24510D5-96C6-4388-AEA6-13D10339DF3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A24510D5-96C6-4388-AEA6-13D10339DF3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D38E7D9F-4009-4F9C-B617-88333414DB02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D38E7D9F-4009-4F9C-B617-88333414DB02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D38E7D9F-4009-4F9C-B617-88333414DB02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D38E7D9F-4009-4F9C-B617-88333414DB02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
