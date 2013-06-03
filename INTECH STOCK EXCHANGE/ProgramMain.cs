@@ -38,7 +38,7 @@ namespace INTECH_STOCK_EXCHANGE
                 foreach ( Shareholder sh in market.shareholderList )
                 {
                     Order newOrder = sh.MakeDecision(market, sh);     
-                    market.globalOrderbook.Add( newOrder );
+                    if(newOrder != null) market.globalOrderbook.Add( newOrder );
                 }
                 market.MatchOrders();
                 market.Clear();
