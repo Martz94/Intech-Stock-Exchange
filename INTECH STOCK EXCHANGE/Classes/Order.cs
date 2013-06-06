@@ -67,6 +67,10 @@ namespace INTECH_STOCK_EXCHANGE
         {
             get { return shareCount; }
         }
+        public void decreaseOrderShareQuantity(int quantity)
+        {
+            shareCount = shareCount - quantity; 
+        }
         public Guid GetSharesCompanyID
         {
             get { return _company.GetID; }

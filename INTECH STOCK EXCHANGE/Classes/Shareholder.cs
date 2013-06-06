@@ -25,8 +25,8 @@ namespace INTECH_STOCK_EXCHANGE
         int shareCount;//nb of shares the guy wants to buy/sell
         private IStrategy _strategy;
         Order order;
-//        public RiskTaker _riskTaker;
-//        public TimeVision _timeVision;
+        RiskTaker _riskTaker;
+        TimeVision _timeVision;
         decimal shareVariation;
 
         public Shareholder(Market marketPlace, string Name, decimal Money)
@@ -40,18 +40,23 @@ namespace INTECH_STOCK_EXCHANGE
                 if ( x.Name == Name ) throw new ArgumentException( "A shareholder already exists with that name!" );
             }
             //Assign a strategy
-            //Randomly define riskTaker and timeVision values
+            //Randomly defines riskTaker and timeVision values
 
-            //Array values = Enum.GetValues( typeof( RiskTaker ) );
+            Array values = Enum.GetValues( typeof( RiskTaker ) );
             Random random = new Random();
-            //RiskTaker _riskTaker = (RiskTaker)values.GetValue( random.Next( values.Length ) );
+            RiskTaker _riskTaker = (RiskTaker)values.GetValue( random.Next( values.Length ) );
 
-            //Array values2 = Enum.GetValues( typeof( TimeVision ) );
-            //TimeVision _timeVision = (TimeVision)values2.GetValue( random.Next( values2.Length ) );
+            Array values2 = Enum.GetValues( typeof( TimeVision ) );
+            TimeVision _timeVision = (TimeVision)values2.GetValue( random.Next( values2.Length ) );
 
             _portfolio = new List<pItem>();
             _displayName = Name;
-            _strategy = new StupidStrategy();   // default
+
+            Random r = new Random();
+            int i = r.Next( 100 );
+            if ( i > 50 ) _strategy = new RandomStrategy();
+            else _strategy = new StupidStrategy();
+
             _cash = Money;
            
             shareholderID = Guid.NewGuid();
@@ -94,30 +99,27 @@ namespace INTECH_STOCK_EXCHANGE
             get { return _strategy; }
             set { _strategy = value; } 
         }
-        //public RiskTaker GetRiskIndex
-        //{
-        //    get { return _riskTaker; }
-        //}
-        //public TimeVision GetTimeVision
-        //{
-        //    get { return _timeVision; }
-        //}
+        public RiskTaker GetRiskIndex
+        {
+            get { return _riskTaker; }
+        }
+        TimeVision GetTimeVision
+        {
+            get { return _timeVision; }
+        }
+        public enum RiskTaker
+        {
+            Bold,
+            Cautious,
+            Crazy,
+        }
 
-        //public void Invest();// IStrategy
-        //enum RiskTaker
-        //{
-        //    Cautious,
-        //    Regular,
-        //    Bold,
-        //    Crazy,
-        //}
-
-        //enum TimeVision
-        //{
-        //    shortTerm,
-        //    middleTerm,
-        //    longTerm,
-        //}
+        enum TimeVision
+        {
+            shortTerm,
+            middleTerm,
+            longTerm,
+        }
 
         public Guid GetID
         {

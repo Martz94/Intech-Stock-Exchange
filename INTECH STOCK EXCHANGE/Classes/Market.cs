@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-
 namespace INTECH_STOCK_EXCHANGE
 {
     public class Market
@@ -16,11 +15,8 @@ namespace INTECH_STOCK_EXCHANGE
         List<Order> _globalOrderbook;
         Order order;
         Company company;
-        Timer round;
-        //List<MatchOrders> _matchOrders;
-        //public Dictionary<Guid, List<Order>> _sellOrders;
-        //public Dictionary<Guid, List<Order>> _buyOrders;
         Shareholder.pItem share;
+        int transactionCount = 0;
 
         public enum ActionType
         {
@@ -32,8 +28,7 @@ namespace INTECH_STOCK_EXCHANGE
         {
             _globalOrderbook = new List<Order>();
             _shareholders = new List<Shareholder>();
-            _companies = new List<Company>();
-            //_matchOrders = new List<MatchOrders>();     
+            _companies = new List<Company>();   
         }
         public void AlterPortfolio( Market.ActionType actionType, int shareCount, Company firm, Shareholder sh )
         //Called when:
@@ -83,7 +78,6 @@ namespace INTECH_STOCK_EXCHANGE
                     {
                         f = i;
                     }
-                    else throw new ArgumentException("The s/h is trying to sell a sharecount he does not possess");
                 }
                 if(f != -1)
                 {
@@ -147,212 +141,11 @@ namespace INTECH_STOCK_EXCHANGE
             get { return _globalOrderbook; }
             set { _globalOrderbook = value; }
         }
-
-        public void start()
-        {
-            round.Enabled = true;
-            round.Start();
-            round.Interval = 2500; //0.5 times the order timout
-        }
-
-        //public void SellBuy()
-        //{
-        //    int nbtransactions;
-        //    int nbselltransaction;
-        //    int nbbuytransaction;
-
-        //    foreach (Company c in _companies)
-        //    {
-        //        nbtransactions = 0;
-        //        nbselltransaction = 0;
-
-        //        foreach (Order o in _sellOrders[c.GetID])
-        //        {
-        //            if (o.GetOrderSharePriceProposal <= c.GetSharePrice)
-        //            {
-        //                nbselltransaction += o.GetOrderShareQuantity;
-        //            }
-        //        }
-
-        //        nbbuytransaction = 0;
-        //        foreach (Order o in _buyOrders[c.GetID])
-        //        {
-        //            if (o.GetOrderSharePriceProposal >= c.GetSharePrice)
-        //            {
-        //                nbbuytransaction += o.GetOrderShareQuantity;
-        //            }
-        //        }
-
-        //        if (nbbuytransaction > nbselltransaction)
-        //        {
-        //            nbtransactions = nbselltransaction;
-        //        }
-        //        else
-        //        {
-        //            nbtransactions = nbbuytransaction;
-        //        }
-
-        //        int tmp = nbtransactions;
-        //        foreach (Order o in _sellOrders[c.GetID])
-        //        {
-        //            if (o.GetOrderSharePriceProposal <= c.GetSharePrice)
-        //            {
-        //                for (int i = 0; i < _shareholders.Count ;i++)
-        //                {
-        //                    if (_shareholders[i].GetID == o.OrderReceiverID)
-        //                    {
-        //                        if (tmp > o.GetOrderShareQuantity)
-        //                        {
-        //                            _shareholders[i].Capital += c.GetSharePrice * o.GetOrderShareQuantity;
-        //                            tmp -= o.GetOrderShareQuantity;
-        //                            // retirer actions dans portfolio
-        //                        }
-        //                        else
-        //                        {
-        //                            _shareholders[i].Capital += c.GetSharePrice * tmp;
-        //                            tmp = 0;
-        //                            // retirer actions dans portfolio
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
-
-                //tmp = nbtransactions;
-            //    foreach (Order o in _buyOrders[c.GetID])
-            //    {
-            //        if (o.GetOrderSharePriceProposal >= c.GetSharePrice)
-            //        {
-            //            for (int i = 0; i < _shareholders.Count; i++)
-            //            {
-            //                if (_shareholders[i].GetID == o.OrderBuyerID)
-            //                {
-            ////                    if (tmp > o.GetOrderShareQuantity)
-            //                    {
-            //                        _shareholders[i].Capital -= c.GetSharePrice * o.GetOrderShareQuantity;
-            //                        tmp -= o.GetOrderShareQuantity;
-            //                        _shareholders[i].FillPortfolio( o.GetOrderShareQuantity, c );
-            //                    }
-            //                    else
-            //                    {
-            //                        _shareholders[i].Capital -= c.GetSharePrice * tmp;
-            //                        tmp = 0;
-            //                        _shareholders[i].FillPortfolio( tmp, c );
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
-        
-
-        //public void SortOrders()
-        //{
-        //    _sellOrders = new Dictionary<Guid,List<Order>>();
-        //    _buyOrders = new Dictionary<Guid, List<Order>>();
-
-        //    foreach (Company c in _companies)
-        //    {
-        //        _sellOrders.Add( c.GetID, new List<Order>() );
-        //        _buyOrders.Add( c.GetID, new List<Order>() );
-        //    }
-
-        //    foreach (Order o in _globalOrderbook)
-        //    {
-        //        if (o._orderType == Order.orderType.Buy)
-        //        {
-        //            _buyOrders[o.GetSharesCompanyID].Add( o );
-        //        }
-        //        else
-        //        {
-        //            _sellOrders[o.GetSharesCompanyID].Add( o );
-        //        }
-        //    }
-        //}
-
-        //public void DefineNewPrice()
-        //{
-        //    Dictionary<decimal, int> nbtransactions = new Dictionary<decimal,int>();
-        //    int nbselltransaction;
-        //    int nbbuytransaction = 0;
-        //    decimal priceTransaction = 0;
-        //    int nbtransaction = 0;
-
-        //    SortOrdersByPrice();
-
-        //    foreach (Company c in companyList)
-        //    {
-        //        for (int i = 0; i < _buyOrders[c.GetID].Count ;i++)
-        //        {
-        //            nbbuytransaction += _buyOrders[c.GetID][i].GetOrderShareQuantity;
-        //            nbselltransaction = 0;
-
-        //            for (int j = 0; j < _sellOrders[c.GetID].Count && _sellOrders[c.GetID][j].GetOrderSharePriceProposal >= _buyOrders[c.GetID][i].GetOrderSharePriceProposal ;j++)
-        //            {
-        //                nbselltransaction += _sellOrders[c.GetID][j].GetOrderShareQuantity;
-        //            }
-
-        //            if (nbselltransaction < nbbuytransaction)
-        //            {
-        //                nbtransactions.Add( _buyOrders[c.GetID][i].GetOrderSharePriceProposal, nbselltransaction );
-        //            }
-        //            else
-        //            {
-        //                nbtransactions.Add( _buyOrders[c.GetID][i].GetOrderSharePriceProposal, nbbuytransaction );
-        //            }
-        //        }
-
-        //        foreach (var p in nbtransactions)
-        //        {
-        //            if (p.Value > nbtransaction)
-        //            {
-        //                nbtransaction = p.Value;
-        //                priceTransaction = p.Key;
-        //            }
-        //            c.GetSharePrice = priceTransaction;
-        //        }
-        //    }
-        //}
-
-        //public void SortOrdersByPrice()
-        //{
-        //    Order tmp;
-        //    foreach (var keyvalue in _buyOrders)
-        //    {
-        //        for (int i = 0; i < keyvalue.Value.Count; i++)
-        //        {
-        //            for (int j = i + 1; j < keyvalue.Value.Count; j++)
-        //            {
-        //                if (keyvalue.Value[i].GetOrderSharePriceProposal > keyvalue.Value[j].GetOrderSharePriceProposal)
-        //                {
-        //                    tmp = keyvalue.Value[i];
-        //                    keyvalue.Value[i] = keyvalue.Value[j];
-        //                    keyvalue.Value[j] = tmp;
-        //                }
-        //            }
-        //        }
-        //    }
-        //    foreach (var keyvalue in _sellOrders)
-        //    {
-        //        for (int i = 0; i < keyvalue.Value.Count; i++)
-        //        {
-        //            for (int j = i + 1; j < keyvalue.Value.Count; j++)
-        //            {
-        //                if (keyvalue.Value[i].GetOrderSharePriceProposal > keyvalue.Value[j].GetOrderSharePriceProposal)
-        //                {
-        //                    tmp = keyvalue.Value[i];
-        //                    keyvalue.Value[i] = keyvalue.Value[j];
-        //                    keyvalue.Value[j] = tmp;
-        //                }
-        //            }
-        //        }
-        //    }
-        //}
-
+ 
         public void Clear()
         //(!) Keeping track on how many rounds each order undergo before being cleared from the orderbook
         //Clearing: 
-        //- The outdated orders (by checking their internal timer)
+        //- The outdated orders (by checking their expiration dates)
         //- The orders that found a match
         //- And prolly more...
         {
@@ -360,7 +153,7 @@ namespace INTECH_STOCK_EXCHANGE
 
             foreach ( Order o in _globalOrderbook )
             {
-                if ( o.OrderStatus != Order.orderStatus.Dispatched || o.TimedOut != false)
+                if ( o.OrderStatus != Order.orderStatus.Dispatched || o.TimedOut == false)
                 {             
                     tmp.Add( o );                  
                 }
@@ -394,7 +187,7 @@ namespace INTECH_STOCK_EXCHANGE
                         MakeTransaction( o1.GetOrderMakerID, o2.GetOrderMakerID, o1.Company, o1.GetOrderShareQuantity, price );
                         o1.OrderStatus = Order.orderStatus.Dispatched;
 
-                       //TODO o2.decreaseOrderQuantity(o1.GetOrderShareQuantity);
+                        o2.decreaseOrderShareQuantity( o1.GetOrderShareQuantity );
                         if (o2.GetOrderShareQuantity == 0) o2.OrderStatus = Order.orderStatus.Dispatched;
                     }
                 }
@@ -409,8 +202,7 @@ namespace INTECH_STOCK_EXCHANGE
             }
             throw new ArgumentException();
         }
-
-      
+  
         private void MakeTransaction( Guid buyerId, Guid sellerId, Company company, int quantity, decimal price )
         {
             Shareholder buyer = getShareholderById(buyerId);
@@ -426,22 +218,17 @@ namespace INTECH_STOCK_EXCHANGE
 
             // Updating market data
             UpdateMarketData( company, price );
+            transactionCount++;
 
-            System.Diagnostics.Debug.WriteLine( "TRANSACTION : " + company.Name + " " + quantity + " shares sold at " + price);
+            System.Diagnostics.Debug.WriteLine( "[TRANSACTION] : " + buyer.Name + " baught to " + seller.Name + " " + quantity + " shares of " + company.Name + " at " + price);
+            System.Diagnostics.Debug.WriteLine(transactionCount);
         }
 
         //Currently: Defining the new company share price based upon the latest exchange in the market
         private void UpdateMarketData( Company company, decimal price )
         {
-            //Share variation definition needs re-coding taking into account the cash difference between current price and price proposal
-            if ( price > company.SharePrice )
-            {
-                company.ShareVariation = 1.0M;
-            }
-            else
-            {
-                company.ShareVariation = -1.0M;
-            }
+            decimal newVariation = ((price - company.SharePrice) / company.SharePrice)*100;
+            company.ShareVariation = newVariation;
             company.SharePrice = price; 
         }
 
@@ -457,6 +244,20 @@ namespace INTECH_STOCK_EXCHANGE
                 }
             }
             return sb.ToString();
+        }
+
+        public Order.orderType EstimateOrderbookBalance(Market market)
+        {
+            int buy = 0;
+            int sell = 0;
+
+            foreach(Order o in _globalOrderbook)
+            {
+                if ( o.GetOrderType == Order.orderType.Buy ) buy++;
+                else if ( o.GetOrderType == Order.orderType.Sell ) sell++;
+            }
+            if ( buy > sell ) return Order.orderType.Sell;
+            else return Order.orderType.Buy;
         }
     }
 }

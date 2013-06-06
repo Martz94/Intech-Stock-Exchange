@@ -69,6 +69,7 @@
             // 
             this._roundNumber.Location = new System.Drawing.Point(209, 23);
             this._roundNumber.Name = "_roundNumber";
+            this._roundNumber.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this._roundNumber.Size = new System.Drawing.Size(39, 20);
             this._roundNumber.TabIndex = 3;
             // 
@@ -99,6 +100,7 @@
             this._goButton.TabIndex = 6;
             this._goButton.Text = "Go";
             this._goButton.UseVisualStyleBackColor = true;
+            this._goButton.Click += new System.EventHandler(this.Play);
             // 
             // Actionbar
             // 

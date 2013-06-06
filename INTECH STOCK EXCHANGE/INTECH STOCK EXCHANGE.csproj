@@ -50,7 +50,6 @@
     <Compile Include="Classes\Market.cs" />
     <Compile Include="Classes\Order.cs" />
     <Compile Include="Classes\Shareholder.cs" />
-    <Compile Include="Classes\Strategies\MainStrategy.cs" />
     <Compile Include="Classes\Strategies\RandomStrategy.cs" />
     <Compile Include="Classes\Strategies\SmarterStrategy.cs" />
     <Compile Include="Classes\Strategies\SmartStrategy.cs" />

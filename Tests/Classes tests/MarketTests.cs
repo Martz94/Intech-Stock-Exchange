@@ -9,7 +9,11 @@ using INTECH_STOCK_EXCHANGE;
 namespace Tests.Classes_tests
 {
     [TestFixture]
-    class MarketTests
+    public class MarketTests
     {
+        [Test]
+        void TestingMarket()
+        {
+        }
     }
 }

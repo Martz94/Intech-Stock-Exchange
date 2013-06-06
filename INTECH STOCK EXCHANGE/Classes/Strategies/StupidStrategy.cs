@@ -11,11 +11,11 @@ namespace INTECH_STOCK_EXCHANGE
         //The stupid strategy consists of buying 1 share of a company that has its share variation superior to 1.0M
         //Checking the cash of the s/h as well
 
- 
         private Order checkInvest(Market market, Shareholder shareholder)
         {      
             //BUYING
             int i;
+            decimal price;
             int f = -1;
             for ( i = 0; i < market.companyList.Count; i++ )
             {
@@ -26,17 +26,28 @@ namespace INTECH_STOCK_EXCHANGE
             }
             if ( f != -1 )
             {
-                //check cash
-                decimal price = market.companyList[f].SharePrice - 5.0M;
-                int quantity = 10;
+                decimal mentalState;
+
+                if ( shareholder.GetRiskIndex == Shareholder.RiskTaker.Crazy )
+                {
+                    mentalState = 0.75M;
+                }
+                else if ( shareholder.GetRiskIndex == Shareholder.RiskTaker.Cautious )
+                {
+                    mentalState = 0.15M;
+                }
+                else
+                {
+                    mentalState = 0.50M;
+                }
+
+                int max = (int) (mentalState * shareholder.Capital);
+                price = market.companyList[f].SharePrice - 5.0M;
+                int quantity = (int) (max/price);
                 return new Order( Order.orderType.Buy, price, quantity, market.companyList[f], shareholder );
             }
- 
             return null; //No order for this round!
          }
-
-        //(1 ORDER/SHAREHOLDER/ROUND FOR STARTERS)
-
         private Order checkSelling( Market market, Shareholder shareholder )
         {
             //SELLING
@@ -44,24 +55,38 @@ namespace INTECH_STOCK_EXCHANGE
             {
                 Company company = x.company;
                 decimal lastPrice = company.SharePrice;
-                decimal shareVariation = company.ShareVariation;
 
-                if ( shareVariation <= -1.0M )
+                if ( company.ShareVariation <= -1.0M )
                 {
                     decimal price = x.shareLastPurchaseValue + 5.0M;
                     int quantity = (int)(0.5 * (x.shareCount));
-                    return new Order( Order.orderType.Sell, price, quantity, x.company, shareholder );
+                    return new Order( Order.orderType.Sell, price, quantity, company, shareholder );
                 }
             }
-            return null;
-           
+            return null;         
         }
 
         public Order MakeDecision( Market market, Shareholder shareholder )
         {
-            Order order = checkInvest( market, shareholder );
-            if ( order == null ) order = checkSelling( market, shareholder );
-            return null;    // no order required
+            if ( market.globalOrderbook.Count > 2 )
+            {
+                Order.orderType checkingOrderTypes = market.EstimateOrderbookBalance( market );
+                if ( checkingOrderTypes == Order.orderType.Buy )
+                {
+                    Order order = checkInvest( market, shareholder );
+                    return order;
+                }
+                else
+                {
+                    Order order = checkSelling( market, shareholder );
+                    return order;
+                }
+            }
+            else
+            {
+                Order order = checkInvest( market, shareholder );
+                return order;
+            }        
         }
     }
 }

@@ -11,12 +11,13 @@ namespace INTECH_STOCK_EXCHANGE
         string name;                    //Company name
         decimal sharePrice;             //starting price for 1 action
         decimal currentSharePrice;      //share price updated by event
-        decimal sharePriceVariation;    //action price's variations updated by event
+        decimal _sharePriceVariation;    //action price's variations updated by event
 
         int shareCount;                 //Quantity of its own shares the company still detains updated by event
   
         Guid companyID;
         private readonly Market market;
+        int TotalShareCount;
         
         Industry TheIndustry;
         //Typehere history;//To be defined.. used to determine whether buying actions from this company is a safe deal or not.
@@ -31,14 +32,17 @@ namespace INTECH_STOCK_EXCHANGE
                 if ( x.Name == name ) throw new ArgumentException("A company already exists under that name");  
             }
 
-            if ( SharePrice < 1 ) throw new ArgumentException("The starting action price must be at least 1€");
+            if ( SharePrice < 0 ) throw new ArgumentException("The starting action price must be at least 1€");
 
             this.name = name;
             
             this.TheIndustry = Industry;
             sharePrice = SharePrice;
             shareCount = ShareCount;
+            TotalShareCount = ShareCount;
             companyID = Guid.NewGuid();
+            Random rate = new Random();
+            _sharePriceVariation = rate.Next(-5, 10);
             market.companyList.Add( this );
         }
 
@@ -64,7 +68,7 @@ namespace INTECH_STOCK_EXCHANGE
 
         public int GetTotalShareCount
         {
-            get { return shareCount; }
+            get { return TotalShareCount; }
         }
 
         public void RemoveShare(int Sharecount)
@@ -74,8 +78,8 @@ namespace INTECH_STOCK_EXCHANGE
 
         public decimal ShareVariation
         {
-            get { return sharePriceVariation; }
-            set { sharePriceVariation = value; }
+            get { return _sharePriceVariation; }
+            set { _sharePriceVariation = value; }
         }
         public string Name
         {

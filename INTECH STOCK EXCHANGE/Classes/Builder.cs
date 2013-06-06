@@ -8,7 +8,7 @@ namespace INTECH_STOCK_EXCHANGE
 {
     public class Builder
     {
-        public void CreateAll(Market market)
+        public void CreateAll(Market market, int nbShareholders, int nbCompanies)
         {
             // 10 Companies
             Company Google = new Company( market, "Google", Company.Industry.IT, 100.0M, 300 );
@@ -28,6 +28,12 @@ namespace INTECH_STOCK_EXCHANGE
             Shareholder Martin = new Shareholder(market, "Martin", 7000.0M);
             Shareholder Camille = new Shareholder(market, "Camille", 10000.0M);
             Shareholder Olivier = new Shareholder(market, "Olivier", 12000.0M);
+            Shareholder Coco = new Shareholder( market, "Coco", 1000.0M );
+            Shareholder YOLO = new Shareholder( market, "YOLO", 1000.0M );
+            Shareholder Jesus = new Shareholder( market, "Jesus", 1000.0M );
+            Shareholder Wazabi = new Shareholder( market, "Wazabi", 1000.0M );
+            Shareholder Luke = new Shareholder( market, "Luke", 1000.0M );
+            Shareholder Sky = new Shareholder( market, "Sky", 1000.0M );
 
             // Filling the shareholders portfolios
             foreach ( Shareholder s in market.shareholderList )

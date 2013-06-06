@@ -75,5 +75,13 @@ namespace ISEdesign
                 }
             }
         }
+
+        private void Play( object sender, EventArgs e )
+        {
+            //Function that's starting the market for x rounds
+
+            //int roundMax = _roundNumber;
+            
+        }
     }
 }

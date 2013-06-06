@@ -8,9 +8,18 @@ namespace INTECH_STOCK_EXCHANGE
 {
     public class SmartStrategy : IStrategy
     {
-        public Order MakeDecision( Market market, Shareholder shareholder )
+        private Order Buy( Market market, Shareholder shareholder )
         {
             return null;
+        }
+        private Order Sell( Market market, Shareholder shareholder )
+        {
+            return null;
+        }
+        public Order MakeDecision( Market market, Shareholder shareholder )
+        {
+
+            return order;
         }
     }
 }
