@@ -17,7 +17,6 @@ namespace INTECH_STOCK_EXCHANGE
         Guid _orderID;
         Shareholder _shareholder;//Need to check whether the shareholder is of type "shareholder" or "company"
         Company _company;
-        Order.orderAvailability _orderAvailability;
         Order.orderStatus _orderStatus;
         Guid _orderBuyerID;
         Timer _timer;
@@ -32,7 +31,6 @@ namespace INTECH_STOCK_EXCHANGE
             _shareholder = Shareholder;
             _company = firm;//Company's share
             shareCount = ShareCount;
-            _orderAvailability = Order.orderAvailability.Free;
             _orderStatus = Order.orderStatus.ReadyForDispatch;
             _sharePriceProposal = PriceProp;//Unit price proposal
             _totalOrderPriceProposal = PriceProp * ShareCount;//Order's total price proposal
@@ -83,11 +81,7 @@ namespace INTECH_STOCK_EXCHANGE
         {
             get { return _totalOrderPriceProposal; }
         }
-        public Order.orderAvailability OrderAvailability
-        {
-            get { return _orderAvailability; }
-            set { _orderAvailability = value; }
-        }
+       
         public Order.orderStatus OrderStatus
         {
             get { return _orderStatus; }
@@ -106,11 +100,7 @@ namespace INTECH_STOCK_EXCHANGE
             Buy,
             Sell,
         }
-        public enum orderAvailability
-        {
-            Matched,
-            Free,
-        }
+       
         public enum orderStatus
         {
             Dispatched,

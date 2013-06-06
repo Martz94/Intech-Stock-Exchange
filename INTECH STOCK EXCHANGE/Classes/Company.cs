@@ -13,7 +13,7 @@ namespace INTECH_STOCK_EXCHANGE
         decimal currentSharePrice;      //share price updated by event
         decimal sharePriceVariation;    //action price's variations updated by event
 
-        int shareCount;                 //Quantity of its own shares the company still detains updated by event
+        int shareVolume;                 //Quantity of its own shares the company still detains updated by event
   
         Guid companyID;
         private readonly Market market;
@@ -23,21 +23,21 @@ namespace INTECH_STOCK_EXCHANGE
         //for example, could take into account net income and growth
         //Ranges from 1 to 10, could be randomly defined
 
-        public Company( Market Marketplace, string name, Industry Industry, decimal SharePrice, int ShareCount )
+        public Company( Market Marketplace, string name, Industry Industry, decimal SharePrice, int ShareVolume )
         {
             market = Marketplace;
-            foreach ( Company x in market.companyList )
-            {
-                if ( x.Name == name ) throw new ArgumentException("A company already exists under that name");  
-            }
+            //foreach ( Company x in market.companyList )
+            //{
+            //    if ( x.Name == name ) throw new ArgumentException("A company already exists under that name");  
+            //}
 
-            if ( SharePrice < 1 ) throw new ArgumentException("The starting action price must be at least 1€");
+            if ( SharePrice < 0 ) throw new ArgumentException("The starting action price must be at least 1€");
 
             this.name = name;
             
             this.TheIndustry = Industry;
             sharePrice = SharePrice;
-            shareCount = ShareCount;
+            shareVolume = ShareVolume;
             companyID = Guid.NewGuid();
             market.companyList.Add( this );
         }
@@ -64,12 +64,12 @@ namespace INTECH_STOCK_EXCHANGE
 
         public int GetTotalShareCount
         {
-            get { return shareCount; }
+            get { return shareVolume; }
         }
 
         public void RemoveShare(int Sharecount)
         {
-            shareCount = shareCount - Sharecount;
+            shareVolume = shareVolume - Sharecount;
         }
 
         public decimal ShareVariation
@@ -77,10 +77,10 @@ namespace INTECH_STOCK_EXCHANGE
             get { return sharePriceVariation; }
             set { sharePriceVariation = value; }
         }
+        
         public string Name
         {
             get { return name; }
         }
-
     }
 }

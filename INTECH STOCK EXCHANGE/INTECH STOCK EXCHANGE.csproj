@@ -81,6 +81,7 @@
     </Compile>
     <EmbeddedResource Include="WinForms.resx">
       <DependentUpon>WinForms.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
