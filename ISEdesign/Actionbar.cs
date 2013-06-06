@@ -25,6 +25,16 @@ namespace ISEdesign
 
         private void _initialize_Click( object sender, EventArgs e )
         {
+            using (var d = new CreateNewWorld())
+            {
+                DialogResult r = d.ShowDialog();
+
+                if (r == DialogResult.OK)
+                {
+                    string name = d.CompanyName;
+                    string value = d.Sharevalue;
+                }
+            }
             market = new Market();
             market.CreateNewCompany( "Google", 650.0M, 1000 );
             market.CreateNewCompany( "Loreal", 130.0M, 1000 );

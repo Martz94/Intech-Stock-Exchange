@@ -57,6 +57,12 @@
     <Compile Include="AppDesign.Designer.cs">
       <DependentUpon>AppDesign.cs</DependentUpon>
     </Compile>
+    <Compile Include="CreateNewWorld.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateNewWorld.Designer.cs">
+      <DependentUpon>CreateNewWorld.cs</DependentUpon>
+    </Compile>
     <Compile Include="MarketView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -73,9 +79,13 @@
     </Compile>
     <EmbeddedResource Include="Actionbar.resx">
       <DependentUpon>Actionbar.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="AppDesign.resx">
       <DependentUpon>AppDesign.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CreateNewWorld.resx">
+      <DependentUpon>CreateNewWorld.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MarketView.resx">
       <DependentUpon>MarketView.cs</DependentUpon>

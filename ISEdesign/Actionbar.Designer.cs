@@ -43,7 +43,7 @@
             this._initialize.Name = "_initialize";
             this._initialize.Size = new System.Drawing.Size(75, 37);
             this._initialize.TabIndex = 0;
-            this._initialize.Text = "Initialize";
+            this._initialize.Text = "Initialize...";
             this._initialize.UseVisualStyleBackColor = true;
             this._initialize.Click += new System.EventHandler(this._initialize_Click);
             // 

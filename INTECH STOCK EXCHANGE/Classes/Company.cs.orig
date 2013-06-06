@@ -11,12 +11,13 @@ namespace INTECH_STOCK_EXCHANGE
         string name;                    //Company name
         decimal sharePrice;             //starting price for 1 action
         decimal currentSharePrice;      //share price updated by event
-        decimal sharePriceVariation;    //action price's variations updated by event
+        decimal _sharePriceVariation;    //action price's variations updated by event
 
         int shareVolume;                 //Quantity of its own shares the company still detains updated by event
   
         Guid companyID;
         private readonly Market market;
+        int TotalShareCount;
         
         Industry TheIndustry;
         //Typehere history;//To be defined.. used to determine whether buying actions from this company is a safe deal or not.
@@ -37,8 +38,15 @@ namespace INTECH_STOCK_EXCHANGE
             
             this.TheIndustry = Industry;
             sharePrice = SharePrice;
+<<<<<<< HEAD
+            shareCount = ShareCount;
+            TotalShareCount = ShareCount;
+=======
             shareVolume = ShareVolume;
+>>>>>>> 0dc5e9a2909606b0de1d4526d77e9ce930eab6a9
             companyID = Guid.NewGuid();
+            Random rate = new Random();
+            _sharePriceVariation = rate.Next(-5, 10);
             market.companyList.Add( this );
         }
 
@@ -64,7 +72,11 @@ namespace INTECH_STOCK_EXCHANGE
 
         public int GetTotalShareCount
         {
+<<<<<<< HEAD
+            get { return TotalShareCount; }
+=======
             get { return shareVolume; }
+>>>>>>> 0dc5e9a2909606b0de1d4526d77e9ce930eab6a9
         }
 
         public void RemoveShare(int Sharecount)
@@ -74,8 +86,8 @@ namespace INTECH_STOCK_EXCHANGE
 
         public decimal ShareVariation
         {
-            get { return sharePriceVariation; }
-            set { sharePriceVariation = value; }
+            get { return _sharePriceVariation; }
+            set { _sharePriceVariation = value; }
         }
         
         public string Name

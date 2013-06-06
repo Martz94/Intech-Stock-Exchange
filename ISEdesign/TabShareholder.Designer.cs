@@ -30,18 +30,18 @@
         {
             this._tabShareholder = new System.Windows.Forms.TabControl();
             this._tabPortfolio = new System.Windows.Forms.TabPage();
-            this._tabOrderbook = new System.Windows.Forms.TabPage();
-            this._tabStats = new System.Windows.Forms.TabPage();
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeaderCompany = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderShareCount = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderCurrentSharePrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.listView2 = new System.Windows.Forms.ListView();
             this.columnHeaderShareVariation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this._tabOrderbook = new System.Windows.Forms.TabPage();
+            this.listView2 = new System.Windows.Forms.ListView();
             this.columnHeaderOrderSB = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderOrderCompany = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderOrderQuantity = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderOrderPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this._tabStats = new System.Windows.Forms.TabPage();
             this._tabShareholder.SuspendLayout();
             this._tabPortfolio.SuspendLayout();
             this._tabOrderbook.SuspendLayout();
@@ -69,28 +69,8 @@
             this._tabPortfolio.Padding = new System.Windows.Forms.Padding(3);
             this._tabPortfolio.Size = new System.Drawing.Size(391, 92);
             this._tabPortfolio.TabIndex = 0;
-            this._tabPortfolio.Text = "Portefeuille";
+            this._tabPortfolio.Text = "Portfolio";
             this._tabPortfolio.UseVisualStyleBackColor = true;
-            // 
-            // _tabOrderbook
-            // 
-            this._tabOrderbook.Controls.Add(this.listView2);
-            this._tabOrderbook.Location = new System.Drawing.Point(4, 22);
-            this._tabOrderbook.Name = "_tabOrderbook";
-            this._tabOrderbook.Padding = new System.Windows.Forms.Padding(3);
-            this._tabOrderbook.Size = new System.Drawing.Size(391, 92);
-            this._tabOrderbook.TabIndex = 1;
-            this._tabOrderbook.Text = "Carnet d\'Ordres";
-            this._tabOrderbook.UseVisualStyleBackColor = true;
-            // 
-            // _tabStats
-            // 
-            this._tabStats.Location = new System.Drawing.Point(4, 22);
-            this._tabStats.Name = "_tabStats";
-            this._tabStats.Size = new System.Drawing.Size(391, 92);
-            this._tabStats.TabIndex = 2;
-            this._tabStats.Text = "Statistiques";
-            this._tabStats.UseVisualStyleBackColor = true;
             // 
             // listView1
             // 
@@ -125,6 +105,21 @@
             this.columnHeaderCurrentSharePrice.Text = "Current Price";
             this.columnHeaderCurrentSharePrice.Width = 89;
             // 
+            // columnHeaderShareVariation
+            // 
+            this.columnHeaderShareVariation.Text = "Variation";
+            // 
+            // _tabOrderbook
+            // 
+            this._tabOrderbook.Controls.Add(this.listView2);
+            this._tabOrderbook.Location = new System.Drawing.Point(4, 22);
+            this._tabOrderbook.Name = "_tabOrderbook";
+            this._tabOrderbook.Padding = new System.Windows.Forms.Padding(3);
+            this._tabOrderbook.Size = new System.Drawing.Size(391, 92);
+            this._tabOrderbook.TabIndex = 1;
+            this._tabOrderbook.Text = "Orderbook";
+            this._tabOrderbook.UseVisualStyleBackColor = true;
+            // 
             // listView2
             // 
             this.listView2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -143,10 +138,6 @@
             this.listView2.UseCompatibleStateImageBehavior = false;
             this.listView2.View = System.Windows.Forms.View.Details;
             // 
-            // columnHeaderShareVariation
-            // 
-            this.columnHeaderShareVariation.Text = "Variation";
-            // 
             // columnHeaderOrderSB
             // 
             this.columnHeaderOrderSB.Text = "Sell / Buy";
@@ -164,6 +155,15 @@
             // columnHeaderOrderPrice
             // 
             this.columnHeaderOrderPrice.Text = "Price";
+            // 
+            // _tabStats
+            // 
+            this._tabStats.Location = new System.Drawing.Point(4, 22);
+            this._tabStats.Name = "_tabStats";
+            this._tabStats.Size = new System.Drawing.Size(391, 92);
+            this._tabStats.TabIndex = 2;
+            this._tabStats.Text = "Statistics";
+            this._tabStats.UseVisualStyleBackColor = true;
             // 
             // TabShareholder
             // 

@@ -15,52 +15,105 @@ namespace INTECH_STOCK_EXCHANGE
         List<Order> _globalOrderbook;
         Order order;
         Company company;
-        Timer round;
-        List<MatchOrders> _matchOrders;
-        public Dictionary<Guid, List<Order>> _sellOrders;
-        public Dictionary<Guid, List<Order>> _buyOrders;
+        Shareholder.pItem share;
+        int transactionCount = 0;
 
-<<<<<<< HEAD
-=======
-        public List<MatchOrders> MatchOrders
+        public enum ActionType
         {
-            get
-            {
-                return _matchOrders;
-            }
+            Fill,
+            Empty,
         }
->>>>>>> f-matchOrders
+      
         public Market()
         {
             _globalOrderbook = new List<Order>();
             _shareholders = new List<Shareholder>();
-            _companies = new List<Company>();
-<<<<<<< HEAD
-=======
-            _matchOrders = new List<MatchOrders>();
-
-
-            //Need to decide here how long the company and shareholder lists should be!
-            Company Google = new Company( this, "Google", Company.Industry.IT, 100.0M, 500 );
-            //_companies.Add( Google );
-
-            Shareholder Trader = new Shareholder( this, "Trader", 1000);
-            Shareholder FatherOfTheYear = new Shareholder( this, "FatherOfTheYear", 500 );
-            Shareholder StupidGuy = new Shareholder( this, "StupidGuy", 1000 );
-            
-            _shareholders.Add( Trader);
-            _shareholders.Add( FatherOfTheYear );
-            _shareholders.Add( StupidGuy );
-            _shareholders.Add( new Shareholder(this, "Coco", 2000 ));
-            _shareholders.Add( new Shareholder( this, "Camillou", 20000 ) );
-
-            Trader.FillPortfolio( 25, Google );
-            FatherOfTheYear.FillPortfolio( 25, Google );
-            StupidGuy.FillPortfolio( 50, Google );
-            _shareholders[3].FillPortfolio( 100, Google );
->>>>>>> f-matchOrders
+            _companies = new List<Company>();   
         }
+        public void AlterPortfolio( Market.ActionType actionType, int shareCount, Company firm, Shareholder sh )
+        //Called when:
+        //- The market opens for the 1st time,
+        //- Transactions need to be made,
 
+        // (!) automatically creates a new struct in the portfolio if the s/h does not already hold at least 1 action of the firm
+        // (!) automatically removes a struct if the s/h holds 0 action of the firm
+        {
+            if(actionType == Market.ActionType.Fill)
+            {
+                int i;
+                int f = -1;
+                for(i = 0; i < sh._portfolio.Count; i++)
+                {
+                    if(sh._portfolio[i].company == firm)
+                    {
+                        f = i;
+                    }
+                }
+                if(f != -1)
+                {
+                    Shareholder.pItem p = sh._portfolio[f];
+                    p.shareCount = p.shareCount + shareCount;
+                    share.shareLastPurchaseValue = firm.SharePrice;// last purchase price kept
+                    share.lastBuyDate = new DateTime();     // last purchase date
+                    sh._portfolio[f] = p;
+                }
+                else                 
+                {                   
+                    share = new Shareholder.pItem();
+                    share.shareCount = shareCount;
+                    share.shareLastPurchaseValue = firm.SharePrice;
+                    share.company = firm;
+                    share.lastBuyDate = new DateTime(); 
+                    sh._portfolio.Add( share );                
+                }                
+            }
+
+            else if(actionType == Market.ActionType.Empty)
+            {
+                int i;
+                int f = -1;
+                for(i = 0; i < sh._portfolio.Count; i++)
+                {
+                    if(sh._portfolio[i].company == firm)
+                    {
+                        f = i;
+                    }
+                }
+                if(f != -1)
+                {
+                    Shareholder.pItem p = sh._portfolio[f];
+                    p.shareCount = p.shareCount - shareCount;
+                    if(p.shareCount == 0)
+                    {
+                        sh._portfolio.RemoveAt(f);
+                    }
+                    else if(p.shareCount > 0)
+                    {   
+                        sh._portfolio[f] = p;
+                    }
+                }
+                else           
+                {                   
+                    share = new Shareholder.pItem();
+                    share.shareLastPurchaseValue = firm.SharePrice;
+                    share.company = firm;
+                    share.shareCount = shareCount;
+                    share.lastBuyDate = new DateTime(); 
+                    sh._portfolio.Add( share );                
+                }                
+            }
+            else
+            {
+                throw new ArgumentException("ActionType to portfolio invalid");
+            }           
+        }
+        //public List<MatchOrders> MatchOrders
+        //{
+        //    get
+        //    {
+        //        return _matchOrders;
+        //    }
+        //}
         public bool minimumOrderCount()
         {
             //Checking in the order book whether there is enough potential orders to open the market
@@ -88,317 +141,265 @@ namespace INTECH_STOCK_EXCHANGE
             get { return _globalOrderbook; }
             set { _globalOrderbook = value; }
         }
-
-        public void start()
+ 
+        public void Clear()
+        //(!) Keeping track on how many rounds each order undergo before being cleared from the orderbook
+        //Clearing: 
+        //- The outdated orders (by checking their expiration dates)
+        //- The orders that found a match
+        //- And prolly more...
         {
-            round.Enabled = true;
-            round.Start();
-            round.Interval = 2500; //0.5 times the order timout
+            List<Order> tmp = new List<Order>();
 
-        }
-
-        public void SellBuy()
-        {
-            int nbtransactions;
-            int nbselltransaction;
-            int nbbuytransaction;
-
-            foreach (Company c in _companies)
+            foreach ( Order o in _globalOrderbook )
             {
-                nbtransactions = 0;
-                nbselltransaction = 0;
+                if ( o.OrderStatus != Order.orderStatus.Dispatched || o.TimedOut == false)
+                {             
+                    tmp.Add( o );                  
+                }
+            }
+            _globalOrderbook.Clear();
+            _globalOrderbook = tmp;
+            tmp.Clear();
+        }
+        public void MatchOrders()
+        //Matching orders algorithm maximalizing transactions:
+        //- Set the buyer/seller IDs to both orders properties when a deal's been made,
+        //- Mark up the orders that found a match for further removal (Order.orderAvailability.Matched;)
+        {
+            foreach ( Order o1 in _globalOrderbook )
+            {
+                if ( o1._orderType != Order.orderType.Buy ) continue;
 
-                foreach (Order o in _sellOrders[c.GetID])
+                foreach ( Order o2 in _globalOrderbook )
                 {
-                    if (o.GetOrderPriceProposal <= c.GetSharePrice)
+                    //Checking it is not the same person who made the 2 orders
+                    if ( o1.GetOrderMakerID == o2.GetOrderMakerID ) continue;
+
+                    if ( o2._orderType != Order.orderType.Sell ) continue;
+
+                    // Checking if the orders are about the same company
+                    if ( o1.Company == o2.Company 
+                        && o1.GetOrderSharePriceProposal >= o2.GetOrderSharePriceProposal
+                        && o1.GetOrderShareQuantity <= o2.GetOrderShareQuantity)
                     {
-                        nbselltransaction += o.GetOrderShareQuantity;
-                    }
-                }
+                        decimal price = o1.GetOrderSharePriceProposal;    // our decision!
+                        MakeTransaction( o1.GetOrderMakerID, o2.GetOrderMakerID, o1.Company, o1.GetOrderShareQuantity, price );
+                        o1.OrderStatus = Order.orderStatus.Dispatched;
 
-                nbbuytransaction = 0;
-                foreach (Order o in _buyOrders[c.GetID])
-                {
-                    if (o.GetOrderPriceProposal >= c.GetSharePrice)
-                    {
-                        nbbuytransaction += o.GetOrderShareQuantity;
-                    }
-                }
-
-                if (nbbuytransaction > nbselltransaction)
-                {
-                    nbtransactions = nbselltransaction;
-                }
-                else
-                {
-                    nbtransactions = nbbuytransaction;
-                }
-
-                int tmp = nbtransactions;
-                foreach (Order o in _sellOrders[c.GetID])
-                {
-                    if (o.GetOrderPriceProposal <= c.GetSharePrice)
-                    {
-                        for (int i = 0; i < _shareholders.Count ;i++)
-                        {
-                            if (_shareholders[i].GetID == o.OrderBuyerID)
-                            {
-                                if (tmp > o.GetOrderShareQuantity)
-                                {
-                                    _shareholders[i].Capital += c.GetSharePrice * o.GetOrderShareQuantity;
-                                    tmp -= o.GetOrderShareQuantity;
-                                    // retirer actions dans portfolio
-                                }
-                                else
-                                {
-                                    _shareholders[i].Capital += c.GetSharePrice * tmp;
-                                    tmp = 0;
-                                    // retirer actions dans portfolio
-                                }
-                            }
-                        }
-                    }
-                }
-
-                tmp = nbtransactions;
-                foreach (Order o in _buyOrders[c.GetID])
-                {
-                    if (o.GetOrderPriceProposal >= c.GetSharePrice)
-                    {
-                        for (int i = 0; i < _shareholders.Count; i++)
-                        {
-                            if (_shareholders[i].GetID == o.OrderBuyerID)
-                            {
-                                if (tmp > o.GetOrderShareQuantity)
-                                {
-                                    _shareholders[i].Capital -= c.GetSharePrice * o.GetOrderShareQuantity;
-                                    tmp -= o.GetOrderShareQuantity;
-                                    _shareholders[i].FillPortfolio( o.GetOrderShareQuantity, c );
-                                }
-                                else
-                                {
-                                    _shareholders[i].Capital -= c.GetSharePrice * tmp;
-                                    tmp = 0;
-                                    _shareholders[i].FillPortfolio( tmp, c );
-                                }
-                            }
-                        }
+                        o2.decreaseOrderShareQuantity( o1.GetOrderShareQuantity );
+                        if (o2.GetOrderShareQuantity == 0) o2.OrderStatus = Order.orderStatus.Dispatched;
                     }
                 }
             }
         }
 
-        public void SortOrders()
+        private Shareholder getShareholderById( Guid id )
         {
+            foreach ( Shareholder s in _shareholders )
+            {
+                if ( id == s.GetID ) return s;
+            }
+            throw new ArgumentException();
+        }
+  
+        private void MakeTransaction( Guid buyerId, Guid sellerId, Company company, int quantity, decimal price )
+        {
+            Shareholder buyer = getShareholderById(buyerId);
+            Shareholder seller = getShareholderById(sellerId);
+
+            // Updating buyer info
+            buyer.Capital = buyer.Capital - price * quantity;
+            this.AlterPortfolio(Market.ActionType.Fill, quantity, company, buyer);
+
+            // Updating seller info
+            seller.Capital = seller.Capital + price * quantity;
+            this.AlterPortfolio(Market.ActionType.Empty, quantity, company, seller);
+
+            // Updating market data
+            UpdateMarketData( company, price );
+            transactionCount++;
+
+            System.Diagnostics.Debug.WriteLine( "[TRANSACTION] : " + buyer.Name + " baught to " + seller.Name + " " + quantity + " shares of " + company.Name + " at " + price);
+            System.Diagnostics.Debug.WriteLine(transactionCount);
+        }
+
+        //Currently: Defining the new company share price based upon the latest exchange in the market
+        private void UpdateMarketData( Company company, decimal price )
+        {
+            decimal newVariation = ((price - company.SharePrice) / company.SharePrice)*100;
+            company.ShareVariation = newVariation;
+            company.SharePrice = price; 
+        }
+
+        public override String ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach ( Shareholder shareholder in _shareholders )
+            {
+                sb.Append( shareholder.Name ).AppendLine();
+                foreach ( Shareholder.pItem share in shareholder._portfolio )
+                {
+                    sb.Append("\t").Append( share.company.Name ).Append( " : " ).Append( share.shareCount ).AppendLine();
+                }
+            }
+            return sb.ToString();
+        }
+
 <<<<<<< HEAD
-            round.Enabled = true;
-            round.Start();
-            round.Interval = 2500; //0.5 times the order's timout
+        public Order.orderType EstimateOrderbookBalance(Market market)
+        {
+            int buy = 0;
+            int sell = 0;
+
+            foreach(Order o in _globalOrderbook)
+            {
+                if ( o.GetOrderType == Order.orderType.Buy ) buy++;
+                else if ( o.GetOrderType == Order.orderType.Sell ) sell++;
+            }
+            if ( buy > sell ) return Order.orderType.Sell;
+            else return Order.orderType.Buy;
+        }
 =======
-            _sellOrders = new Dictionary<Guid,List<Order>>();
-            _buyOrders = new Dictionary<Guid, List<Order>>();
->>>>>>> f-matchOrders
-
-            foreach (Company c in _companies)
-            {
-                _sellOrders.Add( c.GetID, new List<Order>() );
-                _buyOrders.Add( c.GetID, new List<Order>() );
-            }
-
-            foreach (Order o in _globalOrderbook)
-            {
-                if (o._orderType == Order.orderType.Buy)
-                {
-                    _buyOrders[o.GetSharesCompanyID].Add( o );
-                }
-                else
-                {
-                    _sellOrders[o.GetSharesCompanyID].Add( o );
-                }
-            }
-        }
-
-        public void DefineNewPrice()
+        public IList<string> companyNames = new List<string>
         {
-            Dictionary<decimal, int> nbtransactions = new Dictionary<decimal,int>();
-            int nbselltransaction;
-            int nbbuytransaction = 0;
-            decimal priceTransaction = 0;
-            int nbtransaction = 0;
+            "Lafarge",
+            "Safran",
+            "Publicis",
+            "Alstom",
+            "EDF",
+            "Solvay",
+            "Capgemini",
+            "CréditAgricole",
+            "Bouygues",
+            "Accor",
+            "Vallourec",
+            "Veolia",
+            "STMicroelectronics",
+            "Gemalto",
+            "Blizzard",
+            "Akamai",
+            "Amazon",
+            "Amgen",
+            "Apple",
+            "Autodesk",
+            "Broadcom",
+            "Cephalon",
+            "Cisco",
+            "Comcast",
+            "Dell",
+            "eBay",
+            "EA",
+            "Garmin",
+            "Google",
+            "Intel",
+            "Juniper",
+            "Logitech",
+            "Microsoft",
+            "Monster",
+            "NetApp",
+            "Nvidia",
+            "Oracle",
+            "Ryanair",
+            "SanDisk",
+            "Starbucks"
+        };
 
-            SortOrdersByPrice();
-
-            foreach (Company c in companyList)
-            {
-                for (int i = 0; i < _buyOrders[c.GetID].Count ;i++)
-                {
-                    nbbuytransaction += _buyOrders[c.GetID][i].GetOrderShareQuantity;
-                    nbselltransaction = 0;
-
-                    for (int j = 0; j < _sellOrders[c.GetID].Count && _sellOrders[c.GetID][j].GetOrderPriceProposal >= _buyOrders[c.GetID][i].GetOrderPriceProposal ;j++)
-                    {
-                        nbselltransaction += _sellOrders[c.GetID][j].GetOrderShareQuantity;
-                    }
-
-                    if (nbselltransaction < nbbuytransaction)
-                    {
-                        nbtransactions.Add( _buyOrders[c.GetID][i].GetOrderPriceProposal, nbselltransaction );
-                    }
-                    else
-                    {
-                        nbtransactions.Add( _buyOrders[c.GetID][i].GetOrderPriceProposal, nbbuytransaction );
-                    }
-                }
-
-                foreach (var p in nbtransactions)
-                {
-                    if (p.Value > nbtransaction)
-                    {
-                        nbtransaction = p.Value;
-                        priceTransaction = p.Key;
-                    }
-                    c.GetSharePrice = priceTransaction;
-                }
-            }
-        }
-
-        public void SortOrdersByPrice()
-        {
-            Order tmp;
-            foreach (var keyvalue in _buyOrders)
-            {
-                for (int i = 0; i < keyvalue.Value.Count; i++)
-                {
-                    for (int j = i + 1; j < keyvalue.Value.Count; j++)
-                    {
-                        if (keyvalue.Value[i].GetOrderPriceProposal > keyvalue.Value[j].GetOrderPriceProposal)
-                        {
-                            tmp = keyvalue.Value[i];
-                            keyvalue.Value[i] = keyvalue.Value[j];
-                            keyvalue.Value[j] = tmp;
-                        }
-                    }
-                }
-            }
-            foreach (var keyvalue in _sellOrders)
-            {
-                for (int i = 0; i < keyvalue.Value.Count; i++)
-                {
-                    for (int j = i + 1; j < keyvalue.Value.Count; j++)
-                    {
-                        if (keyvalue.Value[i].GetOrderPriceProposal > keyvalue.Value[j].GetOrderPriceProposal)
-                        {
-                            tmp = keyvalue.Value[i];
-                            keyvalue.Value[i] = keyvalue.Value[j];
-                            keyvalue.Value[j] = tmp;
-                        }
-                    }
-                }
-            }
-        }
-
-        public void addOrUpdate( EventArgs e, Order order )
-        //Once a deal's been made:
-        //- Receiving and adding or removing new/old orders from the orderbook, 
-        //- Updating portfolios and capitals (companies and shareholders),
-        //- Updating share prices and variations,
-        //- More updates to come...
-        {               
-            foreach ( Order x in _globalOrderbook )
-            {
-                if ( x.Done == true )
-                {
-                    foreach ( Company c in _companies )
-                    {
-                        if ( x.GetOrderMakerID == c.GetID ) //   [ALL THIS FUNCTION NEEDS AN UPDATE SINCE A LOT OF NAMES HAVE CHANGED] but the main idea's still good
-                        {
-                            if ( x.GetOrderType == 0 )//Buy
-                            {
-                                //sharestock++, capital--
-                                //            c.Capital = c.Capital - x.GetOrderTotalPriceProposal;
-                                //            c.Portfolio.AddRange( x.GetOrderShares );
-                                //        }
-                                //        else if ( x.GetOrderType == 1 )//Sell
-                                //        {
-                                //            //sharestock--, capital++
-                                //            c.Capital = c.Capital + x.GetOrderTotalPriceProposal;
-                                //            c.Portfolio.RemoveAll(Share => Share.OrderID == x.GetOrderId);
-                                //        }
-                                //    }
-                                //    else if ( x.OrderBuyerID == c.GetID )
-                                //    {
-                                //        if ( x.GetOrderType == 0 )
-                                //        {
-                                //            //sharestock--, capital++
-                                //            c.Capital = c.Capital + x.GetOrderTotalPriceProposal;
-                                //            c.Portfolio.RemoveAll( Share => Share.OrderID == x.GetOrderId );
-                                //        }
-                                //        else if ( x.GetOrderType == 1 )
-                                //        {
-                                //            //sharestock++, capital--
-                                //            c.Capital = c.Capital - x.GetOrderTotalPriceProposal;
-                                //            c.Portfolio.AddRange( x.GetOrderShares );
-                                //        }
-                                //    }
-                                //}
-                                ///*Need to implement price evolution here! */
-                                //foreach(Shareholder s in _shareholders)
-                                //{
-                                //    if ( x.GetOrderMakerID == s.GetID )
-                                //    {
-                                //        if ( x.GetOrderType == 0 )//Buy
-                                //        {
-                                //            //sharestock++, capital--
-                                //            s.Capital = s.Capital - x.GetOrderTotalPriceProposal;
-                                //            s.Portfolio.AddRange( x.GetOrderShares );
-                                //        }
-                                //        else if ( x.GetOrderType == 1 )//Sell
-                                //        {
-                                //            //sharestock--, capital++
-                                //            s.Capital = s.Capital + x.GetOrderTotalPriceProposal;
-                                //            s.Portfolio.RemoveAll( Share => Share.OrderID == x.GetOrderId );
-                                //        }
-                                //    }
-                                //    else if ( x.OrderBuyerID == s.GetID )
-                                //    {
-                                //        if ( x.GetOrderType == 0 )
-                                //        {
-                                //            //sharestock--, capital++
-                                //            s.Capital = s.Capital + x.GetOrderTotalPriceProposal;
-                                //            s.Portfolio.RemoveAll( Share => Share.OrderID == x.GetOrderId );
-                                //        }
-                                //        else if ( x.GetOrderType == 1 )
-                                //        {
-                                //            //sharestock++, capital--
-                                //            s.Capital = s.Capital - x.GetOrderTotalPriceProposal;
-                                //            s.Portfolio.AddRange( x.GetOrderShares );
-                                //        }
-                            }
-                        }
-                        _globalOrderbook.Remove( x );//Removing the order from the orderbook since the deal's done
-                    }
-                }
-            }
-        }
-    }
-
-    public class MatchOrders
-    {
-        Guid[] _sellerBuyer;
-        public Guid IdSeller { get { return _sellerBuyer[1]; } }
-        public Guid IdBuyer
-        { 
-            get 
-            {
-                return _sellerBuyer[0];
-            } 
-        }
-
-        public MatchOrders(Guid idSeller, Guid idBuyer)
-        {
-            Guid[] tmp = { idSeller, idBuyer};
-            _sellerBuyer = tmp;
-        }
-
+        public IList<string> shareholderNames = new List<string>
+       {
+           "Martin Finkel",
+           "Vincent Dufrasnes",
+           "Johan Rain",
+           "Martin Lavie",
+           "Corentin Broux",
+           "Nicolas Beuzart",
+           "Camille Colin",
+           "Brice Hoffmann",
+           "Christie Bunlon",
+           "Eric Lalitte",
+           "Olivier Spinelli",
+           "Damien Goldenberg",
+           "Catherine Dorignac",
+           "Corinne Thomas",
+           "Alexis Boulanger",
+           "Christophe Mortelette",
+           "Julien Bernard",
+           "Valentin Beuzart",
+           "Franck Bontemps",
+           "Jules Bourreau",
+           "Benjamin Gratade",
+           "Vincent Ricard",
+           "Etienne Rocipon",
+           "Ludovic Tresson",
+           "Salman Alamdar",
+           "Alexandre Arnal",
+           "Nicolas Chatelain",
+           "Stéphane Gereme",
+           "Michel Gille",
+           "Alban Inquel",
+           "Silvja Jung",
+           "Maxime Pavaut",
+           "Thomas Rempenault",
+           "Guillaume Roux",
+           "Florian Thorreau",
+           "Sabrina Mustafic",
+           "Stéphane Mougel",
+           "Adeline Martin",
+           "Lucas Souppe",
+           "Patrice Thiré",
+           "Valéry Farcy",
+           "Joel Goy",
+           "Thomas Barach",
+           "Antoine Bibes",
+           "Riwan Bodereau",
+           "Julien Cartier",
+           "Anthony Chami",
+           "Alain Cheung",
+           "David Cingala",
+           "Margot Filleton",
+           "Kevin Guyoton",
+           "Simon Hallay",
+           "Charles Jarre",
+           "Guillaume Noel",
+           "Stéphane Pourrier",
+           "François Proust",
+           "Thomas Bouzou",
+           "Yoel Marciano",
+           "Nathan Gatti",
+           "Antoine Chwalek",
+           "Arthur Caron",
+           "Kévin Defarge",
+           "Bruno Paty",
+           "Bessalel Cohen",
+           "Adrien Dumont",
+           "Christophe Hermer",
+           "Raphael Costet",
+           "Joshua Molinier",
+           "Rami Morri",
+           "Clément Rousseau",
+           "Tristan Letrou",
+           "Christine Brouste",
+           "Mazen Dekhil",
+           "Clémence Enault",
+           "Clément Gaillardot",
+           "Pierre Houdyer",
+           "Stéphane Miginiac",
+           "Jessica Ndjiki",
+           "Timothée Pillard",
+           "Axel Riffard",
+           "Cédric Sika",
+           "Xavier Diaz",
+           "Etienne Got",
+           "Brice Guégan",
+           "Adrien Kasse",
+           "Thomas Michau",
+           "Mathieu Quioc",
+           "Aurélien Roose",
+           "Antoine Meunier",
+           "Benoit Sturzer",
+           "Guillaume Tawil",
+           "Tomasz Urbanski"
+       };
+>>>>>>> 0dc5e9a2909606b0de1d4526d77e9ce930eab6a9
     }
 }

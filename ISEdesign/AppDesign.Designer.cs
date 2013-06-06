@@ -69,7 +69,7 @@
             this.Controls.Add(this.actionbar1);
             this.Controls.Add(this.tabShareholder1);
             this.Name = "AppDesign";
-            this.Text = "Form1";
+            this.Text = "Intech Stock Exchange";
             this.ResumeLayout(false);
 
         }
