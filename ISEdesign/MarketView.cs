@@ -45,8 +45,21 @@ namespace ISEdesign
             foreach (var c in _market.companyList)
             {
                 ListViewItem i = new ListViewItem( c.Name );
-                i.SubItems.Add( c.SharePrice.ToString() );
+                i.SubItems.Add( c.SharePrice.ToString( "#.###" ) );
                 _listView.Items.Add( i );
+            }
+        }
+
+        private void _listView_DoubleClick( object sender, EventArgs e )
+        {
+            using (var t = new ChangeCompany())
+            {
+                DialogResult r = t.ShowDialog();
+
+                if (r == DialogResult.OK)
+                {
+                    
+                }
             }
         }
     }

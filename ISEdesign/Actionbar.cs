@@ -76,7 +76,7 @@ namespace ISEdesign
                     {
                         ListViewItem i = new ListViewItem( a.company.Name );
                         i.SubItems.Add( a.shareCount.ToString() );
-                        i.SubItems.Add( a.company.SharePrice.ToString() );
+                        i.SubItems.Add( a.company.SharePrice.ToString( "#.###" ) );
                         TabShareholder.TabPortfolio.Items.Add( i );
                     }
                 }

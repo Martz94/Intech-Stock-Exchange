@@ -106,7 +106,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.DeepPink;
+            this.BackColor = System.Drawing.Color.SkyBlue;
             this.Controls.Add(this._goButton);
             this.Controls.Add(this._listShareholder);
             this.Controls.Add(this.label1);

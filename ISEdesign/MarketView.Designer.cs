@@ -55,14 +55,17 @@
             this._listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this._columnHeaderName,
             this._columnHeaderValue});
+            this._listView.FullRowSelect = true;
             this._listView.GridLines = true;
             this._listView.HideSelection = false;
+            this._listView.LabelEdit = true;
             this._listView.Location = new System.Drawing.Point(3, 16);
             this._listView.Name = "_listView";
             this._listView.Size = new System.Drawing.Size(196, 310);
             this._listView.TabIndex = 0;
             this._listView.UseCompatibleStateImageBehavior = false;
             this._listView.View = System.Windows.Forms.View.Details;
+            this._listView.DoubleClick += new System.EventHandler(this._listView_DoubleClick);
             // 
             // _columnHeaderName
             // 
