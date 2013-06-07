@@ -194,7 +194,7 @@ namespace INTECH_STOCK_EXCHANGE
                         decimal exchangePrice = oBuy.OrderSharePriceProposal;    // our call!
                         int exchangeCount = Math.Min( oBuy.OrderShareQuantity, oSell.OrderShareQuantity );
 
-                        MakeTransaction( oBuy, oSell, exchangeCount, exchangePrice );
+                        if(exchangeCount > 0) MakeTransaction( oBuy, oSell, exchangeCount, exchangePrice );
                     }
                 }
             }
@@ -204,6 +204,7 @@ namespace INTECH_STOCK_EXCHANGE
         {
             Debug.Assert( oBuy.Company == oSell.Company );
             Debug.Assert( oBuy.OrderMaker != oSell.OrderMaker );
+            Debug.Assert( quantity > 0 );
 
             Shareholder buyer =  oBuy.OrderMaker;
             Shareholder seller = oSell.OrderMaker;
@@ -221,13 +222,15 @@ namespace INTECH_STOCK_EXCHANGE
             UpdateMarketData( company, price );
             _transactionCount++;
 
+            System.Diagnostics.Debug.WriteLine( "[TRANSACTION] : " + buyer.Name + " bought to " + seller.Name + " " + quantity + " shares of " + company.Name + " at " + price);
+            System.Diagnostics.Debug.WriteLine("Transaction number : " + _transactionCount);
+            
             oBuy.DecreaseOrderShareQuantity( quantity );
             oSell.DecreaseOrderShareQuantity( quantity );
             if ( oBuy.OrderShareQuantity == 0 ) oBuy.OrderStatus = Order.orderStatus.Dispatched;
             if ( oSell.OrderShareQuantity == 0 ) oSell.OrderStatus = Order.orderStatus.Dispatched;
 
-            System.Diagnostics.Debug.WriteLine( "[TRANSACTION] : " + buyer.Name + " bought to " + seller.Name + " " + quantity + " shares of " + company.Name + " at " + price);
-            System.Diagnostics.Debug.WriteLine("Transaction number : " + _transactionCount);
+            
         }
 
         //Currently: Defining the new company share price based upon the latest exchange in the market

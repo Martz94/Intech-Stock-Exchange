@@ -11,7 +11,7 @@ namespace INTECH_STOCK_EXCHANGE
     {
         public void CreateAll(Market market)
         {
-            int _maxCompanies = 20;
+            int _maxCompanies = 30;
             int _maxShareholders = 1000;
 
             // Create companies with companies' numbers defined by user

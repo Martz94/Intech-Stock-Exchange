@@ -25,7 +25,7 @@ namespace INTECH_STOCK_EXCHANGE
             int quantity = (int)(max / (double)firm.SharePrice);
             decimal priceProp = (decimal)(max / (double)quantity);
 
-            if(priceProp * quantity < shareholder.Capital) return new Order(Order.orderType.Buy, priceProp - 5, quantity, firm, shareholder); 
+            if(priceProp * quantity < shareholder.Capital && quantity > 0) return new Order(Order.orderType.Buy, priceProp - 5, quantity, firm, shareholder); 
             else return null;
         }
 
@@ -49,7 +49,8 @@ namespace INTECH_STOCK_EXCHANGE
                 priceProp = share.company.SharePrice + 5;
                 quantity = (int)(0.5 * share.shareCount);
                 firm = share.company;
-                return new Order( Order.orderType.Sell, priceProp, quantity, firm, shareholder );
+                if ( quantity > 0 ) return new Order( Order.orderType.Sell, priceProp, quantity, firm, shareholder );
+                else return null;
             }
             else return null;            
         }
