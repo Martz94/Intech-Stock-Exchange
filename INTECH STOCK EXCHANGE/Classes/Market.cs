@@ -30,6 +30,13 @@ namespace INTECH_STOCK_EXCHANGE
             _shareholders = new List<Shareholder>();
             _companies = new List<Company>();   
         }
+
+        public event EventHandler<EventArgs> CompanyListChanged;
+
+        public event EventHandler<EventArgs> ShareholdersListChanged;
+
+        public event EventHandler<CompanyChangedArgs> CompanyChanged;
+
         public void AlterPortfolio( Market.ActionType actionType, int shareCount, Company firm, Shareholder sh )
         //Called when:
         //- The market opens for the 1st time,
@@ -258,6 +265,50 @@ namespace INTECH_STOCK_EXCHANGE
             }
             if ( buy > sell ) return Order.orderType.Sell;
             else return Order.orderType.Buy;
+        }
+
+        public void AddOrUpdateCompany( string name, Company.Industry ind, decimal shareValue, int sharevolume )
+        {
+            Company c = _companies.FirstOrDefault( company => company.Name == name );
+            if (c == null)
+            {
+                c = new Company(this, name, ind, shareValue, sharevolume);
+                _companies.Add( c );
+                var h = CompanyListChanged;
+                if (h != null) h( this, EventArgs.Empty );
+            }
+            else if (c.SharePrice != shareValue)
+            {
+                c.SharePrice = shareValue;
+                var h = CompanyChanged;
+                if (h != null)
+                {
+                    CompanyChangedArgs e = new CompanyChangedArgs( c );
+                    h( this, e );
+                }
+            }
+        }
+
+        public void AddOrUpdateShareholders( string name, decimal money)
+        {
+            Shareholder c = _shareholders.FirstOrDefault( company => company.Name == name );
+            if (c == null)
+            {
+                c = new Shareholder(this, name, money);
+                _shareholders.Add( c );
+                var h = ShareholdersListChanged;
+                if (h != null) h( this, EventArgs.Empty );
+            }
+            //else if (c.SharePrice != shareValue)
+            //{
+            //    c.SharePrice = shareValue;
+            //    var h = CompanyChanged;
+            //    if (h != null)
+            //    {
+            //        CompanyChangedArgs e = new CompanyChangedArgs( c );
+            //        h( this, e );
+            //    }
+            //}
         }
 
         public IList<string> companyNames = new List<string>

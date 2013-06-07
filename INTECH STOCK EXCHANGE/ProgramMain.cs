@@ -23,8 +23,8 @@ namespace INTECH_STOCK_EXCHANGE
             //Initialization
 
             market = new Market(); //Creating an empty market with empty lists of s/h, firms and orders (The orderbook)
-            Builder builder = new Builder();
-            builder.CreateAll( market, nbShareholders, nbShareholders/4 ); //Instancing companies and s/h objects. Filling portfolios and capitals to get the game going.
+            //Builder builder = new Builder();
+            //builder.CreateAll( market ); Instancing companies and s/h objects. Filling portfolios and capitals to get the game going.
             System.Diagnostics.Debug.WriteLine( market.ToString() );
 
             Play( market, maxRound ); //Called again and again by UI

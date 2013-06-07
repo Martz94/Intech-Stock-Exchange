@@ -60,7 +60,6 @@ namespace INTECH_STOCK_EXCHANGE
             _cash = Money;
            
             shareholderID = Guid.NewGuid();
-            market.shareholderList.Add( this );
         }
         public Order MakeDecision( Market market, Shareholder shareholder )
         {

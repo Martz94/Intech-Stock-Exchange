@@ -58,7 +58,7 @@
             this._tabShareholder.Location = new System.Drawing.Point(0, 0);
             this._tabShareholder.Name = "_tabShareholder";
             this._tabShareholder.SelectedIndex = 0;
-            this._tabShareholder.Size = new System.Drawing.Size(399, 118);
+            this._tabShareholder.Size = new System.Drawing.Size(399, 166);
             this._tabShareholder.TabIndex = 0;
             // 
             // _tabPortfolio
@@ -67,7 +67,7 @@
             this._tabPortfolio.Location = new System.Drawing.Point(4, 22);
             this._tabPortfolio.Name = "_tabPortfolio";
             this._tabPortfolio.Padding = new System.Windows.Forms.Padding(3);
-            this._tabPortfolio.Size = new System.Drawing.Size(391, 92);
+            this._tabPortfolio.Size = new System.Drawing.Size(391, 140);
             this._tabPortfolio.TabIndex = 0;
             this._tabPortfolio.Text = "Portfolio";
             this._tabPortfolio.UseVisualStyleBackColor = true;
@@ -85,7 +85,7 @@
             this.listView1.GridLines = true;
             this.listView1.Location = new System.Drawing.Point(-4, 0);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(395, 94);
+            this.listView1.Size = new System.Drawing.Size(395, 142);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -171,7 +171,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this._tabShareholder);
             this.Name = "TabShareholder";
-            this.Size = new System.Drawing.Size(396, 119);
+            this.Size = new System.Drawing.Size(396, 167);
             this._tabShareholder.ResumeLayout(false);
             this._tabPortfolio.ResumeLayout(false);
             this._tabOrderbook.ResumeLayout(false);

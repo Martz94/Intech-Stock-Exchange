@@ -7,21 +7,47 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using INTECH_STOCK_EXCHANGE;
 
 namespace ISEdesign
 {
     public partial class MarketView : UserControl
     {
-
-        public System.Windows.Forms.ListView ListView
-        {
-            get { return _listView; }
-            set { _listView = value; }
-        }
+        Market _market;
 
         public MarketView()
         {
             InitializeComponent();
+        }
+
+        internal void SetMarket (Market market)
+        {
+            _market = market;
+            FillCompanyList();
+            _market.CompanyListChanged += _market_CompanyListChanged;
+            _market.CompanyChanged += _market_CompanyChanged;
+        }
+
+        void _market_CompanyChanged( object sender, CompanyChangedArgs e )
+        {
+            ListViewItem item = _listView.Items.Cast<ListViewItem>().First( i => i.Text == e.Company.Name );
+            item.SubItems[1].Text = e.Company.SharePrice.ToString();
+        }
+
+        void _market_CompanyListChanged( object sender, EventArgs e )
+        {
+            FillCompanyList();
+        }
+
+        private void FillCompanyList()
+        {
+            _listView.Items.Clear();
+            foreach (var c in _market.companyList)
+            {
+                ListViewItem i = new ListViewItem( c.Name );
+                i.SubItems.Add( c.SharePrice.ToString() );
+                _listView.Items.Add( i );
+            }
         }
     }
 }

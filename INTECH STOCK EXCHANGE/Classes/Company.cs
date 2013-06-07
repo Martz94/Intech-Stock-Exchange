@@ -39,7 +39,6 @@ namespace INTECH_STOCK_EXCHANGE
             sharePrice = SharePrice;
             shareVolume = ShareVolume;
             companyID = Guid.NewGuid();
-            market.companyList.Add( this );
         }
 
         public enum Industry

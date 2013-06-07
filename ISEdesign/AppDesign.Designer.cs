@@ -28,46 +28,46 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.marketView1 = new ISEdesign.MarketView();
-            this.actionbar1 = new ISEdesign.Actionbar();
+            this._marketView = new ISEdesign.MarketView();
+            this._actionBar = new ISEdesign.Actionbar();
             this.tabShareholder1 = new ISEdesign.TabShareholder();
             this.SuspendLayout();
             // 
-            // marketView1
+            // _marketView
             // 
-            this.marketView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.marketView1.Location = new System.Drawing.Point(0, 53);
-            this.marketView1.Name = "marketView1";
-            this.marketView1.Size = new System.Drawing.Size(553, 170);
-            this.marketView1.TabIndex = 1;
+            this._marketView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._marketView.Location = new System.Drawing.Point(0, 53);
+            this._marketView.Name = "_marketView";
+            this._marketView.Size = new System.Drawing.Size(569, 159);
+            this._marketView.TabIndex = 1;
             // 
-            // actionbar1
+            // _actionBar
             // 
-            this.actionbar1.BackColor = System.Drawing.Color.DeepPink;
-            this.actionbar1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.actionbar1.Location = new System.Drawing.Point(0, 0);
-            this.actionbar1.MarketView = null;
-            this.actionbar1.Name = "actionbar1";
-            this.actionbar1.Size = new System.Drawing.Size(553, 53);
-            this.actionbar1.TabIndex = 3;
-            this.actionbar1.TabShareholder = null;
+            this._actionBar.BackColor = System.Drawing.Color.DeepPink;
+            this._actionBar.Dock = System.Windows.Forms.DockStyle.Top;
+            this._actionBar.Location = new System.Drawing.Point(0, 0);
+            this._actionBar.MarketView = null;
+            this._actionBar.Name = "_actionBar";
+            this._actionBar.Size = new System.Drawing.Size(569, 53);
+            this._actionBar.TabIndex = 3;
+            this._actionBar.TabShareholder = null;
             // 
             // tabShareholder1
             // 
             this.tabShareholder1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tabShareholder1.Location = new System.Drawing.Point(0, 223);
+            this.tabShareholder1.Location = new System.Drawing.Point(0, 212);
             this.tabShareholder1.Name = "tabShareholder1";
-            this.tabShareholder1.Size = new System.Drawing.Size(553, 119);
-            this.tabShareholder1.TabIndex = 2;
+            this.tabShareholder1.Size = new System.Drawing.Size(569, 163);
+            this.tabShareholder1.TabIndex = 4;
             // 
             // AppDesign
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(553, 342);
-            this.Controls.Add(this.marketView1);
-            this.Controls.Add(this.actionbar1);
+            this.ClientSize = new System.Drawing.Size(569, 375);
+            this.Controls.Add(this._marketView);
             this.Controls.Add(this.tabShareholder1);
+            this.Controls.Add(this._actionBar);
             this.Name = "AppDesign";
             this.Text = "Intech Stock Exchange";
             this.ResumeLayout(false);
@@ -76,9 +76,9 @@
 
         #endregion
 
-        private MarketView marketView1;
+        private MarketView _marketView;
+        private Actionbar _actionBar;
         private TabShareholder tabShareholder1;
-        private Actionbar actionbar1;
     }
 }
 
