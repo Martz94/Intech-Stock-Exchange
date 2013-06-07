@@ -52,14 +52,15 @@ namespace INTECH_STOCK_EXCHANGE
             _portfolio = new List<pItem>();
             _displayName = Name;
 
-            Random r = new Random();
-            int i = r.Next( 100 );
-            if ( i > 50 ) _strategy = new RandomStrategy();
-            else _strategy = new StupidStrategy();
+            //Random r = new Random();
+            //int i = r.Next( 100 );
+            //if ( i > 50 ) _strategy = new RandomStrategy();
+            _strategy = new StupidStrategy();
 
             _cash = Money;
            
             shareholderID = Guid.NewGuid();
+            market.shareholderList.Add( this );
         }
         public Order MakeDecision( Market market, Shareholder shareholder )
         {

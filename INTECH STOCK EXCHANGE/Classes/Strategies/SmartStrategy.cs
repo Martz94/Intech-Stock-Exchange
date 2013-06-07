@@ -18,8 +18,8 @@ namespace INTECH_STOCK_EXCHANGE
         }
         public Order MakeDecision( Market market, Shareholder shareholder )
         {
-
             return null;
+            //return order;
         }
     }
 }

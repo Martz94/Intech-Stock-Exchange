@@ -51,6 +51,7 @@
             this._nbCompanyTextBox.Name = "_nbCompanyTextBox";
             this._nbCompanyTextBox.Size = new System.Drawing.Size(38, 20);
             this._nbCompanyTextBox.TabIndex = 1;
+            this._nbCompanyTextBox.Validating += new System.ComponentModel.CancelEventHandler(this._nbCompanyTextBox_Validating);
             // 
             // _shareholderNumber
             // 

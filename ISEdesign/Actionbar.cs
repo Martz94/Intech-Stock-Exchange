@@ -13,8 +13,6 @@ namespace ISEdesign
 {
     public partial class Actionbar : UserControl
     {
-        Market _market;
-
         public Actionbar()
         {
             InitializeComponent();
@@ -22,6 +20,8 @@ namespace ISEdesign
 
         public MarketView MarketView { get; set; }
         public TabShareholder TabShareholder { get; set; }
+
+        Market market;
 
         private void _initialize_Click( object sender, EventArgs e )
         {
@@ -31,10 +31,59 @@ namespace ISEdesign
 
                 if (r == DialogResult.OK)
                 {
-                    Builder.CreateAll( _market, d.CompanyNumber, d.ShareholderNumber );
+                    string name = d.CompanyName;
+                    string value = d.Sharevalue;
                 }
             }
+            market = new Market();
+            market.CreateNewCompany( "Google", 650.0M, 1000 );
+            market.CreateNewCompany( "Loreal", 130.0M, 1000 );
+            market.CreateNewCompany( "Apple", 450.0M, 1000 );
+            market.CreateNewCompany( "EDF", 17.590M, 1000 );
+            market.CreateNewCompany( "Sanofi", 82.51M, 1000 );
+            market.CreateNewCompany( "France Telecom", 7.843M, 1000 );
+            market.CreateNewCompany( "Total", 38.585M, 1000 );
+            Shareholder Olivier = new Shareholder( market, "Olivier", 10000.0M );
+            Olivier.FillPortfolio( 100, market.companyList[0] );
+            market.shareholderList.Add( Olivier );
+            market.shareholderList.Add( new Shareholder( market, "Vincent", 20000.0M ) );
+            market.shareholderList.Add( new Shareholder( market, "Nicolas", 20000.0M ) );
+            market.shareholderList.Add( new Shareholder( market, "Camille", 20000.0M ) );
+            market.shareholderList.Add( new Shareholder( market, "Romain", 20000.0M ) );
+            market.shareholderList.Add( new Shareholder( market, "Corentin", 20000.0M ) );
+            market.shareholderList.Add( new Shareholder( market, "Martin", 20000.0M ) );
 
+            MarketView.ListView.Items.Clear();
+
+            foreach (var c in market.companyList)
+            {
+                ListViewItem i = new ListViewItem( c.Name );
+                i.SubItems.Add( c.GetSharePrice.ToString() );
+                MarketView.ListView.Items.Add(i);
+            }
+
+            foreach (var s in market.shareholderList)
+            {
+                if (!s.IsCompany) _listShareholder.Items.Add( s.Name );
+            }
+        }
+
+        private void _listShareholder_SelectedIndexChanged( object sender, EventArgs e )
+        {
+            TabShareholder.TabPortfolio.Items.Clear();
+            foreach (var c in market.shareholderList)
+            {
+                if (c.Name == _listShareholder.Items[_listShareholder.SelectedIndex])
+                {
+                    foreach (var a in c.Portfolio)
+                    {
+                        ListViewItem i = new ListViewItem( a.company.Name );
+                        i.SubItems.Add( a.shareCount.ToString() );
+                        i.SubItems.Add( a.shareValue.ToString() );
+                        TabShareholder.TabPortfolio.Items.Add( i );
+                    }
+                }
+            }
         }
 
         private void Play( object sender, EventArgs e )
@@ -42,45 +91,7 @@ namespace ISEdesign
             //Function that's starting the market for x rounds
 
             //int roundMax = _roundNumber;
-        }
-
-        internal void SetMarket( Market market )
-        {
-            _market = market;
-            _market.ShareholdersListChanged += _market_ShareholdersListChanged;
-        }
-
-        void _market_ShareholdersListChanged( object sender, EventArgs e )
-        {
-            FillShareholdersList();
-        }
-
-        private void FillShareholdersList()
-        {
-            _listShareholder.Items.Clear();
-            foreach (var c in _market.shareholderList)
-            {
-                _listShareholder.Items.Add( c.Name );
-            }
-
-        }
-
-        private void _listShareholder_SelectedIndexChanged( object sender, EventArgs e )
-        {
-            TabShareholder.TabPortfolio.Items.Clear();
-            foreach (var c in _market.shareholderList)
-            {
-                if (c.Name == _listShareholder.Items[_listShareholder.SelectedIndex])
-                {
-                    foreach (var a in c._portfolio)
-                    {
-                        ListViewItem i = new ListViewItem( a.company.Name );
-                        i.SubItems.Add( a.shareCount.ToString() );
-                        i.SubItems.Add( a.company.SharePrice.ToString() );
-                        TabShareholder.TabPortfolio.Items.Add( i );
-                    }
-                }
-            }
+            
         }
     }
 }

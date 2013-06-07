@@ -17,6 +17,7 @@ namespace INTECH_STOCK_EXCHANGE
         Company company;
         Shareholder.pItem share;
         int transactionCount = 0;
+        readonly Random _random;
 
         public enum ActionType
         {
@@ -28,14 +29,11 @@ namespace INTECH_STOCK_EXCHANGE
         {
             _globalOrderbook = new List<Order>();
             _shareholders = new List<Shareholder>();
-            _companies = new List<Company>();   
+            _companies = new List<Company>();
+            _random = new Random();
         }
 
-        public event EventHandler<EventArgs> CompanyListChanged;
-
-        public event EventHandler<EventArgs> ShareholdersListChanged;
-
-        public event EventHandler<CompanyChangedArgs> CompanyChanged;
+        public Random Random { get { return _random; } }
 
         public void AlterPortfolio( Market.ActionType actionType, int shareCount, Company firm, Shareholder sh )
         //Called when:
@@ -238,7 +236,16 @@ namespace INTECH_STOCK_EXCHANGE
             company.ShareVariation = newVariation;
             company.SharePrice = price; 
         }
-
+        public String OrderBookToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach ( Order order in _globalOrderbook )
+            {
+                sb.Append(order._orderType ).AppendLine();
+                sb.Append( "\t" ).Append( order.Company.Name ).Append( " : " ).Append( order.GetOrderShareQuantity ).AppendLine();
+            }
+            return sb.ToString();
+        }
         public override String ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -265,50 +272,6 @@ namespace INTECH_STOCK_EXCHANGE
             }
             if ( buy > sell ) return Order.orderType.Sell;
             else return Order.orderType.Buy;
-        }
-
-        public void AddOrUpdateCompany( string name, Company.Industry ind, decimal shareValue, int sharevolume )
-        {
-            Company c = _companies.FirstOrDefault( company => company.Name == name );
-            if (c == null)
-            {
-                c = new Company(this, name, ind, shareValue, sharevolume);
-                _companies.Add( c );
-                var h = CompanyListChanged;
-                if (h != null) h( this, EventArgs.Empty );
-            }
-            else if (c.SharePrice != shareValue)
-            {
-                c.SharePrice = shareValue;
-                var h = CompanyChanged;
-                if (h != null)
-                {
-                    CompanyChangedArgs e = new CompanyChangedArgs( c );
-                    h( this, e );
-                }
-            }
-        }
-
-        public void AddOrUpdateShareholders( string name, decimal money)
-        {
-            Shareholder c = _shareholders.FirstOrDefault( company => company.Name == name );
-            if (c == null)
-            {
-                c = new Shareholder(this, name, money);
-                _shareholders.Add( c );
-                var h = ShareholdersListChanged;
-                if (h != null) h( this, EventArgs.Empty );
-            }
-            //else if (c.SharePrice != shareValue)
-            //{
-            //    c.SharePrice = shareValue;
-            //    var h = CompanyChanged;
-            //    if (h != null)
-            //    {
-            //        CompanyChangedArgs e = new CompanyChangedArgs( c );
-            //        h( this, e );
-            //    }
-            //}
         }
 
         public IList<string> companyNames = new List<string>

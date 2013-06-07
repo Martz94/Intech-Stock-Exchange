@@ -37,8 +37,11 @@ namespace INTECH_STOCK_EXCHANGE
             
             this.TheIndustry = Industry;
             sharePrice = SharePrice;
+            Random r = new Random();
+            sharePriceVariation = r.Next( 1, 10 );
             shareVolume = ShareVolume;
             companyID = Guid.NewGuid();
+            market.companyList.Add( this );
         }
 
         public enum Industry

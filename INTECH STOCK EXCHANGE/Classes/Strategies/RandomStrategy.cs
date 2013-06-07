@@ -49,7 +49,6 @@ namespace INTECH_STOCK_EXCHANGE
             //- Pick a random number of share count to sell,
             //- Pick a random price.
 
-            int i;
             decimal priceProp;
             decimal mentalState;
             int quantity;
@@ -62,9 +61,9 @@ namespace INTECH_STOCK_EXCHANGE
             {
                 share = shareholder._portfolio.ElementAt(k);
             }
-            if ( shareholder.GetRiskIndex == Shareholder.RiskTaker.Cautious ) mentalState = 1.15M;
-            else if ( shareholder.GetRiskIndex == Shareholder.RiskTaker.Bold ) mentalState = 1.50M;
-            else mentalState = 1.7M;
+            if ( shareholder.GetRiskIndex == Shareholder.RiskTaker.Cautious ) mentalState = 1.0M;
+            else if ( shareholder.GetRiskIndex == Shareholder.RiskTaker.Bold ) mentalState = 1.1M;
+            else mentalState = 1.05M;
 
             priceProp = mentalState * share.company.SharePrice;
             quantity = (int)(0.5 * share.shareCount);
@@ -75,7 +74,7 @@ namespace INTECH_STOCK_EXCHANGE
         public Order MakeDecision(Market market, Shareholder shareholder)
         {
             //return RandomBuy( market, shareholder );
-            Random random = new Random();
+            Random random = new Random((int)DateTime.Now.Ticks);
             int i = random.Next( 0, 10 );
             if ( i > 5 ) return RandomBuy( market, shareholder );
             else return RandomSell( market, shareholder );            
