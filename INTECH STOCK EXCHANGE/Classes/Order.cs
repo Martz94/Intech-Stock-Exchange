@@ -61,11 +61,11 @@ namespace INTECH_STOCK_EXCHANGE
         {
             get { return _orderType; }
         }
-        public int GetOrderShareQuantity
+        public int OrderShareQuantity
         {
             get { return shareCount; }
         }
-        public void decreaseOrderShareQuantity(int quantity)
+        public void DecreaseOrderShareQuantity(int quantity)
         {
             shareCount = shareCount - quantity; 
         }
@@ -73,11 +73,11 @@ namespace INTECH_STOCK_EXCHANGE
         {
             get { return _company.GetID; }
         }
-        public Guid GetOrderMakerID
+        public Shareholder OrderMaker
         {
-            get { return _shareholder.GetID; }
+            get { return _shareholder; }
         }
-        public decimal GetOrderSharePriceProposal
+        public decimal OrderSharePriceProposal
         {
             get { return _sharePriceProposal; }
         }

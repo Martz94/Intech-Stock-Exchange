@@ -17,15 +17,20 @@ namespace INTECH_STOCK_EXCHANGE
         {
             Market market;
             DateTime time;
-            int maxRound = 5;//Set from the GUI sometime
-            int nbShareholders = 100; //Set from the GUI sometime
-            int nbCompanies; //Possibly set from the GUI (or just nbShareholders/4)
-            //Initialization
+            int maxRound = 1;//Set from the GUI sometime
+            //int nbShareholders = 100; Set from the GUI sometime
+            //int nbCompanies; Possibly set from the GUI (or just nbShareholders/4)
+
+            //Market Initialization
 
             market = new Market(); //Creating an empty market with empty lists of s/h, firms and orders (The orderbook)
-            //Builder builder = new Builder();
-            //builder.CreateAll( market ); Instancing companies and s/h objects. Filling portfolios and capitals to get the game going.
-            System.Diagnostics.Debug.WriteLine( market.ToString() );
+            
+            //Market Building
+            //Instancing companies and s/h objects. Filling portfolios and capitals to get the game going
+
+            Builder builder = new Builder();
+            builder.CreateAll( market); 
+            //System.Diagnostics.Debug.WriteLine( market.ToString() );
 
             Play( market, maxRound ); //Called again and again by UI
         }
@@ -44,11 +49,12 @@ namespace INTECH_STOCK_EXCHANGE
                     Order newOrder = sh.MakeDecision( market, sh );
                     if ( newOrder != null ) market.globalOrderbook.Add( newOrder );
                 }
+                System.Diagnostics.Debug.WriteLine( market.OrderBookToString() );
                 market.MatchOrders();
                 market.Clear();
 
-                System.Diagnostics.Debug.WriteLine( "after round #" + (i + 1) );
-                System.Diagnostics.Debug.WriteLine( market.ToString() );
+                //System.Diagnostics.Debug.WriteLine( "after round #" + (i + 1) );
+                //System.Diagnostics.Debug.WriteLine( market.ToString() );
             }           
         }
     }

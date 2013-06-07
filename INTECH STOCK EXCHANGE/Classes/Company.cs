@@ -37,8 +37,11 @@ namespace INTECH_STOCK_EXCHANGE
             
             this.TheIndustry = Industry;
             sharePrice = SharePrice;
+            Random r = market.Random;
+            sharePriceVariation = r.Next( -5, 10 );
             shareVolume = ShareVolume;
             companyID = Guid.NewGuid();
+            market.companyList.Add( this );
         }
 
         public enum Industry
@@ -81,5 +84,16 @@ namespace INTECH_STOCK_EXCHANGE
         {
             get { return name; }
         }
+        //public override bool Equals( object obj )
+        //{
+        //    return base.Equals( obj );
+        //}
+        //public override int GetHashCode()
+        //{
+        //    return base.GetHashCode();
+        //}
+        //public operator==( Company company )
+        //{
+        //}
     }
 }

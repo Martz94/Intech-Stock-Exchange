@@ -43,7 +43,7 @@ namespace INTECH_STOCK_EXCHANGE
             //Randomly defines riskTaker and timeVision values
 
             Array values = Enum.GetValues( typeof( RiskTaker ) );
-            Random random = new Random();
+            Random random = market.Random;
             RiskTaker _riskTaker = (RiskTaker)values.GetValue( random.Next( values.Length ) );
 
             Array values2 = Enum.GetValues( typeof( TimeVision ) );
@@ -52,14 +52,16 @@ namespace INTECH_STOCK_EXCHANGE
             _portfolio = new List<pItem>();
             _displayName = Name;
 
-            Random r = new Random();
-            int i = r.Next( 100 );
-            if ( i > 50 ) _strategy = new RandomStrategy();
-            else _strategy = new StupidStrategy();
+            //Random r = market.Random;
+            //int i = r.Next( 100 );
+            //if ( i > 50 ) _strategy = new RandomStrategy();
+            if ( market.Random.Next( 2 ) == 1 ) _strategy = new StupidStrategy();
+            else _strategy = new RandomStrategy();
 
             _cash = Money;
            
             shareholderID = Guid.NewGuid();
+            market.shareholderList.Add( this );
         }
         public Order MakeDecision( Market market, Shareholder shareholder )
         {
