@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;  
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,24 +11,24 @@ namespace INTECH_STOCK_EXCHANGE
     {
         public void CreateAll(Market market)
         {
-            int _maxCompanies = 30;
-            int _maxShareholders = 60;
+            int _maxCompanies = 20;
+            int _maxShareholders = 1000;
 
             // Create companies with companies' numbers defined by user
             for (int i = 0; i < _maxCompanies; i++)
             {
-                Random r = new Random();
+                Random r = market.Random;
                 double price = 5 + r.NextDouble() * 995;
                 decimal sharePrice = (decimal)price;
 
-                Random r2 = new Random();
+                Random r2 = market.Random;
                 int shareVolume = r2.Next( 500000 );
 
                 Array values = Enum.GetValues( typeof( Company.Industry ) );
-                Random random = new Random();
+                Random random = market.Random;
                 Company.Industry randomInd = (Company.Industry)values.GetValue( random.Next( values.Length ) );
 
-                Random rdm = new Random();
+                Random rdm = market.Random;
                 int k = rdm.Next( market.companyNames.Count );
                 string name = market.companyNames[k];
                 market.companyNames.RemoveAt( k );
@@ -38,11 +39,19 @@ namespace INTECH_STOCK_EXCHANGE
             // Create shareholders with shareholders' numbers defined by user
             for (int t = 0; t < _maxShareholders; t++)
             {
-                Random rdm = new Random();
-                int k = rdm.Next( market.shareholderNames.Count );
-                string name = market.shareholderNames[k];
-                market.shareholderNames.RemoveAt( k );
-
+                string name;
+                Random rdm = market.Random;
+                //if ( market.GetNameList.Count > 1 )
+                //{
+                //    int k = rdm.Next( market.shareholderNames.Count );
+                //    name = market.shareholderNames[k];
+                //    market.shareholderNames.RemoveAt( k );
+                //}
+                //else
+                //{
+                    name = Path.GetRandomFileName();
+                    name = name.Replace(".", ""); // For Removing the dots and spaces
+                //}
                 Shareholder newshareholder = new Shareholder( market, name, 20000.0M );
             }
 
@@ -51,7 +60,7 @@ namespace INTECH_STOCK_EXCHANGE
             {
                 foreach (Company c in market.companyList)
                 {
-                    Random random = new Random();
+                    Random random = market.Random;
                     int shareCount = random.Next(c.GetTotalShareCount);
 
                     market.AlterPortfolio( Market.ActionType.Fill, shareCount, c, s );

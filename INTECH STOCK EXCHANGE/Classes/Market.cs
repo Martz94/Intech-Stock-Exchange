@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,7 +17,7 @@ namespace INTECH_STOCK_EXCHANGE
         Order order;
         Company company;
         Shareholder.pItem share;
-        int transactionCount = 0;
+        int _transactionCount = 0;
         readonly Random _random;
 
         public enum ActionType
@@ -43,6 +44,8 @@ namespace INTECH_STOCK_EXCHANGE
         // (!) automatically creates a new struct in the portfolio if the s/h does not already hold at least 1 action of the firm
         // (!) automatically removes a struct if the s/h holds 0 action of the firm
         {
+            Debug.Assert( firm != null );
+
             if(actionType == Market.ActionType.Fill)
             {
                 int i;
@@ -172,46 +175,39 @@ namespace INTECH_STOCK_EXCHANGE
         //- Set the buyer/seller IDs to both orders properties when a deal's been made,
         //- Mark up the orders that found a match for further removal (Order.orderAvailability.Matched;)
         {
-            foreach ( Order o1 in _globalOrderbook )
+            foreach ( Order oBuy in _globalOrderbook )
             {
-                if ( o1._orderType != Order.orderType.Buy ) continue;
+                if ( oBuy._orderType != Order.orderType.Buy ) continue;
 
-                foreach ( Order o2 in _globalOrderbook )
+                foreach ( Order oSell in _globalOrderbook )
                 {
                     //Checking it is not the same person who made the 2 orders
-                    if ( o1.GetOrderMakerID == o2.GetOrderMakerID ) continue;
+                    if ( oBuy.OrderMaker == oSell.OrderMaker ) continue;
 
-                    if ( o2._orderType != Order.orderType.Sell ) continue;
+                    if ( oSell._orderType != Order.orderType.Sell ) continue;
 
                     // Checking if the orders are about the same company
-                    if ( o1.Company == o2.Company 
-                        && o1.GetOrderSharePriceProposal >= o2.GetOrderSharePriceProposal
-                        && o1.GetOrderShareQuantity <= o2.GetOrderShareQuantity)
-                    {
-                        decimal price = o1.GetOrderSharePriceProposal;    // our decision!
-                        MakeTransaction( o1.GetOrderMakerID, o2.GetOrderMakerID, o1.Company, o1.GetOrderShareQuantity, price );
-                        o1.OrderStatus = Order.orderStatus.Dispatched;
+                    if ( oBuy.Company != oSell.Company) continue;
 
-                        o2.decreaseOrderShareQuantity( o1.GetOrderShareQuantity );
-                        if (o2.GetOrderShareQuantity == 0) o2.OrderStatus = Order.orderStatus.Dispatched;
+                    if(oBuy.OrderSharePriceProposal >= oSell.OrderSharePriceProposal )
+                    {
+                        decimal exchangePrice = oBuy.OrderSharePriceProposal;    // our call!
+                        int exchangeCount = Math.Min( oBuy.OrderShareQuantity, oSell.OrderShareQuantity );
+
+                        MakeTransaction( oBuy, oSell, exchangeCount, exchangePrice );
                     }
                 }
             }
         }
-
-        private Shareholder getShareholderById( Guid id )
-        {
-            foreach ( Shareholder s in _shareholders )
-            {
-                if ( id == s.GetID ) return s;
-            }
-            throw new ArgumentException();
-        }
   
-        private void MakeTransaction( Guid buyerId, Guid sellerId, Company company, int quantity, decimal price )
+        private void MakeTransaction( Order oBuy, Order oSell, int quantity, decimal price )
         {
-            Shareholder buyer = getShareholderById(buyerId);
-            Shareholder seller = getShareholderById(sellerId);
+            Debug.Assert( oBuy.Company == oSell.Company );
+            Debug.Assert( oBuy.OrderMaker != oSell.OrderMaker );
+
+            Shareholder buyer =  oBuy.OrderMaker;
+            Shareholder seller = oSell.OrderMaker;
+            Company company = oSell.Company;
 
             // Updating buyer info
             buyer.Capital = buyer.Capital - price * quantity;
@@ -223,10 +219,15 @@ namespace INTECH_STOCK_EXCHANGE
 
             // Updating market data
             UpdateMarketData( company, price );
-            transactionCount++;
+            _transactionCount++;
 
-            System.Diagnostics.Debug.WriteLine( "[TRANSACTION] : " + buyer.Name + " baught to " + seller.Name + " " + quantity + " shares of " + company.Name + " at " + price);
-            System.Diagnostics.Debug.WriteLine(transactionCount);
+            oBuy.DecreaseOrderShareQuantity( quantity );
+            oSell.DecreaseOrderShareQuantity( quantity );
+            if ( oBuy.OrderShareQuantity == 0 ) oBuy.OrderStatus = Order.orderStatus.Dispatched;
+            if ( oSell.OrderShareQuantity == 0 ) oSell.OrderStatus = Order.orderStatus.Dispatched;
+
+            System.Diagnostics.Debug.WriteLine( "[TRANSACTION] : " + buyer.Name + " bought to " + seller.Name + " " + quantity + " shares of " + company.Name + " at " + price);
+            System.Diagnostics.Debug.WriteLine("Transaction number : " + _transactionCount);
         }
 
         //Currently: Defining the new company share price based upon the latest exchange in the market
@@ -242,7 +243,10 @@ namespace INTECH_STOCK_EXCHANGE
             foreach ( Order order in _globalOrderbook )
             {
                 sb.Append(order._orderType ).AppendLine();
-                sb.Append( "\t" ).Append( order.Company.Name ).Append( " : " ).Append( order.GetOrderShareQuantity ).AppendLine();
+                sb.Append( "\t" ).Append( order.Company.Name ).AppendLine();
+                sb.Append( "\t" ).Append( "SP : " ).Append( order.Company.SharePrice).AppendLine();
+                sb.Append( "\t" ).Append( "Q : " ).Append( order.OrderShareQuantity ).AppendLine();
+                sb.Append( "\t" ).Append( "Prop : " ).Append( order.OrderSharePriceProposal ).AppendLine();
             }
             return sb.ToString();
         }
@@ -317,6 +321,7 @@ namespace INTECH_STOCK_EXCHANGE
             "SanDisk",
             "Starbucks"
         };
+        public IList<string> GetNameList { get { return shareholderNames; } }
 
         public IList<string> shareholderNames = new List<string>
        {

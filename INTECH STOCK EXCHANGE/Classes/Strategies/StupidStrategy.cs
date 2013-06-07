@@ -12,21 +12,21 @@ namespace INTECH_STOCK_EXCHANGE
         //Checking the cash of the s/h as well
         //Define price proposition according to share variation (buy/sell)
 
-        private Order checkInvest(Market market, Shareholder shareholder)
-        {      
+        private Order Buy( Market market, Shareholder shareholder )
+        {
             //BUYING
             int i;
             List<Company> targetList = new List<Company>();
             foreach ( Company c in market.companyList )
             {
-                if ( c.ShareVariation >= 1.0M ) targetList.Add( c );
+                if ( c.ShareVariation >= 3.0M ) targetList.Add( c );
             }
-            Random index = new Random();
+            Random index = market.Random;
             i = index.Next( targetList.Count );
-            Company target = targetList[ i ];
+            Company target = targetList[i];
 
-            decimal priceProp = target.SharePrice * ((target.ShareVariation/100) + 1);
-            
+            decimal priceProp = target.SharePrice * ((target.ShareVariation / 100) + 1);
+
             decimal mentalState;
 
             if ( shareholder.GetRiskIndex == Shareholder.RiskTaker.Crazy )
@@ -41,11 +41,11 @@ namespace INTECH_STOCK_EXCHANGE
             {
                 mentalState = 0.50M;
             }
-            int max = (int) (mentalState * shareholder.Capital);
-            int quantity = (int) (max/priceProp);
+            int max = (int)(mentalState * shareholder.Capital);
+            int quantity = (int)(max / priceProp);
             return new Order( Order.orderType.Buy, priceProp, quantity, target, shareholder );
         }
-        private Order checkSelling( Market market, Shareholder shareholder )
+        private Order Sell( Market market, Shareholder shareholder )
         {
             //SELLING
             List<Shareholder.pItem> targetList = new List<Shareholder.pItem>();
@@ -55,11 +55,11 @@ namespace INTECH_STOCK_EXCHANGE
             {
                 if ( share.company.ShareVariation < -1.0M ) targetList.Add( share );
             }
-            Random y = new Random();
-            int index = y.Next(targetList.Count);
-            if ( index > 0 )
+            Random y = market.Random;
+            if ( targetList.Count > 0 )
             {
-                Shareholder.pItem target = targetList.ElementAt( index );
+                int index = y.Next( targetList.Count );
+                Shareholder.pItem target = targetList[index];
 
                 decimal priceProp = target.company.SharePrice * ((target.company.ShareVariation / 100) + 1);
                 if ( shareholder.GetRiskIndex == Shareholder.RiskTaker.Crazy )
@@ -79,25 +79,11 @@ namespace INTECH_STOCK_EXCHANGE
                 return new Order( Order.orderType.Sell, priceProp, quantity, target.company, shareholder );
             }
             else return null;
-       }
-       public Order MakeDecision( Market market, Shareholder shareholder )
-       {
-            if ( market.globalOrderbook.Count > 2 )
-            {
-                Order.orderType checkingOrderTypes = market.EstimateOrderbookBalance( market );
-                if ( checkingOrderTypes == Order.orderType.Buy )
-                {
-                    return checkInvest( market, shareholder );
-                }
-                else
-                {
-                    return checkSelling( market, shareholder );
-                }
-            }
-            else
-            {
-               return checkInvest( market, shareholder );
-            }        
+        }
+        public Order MakeDecision( Market market, Shareholder shareholder )
+        {
+            if ( market.Random.Next( 2 ) == 1 ) return Buy( market, shareholder );
+            else return Sell( market, shareholder );
         }
     }
 }
