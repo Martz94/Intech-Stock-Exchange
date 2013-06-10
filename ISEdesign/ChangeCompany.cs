@@ -34,6 +34,9 @@ namespace ISEdesign
 
         private void _buttonOk_Click( object sender, EventArgs e )
         {
+            //Need to :
+            //- Check input numbers,
+            //- Add possibility to press "enter" to validate
             DialogResult = DialogResult.OK;
             Close();
         }
