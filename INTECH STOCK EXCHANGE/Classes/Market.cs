@@ -124,26 +124,6 @@ namespace INTECH_STOCK_EXCHANGE
                 throw new ArgumentException("ActionType to portfolio invalid");
             }           
         }
-        //public List<MatchOrders> MatchOrders
-        //{
-        //    get
-        //    {
-        //        return _matchOrders;
-        //    }
-        //}
-        public bool minimumOrderCount()
-        {
-            //Checking in the order book whether there is enough potential orders to open the market
-            //If so, then _orderCount goes "true"
-            if ( _globalOrderbook.Count > 20 )
-            {
-                return _orderCount = true;
-            }
-            else
-            {
-                return _orderCount;
-            }
-        }
 
         public List<Company> companyList
         {
@@ -250,8 +230,6 @@ namespace INTECH_STOCK_EXCHANGE
             oSell.DecreaseOrderShareQuantity( quantity );
             if ( oBuy.OrderShareQuantity == 0 ) oBuy.OrderStatus = Order.orderStatus.Dispatched;
             if ( oSell.OrderShareQuantity == 0 ) oSell.OrderStatus = Order.orderStatus.Dispatched;
-
-            
         }
 
         //Currently: Defining the new company share price based upon the latest exchange in the market
@@ -327,7 +305,6 @@ namespace INTECH_STOCK_EXCHANGE
 
         public void AddShareholders(List<Shareholder> shareholdersListToAdd)
         {
-
             _shareholders.AddRange(shareholdersListToAdd);
             var h = ShareholdersListChanged;
             if (h != null) h( this, EventArgs.Empty );
@@ -352,7 +329,6 @@ namespace INTECH_STOCK_EXCHANGE
                     return true;
                 }
             }
-
             return false;
         }
 

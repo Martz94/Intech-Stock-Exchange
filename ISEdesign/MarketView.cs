@@ -15,6 +15,7 @@ namespace ISEdesign
 	public partial class MarketView : UserControl
 	{
 		Market _market;
+        private int sortColumn = -1;
 
 		public MarketView()
 		{
@@ -107,7 +108,6 @@ namespace ISEdesign
 				series.Points.Add( d );
 			}
 		}
-
 		public void FillGraphCompany(Company company)
 		{
 			GraphCompany.Series.Clear();
@@ -126,7 +126,7 @@ namespace ISEdesign
 		}
 
 		private void _listView_Click( object sender, EventArgs e )
-		{
+		{		
 			ListViewItem i = _listView.SelectedItems[0];
 			Company company = null;
 			foreach (var c in _market.Companies)
@@ -141,7 +141,25 @@ namespace ISEdesign
 
 		private void _listView_ColumnClick( object sender, ColumnClickEventArgs e )
 		{
-			
-		}
+            // Determine whether the column is the same as the last column clicked.
+            if (e.Column != sortColumn)
+            {
+                // Set the sort column to the new column.
+                sortColumn = e.Column;
+                // Set the sort order to ascending by default
+                _listView.Sorting = SortOrder.Ascending;
+            }
+            else
+            {
+                // Determine what the last sort order was and change it
+                if (_listView.Sorting == SortOrder.Ascending)
+                    _listView.Sorting = SortOrder.Descending;
+                else
+                    _listView.Sorting = SortOrder.Ascending;
+            }          
+            // Call the sort method to manually sort
+                 _listView.ListViewItemSorter = new _listViewItemComparer( e.Column, _listView.Sorting );
+                 _listView.Sort();      
+        }  
 	}
 }
