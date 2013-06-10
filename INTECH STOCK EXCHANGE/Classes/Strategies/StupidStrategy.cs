@@ -78,7 +78,6 @@ namespace INTECH_STOCK_EXCHANGE
                 {
                     mentalState = 0.50M;
                 }
-
                 int quantity = (int)(mentalState * (target.shareCount));
                 return new Order( Order.orderType.Sell, priceProp, quantity, target.company, shareholder );
             }
