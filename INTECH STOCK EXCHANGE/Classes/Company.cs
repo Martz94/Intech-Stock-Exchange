@@ -94,16 +94,5 @@ namespace INTECH_STOCK_EXCHANGE
             get { return name; }
             set { name = value; }
         }
-        //public override bool Equals( object obj )
-        //{
-        //    return base.Equals( obj );
-        //}
-        //public override int GetHashCode()
-        //{
-        //    return base.GetHashCode();
-        //}
-        //public operator==( Company company )
-        //{
-        //}
     }
 }

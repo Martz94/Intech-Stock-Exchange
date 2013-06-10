@@ -144,8 +144,6 @@ namespace ISEdesign
 
         private void _listShareholder_SelectedIndexChanged( object sender, EventArgs e )
         {
-
-
             foreach (var c in _market.shareholderList)
             {
 

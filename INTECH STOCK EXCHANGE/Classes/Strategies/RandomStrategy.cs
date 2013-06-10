@@ -45,7 +45,6 @@ namespace INTECH_STOCK_EXCHANGE
 
             if ( k > -1 && shareholder._portfolio.Count > 0)
             {
-
                 share = shareholder._portfolio[k];
                 priceProp = share.company.SharePrice * (r.Next( 201 ) + 899) / 1000;
                 //priceProp = share.company.SharePrice + 5;

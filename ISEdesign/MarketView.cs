@@ -15,6 +15,7 @@ namespace ISEdesign
 	public partial class MarketView : UserControl
 	{
 		Market _market;
+        private int sortColumn = -1;
 
 		public MarketView()
 		{
@@ -92,7 +93,6 @@ namespace ISEdesign
 			}
 		}
 
-
 		public void FillGraphCompany(Company company)
 		{
 			GraphCompany.Series.Clear();
@@ -106,16 +106,12 @@ namespace ISEdesign
 			{
 				series.Points.Add( history[j] );
 			}
-
 			series.Points.Add( (double)company.SharePrice );
 		}
 
 		private void _listView_Click( object sender, EventArgs e )
-		{
-			
+		{		
 			int[] pointsArray = { 1, 2 };
-
-
 
 			ListViewItem i = _listView.SelectedItems[0];
 			Company company = null;
@@ -125,13 +121,32 @@ namespace ISEdesign
 			}
 
 			_market.SuperCompany = company;
-			FillGraphCompany( company );
-			
+			FillGraphCompany( company );	
 		}
 
 		private void _listView_ColumnClick( object sender, ColumnClickEventArgs e )
 		{
-			
-		}
+            // Determine whether the column is the same as the last column clicked.
+            if (e.Column != sortColumn)
+            {
+                // Set the sort column to the new column.
+                sortColumn = e.Column;
+                // Set the sort order to ascending by default
+                _listView.Sorting = SortOrder.Ascending;
+            }
+            else
+            {
+                // Determine what the last sort order was and change it.
+                if (_listView.Sorting == SortOrder.Ascending)
+                    _listView.Sorting = SortOrder.Descending;
+                else
+                    _listView.Sorting = SortOrder.Ascending;
+            }
+                // Call the sort method to manually sort.
+                _listView.Sort();
+                // Set the ListViewItemSorter property to a new ListViewItemComparer
+                // object.
+                this._listView.ListViewItemSorter = new ListViewItemComparer( e.Column, _listView.Sorting );
+        }  
 	}
 }
