@@ -35,27 +35,55 @@
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabCompanyStockPrice = new System.Windows.Forms.TabPage();
+            this._chartStockPrice = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabCompany = new System.Windows.Forms.TabPage();
-            this.tabShareholder = new System.Windows.Forms.TabPage();
             this._chartCompany = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this._chartShareholder = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tabControl1.SuspendLayout();
+            this.tabCompanyStockPrice.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._chartStockPrice)).BeginInit();
             this.tabCompany.SuspendLayout();
-            this.tabShareholder.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._chartCompany)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this._chartShareholder)).BeginInit();
             this.SuspendLayout();
             // 
             // tabControl1
             // 
+            this.tabControl1.Controls.Add(this.tabCompanyStockPrice);
             this.tabControl1.Controls.Add(this.tabCompany);
-            this.tabControl1.Controls.Add(this.tabShareholder);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(515, 436);
             this.tabControl1.TabIndex = 0;
+            // 
+            // tabCompanyStockPrice
+            // 
+            this.tabCompanyStockPrice.Controls.Add(this._chartStockPrice);
+            this.tabCompanyStockPrice.Location = new System.Drawing.Point(4, 22);
+            this.tabCompanyStockPrice.Name = "tabCompanyStockPrice";
+            this.tabCompanyStockPrice.Padding = new System.Windows.Forms.Padding(3);
+            this.tabCompanyStockPrice.Size = new System.Drawing.Size(507, 410);
+            this.tabCompanyStockPrice.TabIndex = 1;
+            this.tabCompanyStockPrice.Text = "Stock Price";
+            this.tabCompanyStockPrice.UseVisualStyleBackColor = true;
+            // 
+            // _chartStockPrice
+            // 
+            chartArea1.Name = "ChartArea1";
+            this._chartStockPrice.ChartAreas.Add(chartArea1);
+            this._chartStockPrice.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend1.Name = "Legend1";
+            this._chartStockPrice.Legends.Add(legend1);
+            this._chartStockPrice.Location = new System.Drawing.Point(3, 3);
+            this._chartStockPrice.Name = "_chartStockPrice";
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this._chartStockPrice.Series.Add(series1);
+            this._chartStockPrice.Size = new System.Drawing.Size(501, 404);
+            this._chartStockPrice.TabIndex = 0;
+            this._chartStockPrice.Text = "chart1";
             // 
             // tabCompany
             // 
@@ -65,53 +93,25 @@
             this.tabCompany.Padding = new System.Windows.Forms.Padding(3);
             this.tabCompany.Size = new System.Drawing.Size(507, 410);
             this.tabCompany.TabIndex = 0;
-            this.tabCompany.Text = "Company";
+            this.tabCompany.Text = "Volume";
             this.tabCompany.UseVisualStyleBackColor = true;
-            // 
-            // tabShareholder
-            // 
-            this.tabShareholder.Controls.Add(this._chartShareholder);
-            this.tabShareholder.Location = new System.Drawing.Point(4, 22);
-            this.tabShareholder.Name = "tabShareholder";
-            this.tabShareholder.Padding = new System.Windows.Forms.Padding(3);
-            this.tabShareholder.Size = new System.Drawing.Size(507, 410);
-            this.tabShareholder.TabIndex = 1;
-            this.tabShareholder.Text = "Shareholder";
-            this.tabShareholder.UseVisualStyleBackColor = true;
             // 
             // _chartCompany
             // 
-            chartArea1.Name = "ChartArea1";
-            this._chartCompany.ChartAreas.Add(chartArea1);
+            chartArea2.Name = "ChartArea1";
+            this._chartCompany.ChartAreas.Add(chartArea2);
             this._chartCompany.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend1";
-            this._chartCompany.Legends.Add(legend1);
+            legend2.Name = "Legend1";
+            this._chartCompany.Legends.Add(legend2);
             this._chartCompany.Location = new System.Drawing.Point(3, 3);
             this._chartCompany.Name = "_chartCompany";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this._chartCompany.Series.Add(series1);
-            this._chartCompany.Size = new System.Drawing.Size(501, 404);
-            this._chartCompany.TabIndex = 0;
-            this._chartCompany.Text = "chart1";
-            // 
-            // _chartShareholder
-            // 
-            chartArea2.Name = "ChartArea1";
-            this._chartShareholder.ChartAreas.Add(chartArea2);
-            this._chartShareholder.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this._chartShareholder.Legends.Add(legend2);
-            this._chartShareholder.Location = new System.Drawing.Point(3, 3);
-            this._chartShareholder.Name = "_chartShareholder";
             series2.ChartArea = "ChartArea1";
             series2.Legend = "Legend1";
             series2.Name = "Series1";
-            this._chartShareholder.Series.Add(series2);
-            this._chartShareholder.Size = new System.Drawing.Size(501, 404);
-            this._chartShareholder.TabIndex = 0;
-            this._chartShareholder.Text = "chart1";
+            this._chartCompany.Series.Add(series2);
+            this._chartCompany.Size = new System.Drawing.Size(501, 404);
+            this._chartCompany.TabIndex = 0;
+            this._chartCompany.Text = "chart1";
             // 
             // Graph
             // 
@@ -121,10 +121,10 @@
             this.Name = "Graph";
             this.Size = new System.Drawing.Size(515, 436);
             this.tabControl1.ResumeLayout(false);
+            this.tabCompanyStockPrice.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this._chartStockPrice)).EndInit();
             this.tabCompany.ResumeLayout(false);
-            this.tabShareholder.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._chartCompany)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this._chartShareholder)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -134,8 +134,8 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabCompany;
         private System.Windows.Forms.DataVisualization.Charting.Chart _chartCompany;
-        private System.Windows.Forms.TabPage tabShareholder;
-        private System.Windows.Forms.DataVisualization.Charting.Chart _chartShareholder;
+        private System.Windows.Forms.TabPage tabCompanyStockPrice;
+        private System.Windows.Forms.DataVisualization.Charting.Chart _chartStockPrice;
 
     }
 }

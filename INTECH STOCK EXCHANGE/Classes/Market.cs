@@ -203,6 +203,15 @@ namespace INTECH_STOCK_EXCHANGE
                     {
                         decimal exchangePrice = oBuy.OrderSharePriceProposal;    // our call!
                         int exchangeCount = Math.Min( oBuy.OrderShareQuantity, oSell.OrderShareQuantity );
+                        exchangeCount = Math.Min(exchangeCount, (int)(oBuy.OrderMaker.Capital / exchangePrice));
+                        int nbSellerShares = 0;
+
+                        foreach (var s in oSell.OrderMaker._portfolio)
+                        {
+                            if (s.company == oSell.Company) nbSellerShares = s.shareCount;
+                        }
+
+                        exchangeCount = Math.Min( exchangeCount, nbSellerShares );
 
                         if(exchangeCount > 0) MakeTransaction( oBuy, oSell, exchangeCount, exchangePrice );
                     }

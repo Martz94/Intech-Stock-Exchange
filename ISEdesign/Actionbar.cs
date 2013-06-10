@@ -15,12 +15,18 @@ namespace ISEdesign
     {
         Market _market;
 
+        internal void SetMarket( Market market )
+        {
+            _market = market;
+        }
+
         public Actionbar()
         {
             InitializeComponent();
         }
 
         public MarketView MarketView { get; set; }
+        public ShareholderView ShareholderView { get; set; }
         public TabShareholder TabShareholder { get; set; }
         public Timer GoTimer;
         int numberRound;
@@ -36,7 +42,6 @@ namespace ISEdesign
                     Builder.CreateAll( _market, d.CompanyNumber, d.ShareholderNumber );
                 }
             }
-
         }
 
         private void _goButtonClick( object sender, EventArgs e )
@@ -65,96 +70,23 @@ namespace ISEdesign
             }
             _market.MatchOrders();
             _market.Clear();
-            FillShareholdersList();
-            
-            if (_market.SuperShareholder != null) fillShareholderPortfolio( _market.SuperShareholder );
-            if (_market.SuperCompany != null) MarketView.FillGraphCompany( _market.SuperCompany );
+            ShareholderView.FillShareholdersList();
 
-        }
-
-        internal void SetMarket( Market market )
-        {
-            _market = market;
-            _market.ShareholdersListChanged += _market_ShareholdersListChanged;
-        }
-
-        void _market_ShareholdersListChanged( object sender, EventArgs e )
-        {
-            FillShareholdersList();
-        }
-
-        private void FillShareholdersList()
-        {
-            _listShareholder.Items.Clear();
-            foreach (var c in _market.shareholderList)
+            foreach (var c in _market.Companies)
             {
-                _listShareholder.Items.Add( c.Name );
+                c.HistoryLastPrice.Add( (double)c.SharePrice );
+                c.HistoryNbTransactions.Add( c.NbTransaction );
+                c.NbTransaction = 0;
             }
 
-        }
 
-        private void fillShareholderPortfolio(Shareholder s)
-        {
-
-            TabShareholder.TabPortfolio.Items.Clear();
-            TabShareholder.TabOrderBook.Items.Clear();
-            decimal shareValue = 0;
-            int nbSell = 0;
-            int nbBuy = 0;
-
-            foreach (var a in s._portfolio)
+            if (_market.SuperShareholder != null) ShareholderView.fillShareholderPortfolio( _market.SuperShareholder );
+            if (_market.SuperCompany != null)
             {
-                ListViewItem i = new ListViewItem( a.company.Name );
-                i.UseItemStyleForSubItems = false;
-                i.SubItems.Add( a.shareCount.ToString() );
-
-                i.SubItems.Add( a.company.SharePrice.ToString( "#.###" ) );
-                i.SubItems.Add( a.company.ShareVariation.ToString( "N2" ) + " %" );
-
-                if (a.company.ShareVariation < 0)
-                {
-                    i.SubItems[3].ForeColor = System.Drawing.Color.Red;
-                }
-                else i.SubItems[3].ForeColor = System.Drawing.Color.Green;
-                TabShareholder.TabPortfolio.Items.Add( i );
-
-                shareValue += a.shareCount * a.company.SharePrice;
+                MarketView.FillGraphCompany( _market.SuperCompany );
+                MarketView.FillGraphStockPrice( _market.SuperCompany );
             }
 
-            foreach (var o in _market.globalOrderbook)
-            {
-                if (o.OrderMaker.Name == s.Name)
-                {
-                    ListViewItem i = new ListViewItem( o.GetOrderType.ToString() );
-                    i.SubItems.Add( o.Company.Name );
-                    i.SubItems.Add( o.OrderShareQuantity.ToString() );
-                    i.SubItems.Add( o.OrderSharePriceProposal.ToString( "#.###" ) );
-                    TabShareholder.TabOrderBook.Items.Add( i );
-
-                    if (o.GetOrderType == Order.orderType.Buy) nbBuy++;
-                    else nbSell++;
-                }
-            }
-
-            TabShareholder.Cash.Text = s.Capital.ToString( "C" );
-            TabShareholder.TotalShareValue.Text = shareValue.ToString( "C" );
-            TabShareholder.NbBuyOrders.Text = nbBuy.ToString();
-            TabShareholder.NbSellOrders.Text = nbSell.ToString();
-        }
-
-        private void _listShareholder_SelectedIndexChanged( object sender, EventArgs e )
-        {
-
-
-            foreach (var c in _market.shareholderList)
-            {
-
-                if (c.Name == _listShareholder.Items[_listShareholder.SelectedIndex].ToString())
-                {
-                    _market.SuperShareholder = c;
-                    fillShareholderPortfolio( c );
-                }
-            }
-        }
+        }   
     }
 }

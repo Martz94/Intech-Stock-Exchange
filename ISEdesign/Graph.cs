@@ -22,5 +22,11 @@ namespace ISEdesign
             get { return _chartCompany; }
             set { _chartCompany = value; }
         }
+
+        public System.Windows.Forms.DataVisualization.Charting.Chart GraphStockPrice
+        {
+            get { return _chartStockPrice; }
+            set { _chartStockPrice = value; }
+        }
     }
 }

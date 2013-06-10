@@ -12,7 +12,9 @@ namespace INTECH_STOCK_EXCHANGE
         decimal sharePrice;             //starting price for 1 action
         decimal currentSharePrice;      //share price updated by event
         decimal sharePriceVariation;    //action price's variations updated by event
-        public List<double> HistoryPrice = new List<double>();
+        public List<int> HistoryNbTransactions = new List<int>();
+        public int NbTransaction = 0;
+        public List<double> HistoryLastPrice = new List<double>();
         int shareVolume;                 //Quantity of its own shares the company still detains updated by event
   
         Guid companyID;
@@ -63,7 +65,7 @@ namespace INTECH_STOCK_EXCHANGE
             get { return sharePrice; }
             set
             {
-                HistoryPrice.Add( (double)sharePrice );
+                NbTransaction++;
                 sharePrice = value;
             }
         }
@@ -94,16 +96,5 @@ namespace INTECH_STOCK_EXCHANGE
             get { return name; }
             set { name = value; }
         }
-        //public override bool Equals( object obj )
-        //{
-        //    return base.Equals( obj );
-        //}
-        //public override int GetHashCode()
-        //{
-        //    return base.GetHashCode();
-        //}
-        //public operator==( Company company )
-        //{
-        //}
     }
 }

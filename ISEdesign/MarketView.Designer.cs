@@ -57,7 +57,6 @@
             this._listView.FullRowSelect = true;
             this._listView.GridLines = true;
             this._listView.HideSelection = false;
-            this._listView.LabelEdit = true;
             this._listView.Location = new System.Drawing.Point(0, 0);
             this._listView.Name = "_listView";
             this._listView.Size = new System.Drawing.Size(321, 279);

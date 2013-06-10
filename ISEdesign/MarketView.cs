@@ -23,6 +23,7 @@ namespace ISEdesign
 		
 		public int listViewHeight { get { return _listView.Height; } }
 		public System.Windows.Forms.DataVisualization.Charting.Chart GraphCompany;
+		public System.Windows.Forms.DataVisualization.Charting.Chart GraphStockPrice;
 
 		internal void SetMarket (Market market)
 		{
@@ -92,31 +93,40 @@ namespace ISEdesign
 			}
 		}
 
+		public void FillGraphStockPrice (Company company)
+		{
+			GraphStockPrice.Series.Clear();
+			GraphStockPrice.Titles.Clear();
+			GraphStockPrice.Palette = ChartColorPalette.Excel;
+			GraphStockPrice.Titles.Add( company.Name + " Stock price" );
+			Series series = GraphStockPrice.Series.Add( "Stock price" );
+            GraphStockPrice.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+
+			foreach (var d in company.HistoryLastPrice)
+			{
+				series.Points.Add( d );
+			}
+		}
 
 		public void FillGraphCompany(Company company)
 		{
 			GraphCompany.Series.Clear();
 			GraphCompany.Titles.Clear();
-			List<double> history = company.HistoryPrice;
+			List<int> history = company.HistoryNbTransactions;
 			GraphCompany.Palette = ChartColorPalette.SeaGreen;
 			GraphCompany.Titles.Add( company.Name );
-			Series series = GraphCompany.Series.Add( "" );
+			Series series = GraphCompany.Series.Add( "Number of transactions" );
+            GraphCompany.Series[0].ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.FastLine;
 
 			for (int j = 0; j < history.Count; j++)
 			{
+                
 				series.Points.Add( history[j] );
 			}
-
-			series.Points.Add( (double)company.SharePrice );
 		}
 
 		private void _listView_Click( object sender, EventArgs e )
 		{
-			
-			int[] pointsArray = { 1, 2 };
-
-
-
 			ListViewItem i = _listView.SelectedItems[0];
 			Company company = null;
 			foreach (var c in _market.Companies)
@@ -125,8 +135,8 @@ namespace ISEdesign
 			}
 
 			_market.SuperCompany = company;
-			FillGraphCompany( company );
-			
+			FillGraphStockPrice( company );
+			FillGraphCompany( company );            		
 		}
 
 		private void _listView_ColumnClick( object sender, ColumnClickEventArgs e )
