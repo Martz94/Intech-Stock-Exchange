@@ -136,17 +136,15 @@ namespace ISEdesign
             }
             else
             {
-                // Determine what the last sort order was and change it.
+                // Determine what the last sort order was and change it
                 if (_listView.Sorting == SortOrder.Ascending)
                     _listView.Sorting = SortOrder.Descending;
                 else
                     _listView.Sorting = SortOrder.Ascending;
-            }
-                // Call the sort method to manually sort.
-                _listView.Sort();
-                // Set the ListViewItemSorter property to a new ListViewItemComparer
-                // object.
-                this._listView.ListViewItemSorter = new ListViewItemComparer( e.Column, _listView.Sorting );
+            }          
+            // Call the sort method to manually sort
+                 _listView.ListViewItemSorter = new _listViewItemComparer( e.Column, _listView.Sorting );
+                 _listView.Sort();      
         }  
 	}
 }

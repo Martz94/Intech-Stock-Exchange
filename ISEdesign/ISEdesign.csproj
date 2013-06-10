@@ -77,7 +77,6 @@
     <Compile Include="Graph.Designer.cs">
       <DependentUpon>Graph.cs</DependentUpon>
     </Compile>
-    <Compile Include="ListViewItemComparer.cs" />
     <Compile Include="MarketView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -92,6 +91,7 @@
     <Compile Include="TabShareholder.Designer.cs">
       <DependentUpon>TabShareholder.cs</DependentUpon>
     </Compile>
+    <Compile Include="_listViewItemComparer.cs" />
     <EmbeddedResource Include="Actionbar.resx">
       <DependentUpon>Actionbar.cs</DependentUpon>
       <SubType>Designer</SubType>
