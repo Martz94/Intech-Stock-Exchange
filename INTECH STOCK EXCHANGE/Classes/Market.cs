@@ -15,7 +15,8 @@ namespace INTECH_STOCK_EXCHANGE
         List<Company> _companies;
         List<Order> _globalOrderbook;
         Order order;
-        Company company;
+        public Company SuperCompany;
+        public Shareholder SuperShareholder;
         Shareholder.pItem share;
         int _transactionCount = 0;
         readonly Random _random;
@@ -33,6 +34,14 @@ namespace INTECH_STOCK_EXCHANGE
             _companies = new List<Company>();
             _random = new Random();
         }
+
+        public event EventHandler<EventArgs> CompanyListChanged;
+
+        public event EventHandler<EventArgs> ShareholdersListChanged;
+
+        public event EventHandler<CompanyChangedArgs> CompanyChanged;
+
+        public IReadOnlyList<Company> Companies { get { return _companies; } }
 
         public Random Random { get { return _random; } }
 
@@ -161,14 +170,13 @@ namespace INTECH_STOCK_EXCHANGE
 
             foreach ( Order o in _globalOrderbook )
             {
-                if ( o.OrderStatus != Order.orderStatus.Dispatched || o.TimedOut == false)
+                if ( o.OrderStatus != Order.orderStatus.Dispatched && o.TimedOut == false)
                 {             
                     tmp.Add( o );                  
                 }
             }
             _globalOrderbook.Clear();
             _globalOrderbook = tmp;
-            tmp.Clear();
         }
         public void MatchOrders()
         //Matching orders algorithm maximalizing transactions:
@@ -189,6 +197,8 @@ namespace INTECH_STOCK_EXCHANGE
                     // Checking if the orders are about the same company
                     if ( oBuy.Company != oSell.Company) continue;
 
+                    if (oBuy.OrderShareQuantity == 0 || oSell.OrderShareQuantity == 0) continue;
+
                     if(oBuy.OrderSharePriceProposal >= oSell.OrderSharePriceProposal )
                     {
                         decimal exchangePrice = oBuy.OrderSharePriceProposal;    // our call!
@@ -198,6 +208,8 @@ namespace INTECH_STOCK_EXCHANGE
                     }
                 }
             }
+            var h = CompanyListChanged;
+            if (h != null) h( this, EventArgs.Empty );
         }
   
         private void MakeTransaction( Order oBuy, Order oSell, int quantity, decimal price )
@@ -235,6 +247,7 @@ namespace INTECH_STOCK_EXCHANGE
         {
             decimal newVariation = ((price - company.SharePrice) / company.SharePrice)*100;
             company.ShareVariation = newVariation;
+
             company.SharePrice = price; 
         }
         public String OrderBookToString()
@@ -276,6 +289,91 @@ namespace INTECH_STOCK_EXCHANGE
             }
             if ( buy > sell ) return Order.orderType.Sell;
             else return Order.orderType.Buy;
+        }
+
+        public void AddOrUpdateCompany( string name, Company.Industry ind, decimal shareValue, int sharevolume )
+        {
+            Company c = _companies.FirstOrDefault( company => company.Name == name );
+            if (c == null)
+            {
+                c = new Company( this, name, ind, shareValue, sharevolume );
+                _companies.Add( c );
+                var h = CompanyListChanged;
+                if (h != null) h( this, EventArgs.Empty );
+            }
+            else if (c.SharePrice != shareValue)
+            {
+                c.SharePrice = shareValue;
+                var h = CompanyChanged;
+                if (h != null)
+                {
+                    CompanyChangedArgs e = new CompanyChangedArgs( c );
+                    h( this, e );
+                }
+            }
+        }
+
+        public void AddShareholders(List<Shareholder> shareholdersListToAdd)
+        {
+
+            _shareholders.AddRange(shareholdersListToAdd);
+            var h = ShareholdersListChanged;
+            if (h != null) h( this, EventArgs.Empty );
+        }
+
+        public void ChangeCompanyName(string oldName, string newName)
+        {
+            foreach (var c in _companies)
+            {
+                if (c.Name == oldName) c.Name = newName;
+            }
+            var h = CompanyListChanged;
+            if (h != null) h( this, EventArgs.Empty );
+        }
+
+        public bool CheckNameCompany (string Name)
+        {
+            foreach (var c in _companies)
+            {
+                if (c.Name == Name)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public void UpdateCompanyPrice(string name, decimal newPrice)
+        {
+            foreach (var c in _companies)
+            {
+                if (c.Name == name) c.SharePrice = newPrice;
+            }
+            var h = CompanyListChanged;
+            if (h != null) h( this, EventArgs.Empty );
+        }
+
+        public void AddOrUpdateShareholders( string name, decimal money )
+        {
+            Shareholder c = _shareholders.FirstOrDefault( company => company.Name == name );
+            if (c == null)
+            {
+                c = new Shareholder( this, name, money );
+                _shareholders.Add( c );
+                var h = ShareholdersListChanged;
+                if (h != null) h( this, EventArgs.Empty );
+            }
+            //else if (c.SharePrice != shareValue)
+            //{
+            //    c.SharePrice = shareValue;
+            //    var h = CompanyChanged;
+            //    if (h != null)
+            //    {
+            //        CompanyChangedArgs e = new CompanyChangedArgs( c );
+            //        h( this, e );
+            //    }
+            //}
         }
 
         public IList<string> companyNames = new List<string>

@@ -12,7 +12,7 @@ namespace INTECH_STOCK_EXCHANGE
         decimal sharePrice;             //starting price for 1 action
         decimal currentSharePrice;      //share price updated by event
         decimal sharePriceVariation;    //action price's variations updated by event
-
+        public List<double> HistoryPrice = new List<double>();
         int shareVolume;                 //Quantity of its own shares the company still detains updated by event
   
         Guid companyID;
@@ -38,10 +38,10 @@ namespace INTECH_STOCK_EXCHANGE
             this.TheIndustry = Industry;
             sharePrice = SharePrice;
             Random r = market.Random;
-            sharePriceVariation = r.Next( -5, 10 );
+            double tmp = -5 + r.NextDouble() * 15;
+            sharePriceVariation = (decimal)tmp;
             shareVolume = ShareVolume;
             companyID = Guid.NewGuid();
-            market.companyList.Add( this );
         }
 
         public enum Industry
@@ -61,7 +61,16 @@ namespace INTECH_STOCK_EXCHANGE
         public decimal SharePrice
         {
             get { return sharePrice; }
-            set { sharePrice = value; }
+            set
+            {
+                HistoryPrice.Add( (double)sharePrice );
+                sharePrice = value;
+            }
+        }
+
+        public int ShareVolume
+        {
+            get { return shareVolume; }
         }
 
         public int GetTotalShareCount
@@ -83,6 +92,7 @@ namespace INTECH_STOCK_EXCHANGE
         public string Name
         {
             get { return name; }
+            set { name = value; }
         }
         //public override bool Equals( object obj )
         //{

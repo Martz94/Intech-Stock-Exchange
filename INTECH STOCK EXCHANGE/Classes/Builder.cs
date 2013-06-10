@@ -9,16 +9,21 @@ namespace INTECH_STOCK_EXCHANGE
 {
     public class Builder
     {
-        public void CreateAll(Market market)
+        public static void CreateAll(Market market, int maxCompanies, int maxShareholders)
         {
-            int _maxCompanies = 20;
-            int _maxShareholders = 1000;
+            market.companyList.Clear();
+            market.shareholderList.Clear();
 
             // Create companies with companies' numbers defined by user
-            for (int i = 0; i < _maxCompanies; i++)
+            for (int i = 0; i < maxCompanies; i++)
             {
                 Random r = market.Random;
-                double price = 5 + r.NextDouble() * 995;
+                int tmprdm = r.Next( 100 );
+                double price;
+                if (tmprdm > 95) price = 700 + r.NextDouble() * 300;
+                else if (tmprdm > 55) price = 300 + r.NextDouble() * 400;
+                else price = 5 + r.NextDouble() * 295;
+
                 decimal sharePrice = (decimal)price;
 
                 Random r2 = market.Random;
@@ -33,11 +38,12 @@ namespace INTECH_STOCK_EXCHANGE
                 string name = market.companyNames[k];
                 market.companyNames.RemoveAt( k );
 
-                Company newCompany = new Company( market, name, randomInd, sharePrice, shareVolume );
+                market.AddOrUpdateCompany( name, randomInd, sharePrice, shareVolume );
             }
 
+            List<Shareholder> shareholdersList = new List<Shareholder>();
             // Create shareholders with shareholders' numbers defined by user
-            for (int t = 0; t < _maxShareholders; t++)
+            for (int t = 0; t < maxShareholders; t++)
             {
                 string name;
                 Random rdm = market.Random;
@@ -52,8 +58,10 @@ namespace INTECH_STOCK_EXCHANGE
                     name = Path.GetRandomFileName();
                     name = name.Replace(".", ""); // For Removing the dots and spaces
                 //}
-                Shareholder newshareholder = new Shareholder( market, name, 20000.0M );
+                shareholdersList.Add( new Shareholder( market, name, 20000.0M ) );
             }
+
+            market.AddShareholders( shareholdersList );
 
             // Filling the shareholders portfolios
             foreach (Shareholder s in market.shareholderList)
@@ -61,27 +69,28 @@ namespace INTECH_STOCK_EXCHANGE
                 foreach (Company c in market.companyList)
                 {
                     Random random = market.Random;
-                    int shareCount = random.Next(c.GetTotalShareCount);
+                    int shareCount = 0;
+                    int rand = random.Next( 6 );
 
-                    market.AlterPortfolio( Market.ActionType.Fill, shareCount, c, s );
+                    if (rand == 1)
+                    {
+                        shareCount = random.Next(c.GetTotalShareCount / market.shareholderList.Count * 4 / 4);
+                    }
+                    else if (rand == 2)
+                    {
+                        shareCount = random.Next(c.GetTotalShareCount / market.shareholderList.Count * 4);
+                    }
+                    else if (rand == 3)
+                    {
+                        shareCount = random.Next(c.GetTotalShareCount / market.shareholderList.Count * 16);
+                    }
+
+                    
+                    if (shareCount != 0 ) market.AlterPortfolio( Market.ActionType.Fill, shareCount, c, s );
                 }
                 
             }
-
-            // Filling the shareholders portfolios
-            //foreach ( Shareholder s in market.shareholderList )
-            //{
-            //    market.AlterPortfolio( Market.ActionType.Fill, 20, Google, s ); //Google gives 100 shares, keeps 200
-            //    market.AlterPortfolio( Market.ActionType.Fill, 20, Facebook, s ); //Facebook gives 100 shares, keeps 205
-            //    market.AlterPortfolio( Market.ActionType.Fill, 15, Twitter, s ); //Twitter gives 75 shares, keeps 25
-            //    market.AlterPortfolio( Market.ActionType.Fill, 20, Axa, s ); //Axa gives 100 shares, keeps 10
-            //    market.AlterPortfolio( Market.ActionType.Fill, 10, Alliance, s ); //Alliance gives 50 shares, keeps 10
-            //    market.AlterPortfolio( Market.ActionType.Fill, 15, Yoyo, s ); //Yoyo gives 75 shares, keeps 14
-            //    market.AlterPortfolio( Market.ActionType.Fill, 20, Monsanto, s ); //Monsanto gives 100 shares, keeps 10
-            //    market.AlterPortfolio( Market.ActionType.Fill, 15, Boiron, s ); //Boiron gives 75 shares, keeps 25
-            //    market.AlterPortfolio( Market.ActionType.Fill, 15, Pfizer, s ); //Pfizer gives 75 shares, keeps 3
-            //    market.AlterPortfolio( Market.ActionType.Fill, 20, Sanofi, s ); //Sanofi gives 100 shares, keeps 10
-            //}           
+       
         }
     }
 }

@@ -17,6 +17,16 @@ namespace ISEdesign
             InitializeComponent();
         }
 
+        public int CompanyNumber
+        {
+            get { return Convert.ToInt32( _nbCompanyTextBox.Text ); }
+        }
+
+        public int ShareholderNumber
+        {
+            get { return Convert.ToInt32( _nbShareholderTextBox.Text ); }
+        }
+
         private void _okButton_Click( object sender, EventArgs e )
         {
             DialogResult = DialogResult.OK;
@@ -29,13 +39,16 @@ namespace ISEdesign
             Close();
         }
 
-        private void _nbCompanyTextBox_Validating( object sender, CancelEventArgs e )
-        {
-            //if (Char.IsControl( e.KeyChar ) || !Char.IsNumber( e.KeyChar ))
-            //{
-            //    e.Handled = true; // Set l'evenement comme etant completement fini
-            //    return;
-            //}
-        }
+        //private void textBox1_KeyPress( object sender, KeyPressEventArgs e )
+        //{
+        //    if (!char.IsControl( e.KeyChar ) && !char.IsDigit( e.KeyChar ))
+        //    {
+        //        e.Handled = true;
+        //    }
+        //    else
+        //    {
+        //        e.Handled = false;
+        //    }
+        //}
     }
 }

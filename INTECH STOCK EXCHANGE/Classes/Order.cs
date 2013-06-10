@@ -37,7 +37,7 @@ namespace INTECH_STOCK_EXCHANGE
             _orderID = Guid.NewGuid(); //ID of the order
             _orderReceiverID = Guid.Empty;//ID of the shareholder that got the deal, to be modified when the deal is done (sold/bought)
 
-            _expirationDate = DateTime.Now.AddMilliseconds( 30 ); //Expiration date set to 30ms  after order's built
+            _expirationDate = DateTime.Now.AddMilliseconds( 300000 ); //Expiration date set to 30ms  after order's built
 
             //(!) (!) (!)
             //Scenario: 1 guy with 100€ cash
@@ -55,7 +55,7 @@ namespace INTECH_STOCK_EXCHANGE
         }
         public bool TimedOut
         {
-            get { return (DateTime.Now < _expirationDate); }
+            get { return (DateTime.Now > _expirationDate); }
         }
         public orderType GetOrderType
         {

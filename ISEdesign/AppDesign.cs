@@ -13,12 +13,24 @@ namespace ISEdesign
 {
     public partial class AppDesign : Form
     {
+        Market _market;
+
         public AppDesign()
         {
             InitializeComponent();
-            this.actionbar1.MarketView = this.marketView1;
-            this.actionbar1.TabShareholder = this.tabShareholder1;
+            _actionBar.TabShareholder = tabShareholder1;
+            _actionBar.MarketView = _marketView;
+            _marketView.GraphCompany = graph1.GraphCompany;
         }
-        
+
+        protected override void OnLoad( EventArgs e )
+        {
+            _market = new Market();
+
+            _actionBar.SetMarket( _market );
+            _marketView.SetMarket( _market );
+
+            base.OnLoad( e );
+        }
     }
 }

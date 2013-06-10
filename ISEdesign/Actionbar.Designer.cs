@@ -55,6 +55,7 @@
             this._stepByStep.TabIndex = 1;
             this._stepByStep.Text = "Step by Step";
             this._stepByStep.UseVisualStyleBackColor = true;
+            this._stepByStep.Click += new System.EventHandler(this._stepByStep_Click);
             // 
             // _round
             // 
@@ -100,7 +101,7 @@
             this._goButton.TabIndex = 6;
             this._goButton.Text = "Go";
             this._goButton.UseVisualStyleBackColor = true;
-            this._goButton.Click += new System.EventHandler(this.Play);
+            this._goButton.Click += new System.EventHandler(this._goButtonClick);
             // 
             // Actionbar
             // 

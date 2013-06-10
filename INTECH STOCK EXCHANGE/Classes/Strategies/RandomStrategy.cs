@@ -20,12 +20,12 @@ namespace INTECH_STOCK_EXCHANGE
             q++;
             int i = properties.Next( 0, market.companyList.Count );
             Company firm = market.companyList[i];
-
+            decimal priceProp = firm.SharePrice * (properties.Next( 201 ) + 899) / 1000;
             double max = (int)(q * (double)shareholder.Capital);
-            int quantity = (int)(max / (double)firm.SharePrice);
-            decimal priceProp = (decimal)(max / (double)quantity);
+            int quantity = properties.Next( Math.Abs((int)((max / (double)priceProp))) );
+            //decimal priceProp = (decimal)(max / (double)quantity);
 
-            if(priceProp * quantity < shareholder.Capital) return new Order(Order.orderType.Buy, priceProp - 5, quantity, firm, shareholder); 
+            if(priceProp * quantity < shareholder.Capital) return new Order(Order.orderType.Buy, priceProp, quantity, firm, shareholder); 
             else return null;
         }
 
@@ -43,12 +43,15 @@ namespace INTECH_STOCK_EXCHANGE
             Random r = market.Random;
             int k = r.Next( shareholder._portfolio.Count );
 
-            if ( k > -1 )
+            if ( k > -1 && shareholder._portfolio.Count > 0)
             {
+
                 share = shareholder._portfolio[k];
-                priceProp = share.company.SharePrice + 5;
+                priceProp = share.company.SharePrice * (r.Next( 201 ) + 899) / 1000;
+                //priceProp = share.company.SharePrice + 5;
                 quantity = (int)(0.5 * share.shareCount);
                 firm = share.company;
+
                 return new Order( Order.orderType.Sell, priceProp, quantity, firm, shareholder );
             }
             else return null;            

@@ -22,28 +22,32 @@ namespace INTECH_STOCK_EXCHANGE
                 if ( c.ShareVariation >= 3.0M ) targetList.Add( c );
             }
             Random index = market.Random;
-            i = index.Next( targetList.Count );
-            Company target = targetList[i];
-
-            decimal priceProp = target.SharePrice * ((target.ShareVariation / 100) + 1);
-
-            decimal mentalState;
-
-            if ( shareholder.GetRiskIndex == Shareholder.RiskTaker.Crazy )
+            if (targetList.Count > 0)
             {
-                mentalState = 0.75M;
+                i = index.Next( targetList.Count );
+                Company target = targetList[i];
+
+                decimal priceProp = target.SharePrice * ((target.ShareVariation / 100) + 1);
+
+                decimal mentalState;
+
+                if (shareholder.GetRiskIndex == Shareholder.RiskTaker.Crazy)
+                {
+                    mentalState = 0.75M;
+                }
+                else if (shareholder.GetRiskIndex == Shareholder.RiskTaker.Cautious)
+                {
+                    mentalState = 0.15M;
+                }
+                else
+                {
+                    mentalState = 0.50M;
+                }
+                int max = (int)(mentalState * shareholder.Capital);
+                int quantity = (int)(max / priceProp);
+                return new Order( Order.orderType.Buy, priceProp, quantity, target, shareholder );
             }
-            else if ( shareholder.GetRiskIndex == Shareholder.RiskTaker.Cautious )
-            {
-                mentalState = 0.15M;
-            }
-            else
-            {
-                mentalState = 0.50M;
-            }
-            int max = (int)(mentalState * shareholder.Capital);
-            int quantity = (int)(max / priceProp);
-            return new Order( Order.orderType.Buy, priceProp, quantity, target, shareholder );
+            else return null;
         }
         private Order Sell( Market market, Shareholder shareholder )
         {

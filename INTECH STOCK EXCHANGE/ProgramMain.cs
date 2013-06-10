@@ -28,8 +28,8 @@ namespace INTECH_STOCK_EXCHANGE
             //Market Building
             //Instancing companies and s/h objects. Filling portfolios and capitals to get the game going
 
-            Builder builder = new Builder();
-            builder.CreateAll( market); 
+            //Builder builder = new Builder();
+            //builder.CreateAll( market); 
             //System.Diagnostics.Debug.WriteLine( market.ToString() );
 
             Play( market, maxRound ); //Called again and again by UI

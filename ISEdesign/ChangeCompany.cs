@@ -27,6 +27,11 @@ namespace ISEdesign
             get { return Convert.ToDecimal(_shareValueTextBox.Text); }
         }
 
+        public bool IsShareValueDecimal(out decimal d)
+        {
+            return (decimal.TryParse( _shareValueTextBox.Text, out d ));
+        }
+
         private void _buttonOk_Click( object sender, EventArgs e )
         {
             DialogResult = DialogResult.OK;
