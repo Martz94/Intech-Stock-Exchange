@@ -78,7 +78,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\INTECH STOCK EXCHANGE\INTECH STOCK EXCHANGE.csproj">
       <Project>{c4a47c7c-02a3-4664-9bf4-cca5091e178b}</Project>

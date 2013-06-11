@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace INTECH_STOCK_EXCHANGE
 {
+    [Serializable()]
     public class RandomStrategy : IStrategy
     {
         private Order RandomBuy(Market market, Shareholder shareholder)
@@ -39,7 +41,7 @@ namespace INTECH_STOCK_EXCHANGE
             decimal priceProp;
             int quantity;
             Company firm;
-            Shareholder.pItem share = new Shareholder.pItem();
+            Shareholder.PortfolioItem share = new Shareholder.PortfolioItem();
             Random r = market.Random;
             int k = r.Next( shareholder._portfolio.Count );
 

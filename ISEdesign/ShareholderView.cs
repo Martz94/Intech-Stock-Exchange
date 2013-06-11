@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 using INTECH_STOCK_EXCHANGE;
 
 namespace ISEdesign
@@ -21,12 +22,21 @@ namespace ISEdesign
         }
 
         public TabShareholder TabShareholder { get; set; }
+        public Chart GraphShareholder;
 
-        internal void SetMarket( Market market )
+        internal void SetMarket( Market m )
         {
-            _market = market;
-            FillShareholdersList();
-            _market.ShareholdersListChanged += _market_ShareholdersListChanged;
+            if (_market != null)
+            {
+                _market.ShareholdersListChanged -= _market_ShareholdersListChanged;
+                _market = null;
+            }
+            if (m != null)
+            {
+                _market = m;
+                FillShareholdersList();
+                _market.ShareholdersListChanged += _market_ShareholdersListChanged;
+            }
         }
 
         void _market_ShareholdersListChanged( object sender, EventArgs e )
@@ -93,6 +103,27 @@ namespace ISEdesign
             }
         }
 
+        public void FillGraphShareholder (Shareholder shareholder)
+        {
+            GraphShareholder.Series.Clear();
+            GraphShareholder.Titles.Clear();
+
+            GraphShareholder.Palette = ChartColorPalette.Berry;
+            GraphShareholder.Titles.Add( shareholder.Name );
+            Series serie = GraphShareholder.Series.Add( "Portfolio value" );
+
+            GraphShareholder.Series[0].ChartType = SeriesChartType.FastLine;
+            GraphShareholder.Series[0].BorderWidth = 2;
+
+            decimal shareValue = 0;
+            foreach (var a in shareholder._portfolio)
+            {
+                shareValue += a.shareCount * a.company.SharePrice;
+                serie.Points.Add( (double)shareValue );
+            }
+            
+        }
+
         private void _listViewSh_Click( object sender, EventArgs e )
         {
             foreach (var c in _market.shareholderList)
@@ -102,6 +133,7 @@ namespace ISEdesign
                 {
                     _market.SuperShareholder = c;
                     fillShareholderPortfolio( c );
+                    FillGraphShareholder( c );
                 }
             }
         }

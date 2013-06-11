@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace INTECH_STOCK_EXCHANGE
 {
+    [Serializable()]
     public class StupidStrategy : IStrategy
     {
         //The stupid strategy consists of buying 1 share of a company that has its share variation superior to 1.0M
@@ -52,10 +54,10 @@ namespace INTECH_STOCK_EXCHANGE
         private Order Sell( Market market, Shareholder shareholder )
         {
             //SELLING
-            List<Shareholder.pItem> targetList = new List<Shareholder.pItem>();
+            List<Shareholder.PortfolioItem> targetList = new List<Shareholder.PortfolioItem>();
             decimal mentalState;
 
-            foreach ( Shareholder.pItem share in shareholder._portfolio )
+            foreach ( Shareholder.PortfolioItem share in shareholder._portfolio )
             {
                 if ( share.company.ShareVariation < -1.0M ) targetList.Add( share );
             }
@@ -63,7 +65,7 @@ namespace INTECH_STOCK_EXCHANGE
             if ( targetList.Count > 0 )
             {
                 int index = y.Next( targetList.Count );
-                Shareholder.pItem target = targetList[index];
+                Shareholder.PortfolioItem target = targetList[index];
 
                 decimal priceProp = target.company.SharePrice * ((target.company.ShareVariation / 100) + 1);
                 if ( shareholder.GetRiskIndex == Shareholder.RiskTaker.Crazy )

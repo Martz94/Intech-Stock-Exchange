@@ -30,25 +30,12 @@ namespace ISEdesign
         public TabShareholder TabShareholder { get; set; }
         public Timer GoTimer;
         int numberRound;
-
-        private void _initialize_Click( object sender, EventArgs e )
-        {
-            using (var d = new CreateNewWorld())
-            {
-                DialogResult r = d.ShowDialog();
-
-                if (r == DialogResult.OK)
-                {
-                    Builder.CreateAll( _market, d.CompanyNumber, d.ShareholderNumber );
-                }
-            }
-        }
-
+                
         private void _goButtonClick( object sender, EventArgs e )
         {
             numberRound = Convert.ToInt32(this._roundNumber.Text);
             int intervalTime = 500;
-            GoTimer = new System.Windows.Forms.Timer();
+            GoTimer = new Timer();
 
             GoTimer.Interval = intervalTime;
             GoTimer.Tick += new EventHandler( _stepByStep_Click );
@@ -80,13 +67,13 @@ namespace ISEdesign
             }
 
 
-            if (_market.SuperShareholder != null) ShareholderView.fillShareholderPortfolio( _market.SuperShareholder );
-            if (_market.SuperCompany != null)
+            if (_market.SuperShareholder != null)
             {
-                MarketView.FillGraphCompany( _market.SuperCompany );
-                MarketView.FillGraphStockPrice( _market.SuperCompany );
+                ShareholderView.fillShareholderPortfolio( _market.SuperShareholder );
+                ShareholderView.FillGraphShareholder( _market.SuperShareholder );
             }
-
+                
+            if (_market.SuperCompany != null) MarketView.FillGraphCompany( _market.SuperCompany );           
         }   
     }
 }

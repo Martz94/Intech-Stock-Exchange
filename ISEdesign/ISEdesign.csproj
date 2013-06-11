@@ -83,6 +83,12 @@
     <Compile Include="MarketView.Designer.cs">
       <DependentUpon>MarketView.cs</DependentUpon>
     </Compile>
+    <Compile Include="MenuFile.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MenuFile.Designer.cs">
+      <DependentUpon>MenuFile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShareholderView.cs">
@@ -116,6 +122,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MarketView.resx">
       <DependentUpon>MarketView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MenuFile.resx">
+      <DependentUpon>MenuFile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace ISEdesign
 {
@@ -17,16 +18,10 @@ namespace ISEdesign
             InitializeComponent();
         }
 
-        public System.Windows.Forms.DataVisualization.Charting.Chart GraphCompany
+        public Chart GraphCompany
         {
             get { return _chartCompany; }
             set { _chartCompany = value; }
-        }
-
-        public System.Windows.Forms.DataVisualization.Charting.Chart GraphStockPrice
-        {
-            get { return _chartStockPrice; }
-            set { _chartStockPrice = value; }
         }
     }
 }

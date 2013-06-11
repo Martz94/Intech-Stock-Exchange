@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.Runtime.Serialization;
 
 namespace INTECH_STOCK_EXCHANGE
 {
+    [Serializable()]
     public class Order : IOrder
     {
         public orderType _orderType;
@@ -19,7 +21,6 @@ namespace INTECH_STOCK_EXCHANGE
         Company _company;
         Order.orderStatus _orderStatus;
         Guid _orderBuyerID;
-        Timer _timer;
         Guid _orderReceiverID;
 
         public Order(orderType orderType, decimal PriceProp, int ShareCount, Company firm, Shareholder Shareholder )

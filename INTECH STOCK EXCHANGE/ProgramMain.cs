@@ -16,7 +16,6 @@ namespace INTECH_STOCK_EXCHANGE
         static void Main()
         {
             Market market;
-            DateTime time;
             int maxRound = 1;//Set from the GUI sometime
             //int nbShareholders = 100; Set from the GUI sometime
             //int nbCompanies; Possibly set from the GUI (or just nbShareholders/4)

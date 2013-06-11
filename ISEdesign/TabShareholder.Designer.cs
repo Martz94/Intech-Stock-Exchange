@@ -45,12 +45,12 @@
             this.columnHeaderOrderQuantity = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderOrderPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this._tabStats = new System.Windows.Forms.TabPage();
-            this.chart1 = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this._chartShareholder = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this._tabShareholder.SuspendLayout();
             this._tabPortfolio.SuspendLayout();
             this._tabOrderbook.SuspendLayout();
             this._tabStats.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._chartShareholder)).BeginInit();
             this.SuspendLayout();
             // 
             // _tabShareholder
@@ -159,7 +159,7 @@
             // 
             // _tabStats
             // 
-            this._tabStats.Controls.Add(this.chart1);
+            this._tabStats.Controls.Add(this._chartShareholder);
             this._tabStats.Location = new System.Drawing.Point(4, 22);
             this._tabStats.Name = "_tabStats";
             this._tabStats.Size = new System.Drawing.Size(388, 136);
@@ -167,22 +167,22 @@
             this._tabStats.Text = "Graph";
             this._tabStats.UseVisualStyleBackColor = true;
             // 
-            // chart1
+            // _chartShareholder
             // 
             chartArea1.Name = "ChartArea1";
-            this.chart1.ChartAreas.Add(chartArea1);
-            this.chart1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._chartShareholder.ChartAreas.Add(chartArea1);
+            this._chartShareholder.Dock = System.Windows.Forms.DockStyle.Fill;
             legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
-            this.chart1.Location = new System.Drawing.Point(0, 0);
-            this.chart1.Name = "chart1";
+            this._chartShareholder.Legends.Add(legend1);
+            this._chartShareholder.Location = new System.Drawing.Point(0, 0);
+            this._chartShareholder.Name = "_chartShareholder";
             series1.ChartArea = "ChartArea1";
             series1.Legend = "Legend1";
             series1.Name = "Series1";
-            this.chart1.Series.Add(series1);
-            this.chart1.Size = new System.Drawing.Size(388, 136);
-            this.chart1.TabIndex = 0;
-            this.chart1.Text = "chart1";
+            this._chartShareholder.Series.Add(series1);
+            this._chartShareholder.Size = new System.Drawing.Size(388, 136);
+            this._chartShareholder.TabIndex = 0;
+            this._chartShareholder.Text = "chart1";
             // 
             // TabShareholder
             // 
@@ -195,7 +195,7 @@
             this._tabPortfolio.ResumeLayout(false);
             this._tabOrderbook.ResumeLayout(false);
             this._tabStats.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._chartShareholder)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -216,6 +216,6 @@
         private System.Windows.Forms.ColumnHeader columnHeaderOrderCompany;
         private System.Windows.Forms.ColumnHeader columnHeaderOrderQuantity;
         private System.Windows.Forms.ColumnHeader columnHeaderOrderPrice;
-        private System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        private System.Windows.Forms.DataVisualization.Charting.Chart _chartShareholder;
     }
 }

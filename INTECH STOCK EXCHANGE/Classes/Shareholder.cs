@@ -5,9 +5,11 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Collections;
+using System.Runtime.Serialization;
 
 namespace INTECH_STOCK_EXCHANGE
 {
+    [Serializable()]
     public class Shareholder //: IShareholder, IEnumerable
     {
         //Profil
@@ -15,8 +17,8 @@ namespace INTECH_STOCK_EXCHANGE
         private Guid shareholderID; //unique identifier
         List<Shareholder> _shareholders;
         public List<Order> _globalOrderbook;//Orderbook of the market
-        public List<pItem> _portfolio;//company, sharevalue, buydate, sharecount - using a list of structs
-        public pItem share; //Share (struct type)
+        public List<PortfolioItem> _portfolio;//company, sharevalue, buydate, sharecount - using a list of structs
+        public PortfolioItem share; //Share (struct type)
         Order.orderType _orderType;
         private readonly Market market;
         Company firm;
@@ -49,7 +51,7 @@ namespace INTECH_STOCK_EXCHANGE
             Array values2 = Enum.GetValues( typeof( TimeVision ) );
             TimeVision _timeVision = (TimeVision)values2.GetValue( random.Next( values2.Length ) );
 
-            _portfolio = new List<pItem>();
+            _portfolio = new List<PortfolioItem>();
             _displayName = Name;
 
             //Random r = market.Random;
@@ -86,7 +88,8 @@ namespace INTECH_STOCK_EXCHANGE
             set { _cash = value; }
         }
 
-        public struct pItem         //Portfolio Item
+        [Serializable]
+        public class PortfolioItem
         {
             public Company company { get; set; }
             public decimal shareLastPurchaseValue { get; set; }

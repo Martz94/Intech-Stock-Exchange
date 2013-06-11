@@ -22,18 +22,23 @@ namespace ISEdesign
             _actionBar.ShareholderView = shareholderView1;
             _actionBar.MarketView = _marketView;
             _marketView.GraphCompany = graph1.GraphCompany;
-            _marketView.GraphStockPrice = graph1.GraphStockPrice;
             shareholderView1.TabShareholder = tabShareholder1;
+            shareholderView1.GraphShareholder = tabShareholder1.GraphShareholder;
         }
 
         protected override void OnLoad( EventArgs e )
         {
-            _market = new Market();
-            _actionBar.SetMarket(_market);
+            BindToMarket( new Market() );
+            base.OnLoad( e );
+        }
+
+        public void BindToMarket( Market m )
+        {
+            _market = m;
+            _actionBar.SetMarket( _market );
             shareholderView1.SetMarket( _market );
             _marketView.SetMarket( _market );
-
-            base.OnLoad( e );
+            _menuFile.SetMarket( _market );
         }
     }
 }

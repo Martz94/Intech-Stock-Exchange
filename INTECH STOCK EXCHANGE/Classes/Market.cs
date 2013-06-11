@@ -5,21 +5,30 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace INTECH_STOCK_EXCHANGE
 {
+    [Serializable]
     public class Market
     {
-        bool _orderCount = false;
         List<Shareholder> _shareholders;
         List<Company> _companies;
         List<Order> _globalOrderbook;
-        Order order;
         public Company SuperCompany;
         public Shareholder SuperShareholder;
-        Shareholder.pItem share;
+        Shareholder.PortfolioItem share;
         int _transactionCount = 0;
         readonly Random _random;
+
+        [NonSerialized]
+        EventHandler<EventArgs> _companyListChanged;
+        [NonSerialized]
+        EventHandler<EventArgs> _shareholdersListChanged;
+        [NonSerialized]
+        EventHandler<CompanyChangedArgs> _companyChanged;
 
         public enum ActionType
         {
@@ -35,15 +44,64 @@ namespace INTECH_STOCK_EXCHANGE
             _random = new Random();
         }
 
-        public event EventHandler<EventArgs> CompanyListChanged;
+        public event EventHandler<EventArgs> CompanyListChanged
+        {
+            add { _companyListChanged = (EventHandler<EventArgs>)Delegate.Combine( (Delegate)_companyListChanged, (Delegate)value ); }
+            remove { _companyListChanged = (EventHandler<EventArgs>)Delegate.Remove( (Delegate)_companyListChanged, (Delegate)value ); }
+        }
 
-        public event EventHandler<EventArgs> ShareholdersListChanged;
+        public event EventHandler<EventArgs> ShareholdersListChanged
+        {
+            add { _shareholdersListChanged = (EventHandler<EventArgs>)Delegate.Combine( (Delegate)_shareholdersListChanged, (Delegate)value ); }
+            remove { _shareholdersListChanged = (EventHandler<EventArgs>)Delegate.Remove( (Delegate)_shareholdersListChanged, (Delegate)value ); }
+        }
 
-        public event EventHandler<CompanyChangedArgs> CompanyChanged;
+        public event EventHandler<CompanyChangedArgs> CompanyChanged
+        {
+            add { _companyChanged = (EventHandler<CompanyChangedArgs>)Delegate.Combine( (Delegate)_companyChanged, (Delegate)value ); }
+            remove { _companyChanged = (EventHandler<CompanyChangedArgs>)Delegate.Remove( (Delegate)_companyChanged, (Delegate)value ); }
+        }
+
+        void RaiseCompanyChanged( Company c )
+        {
+            var h = _companyChanged;
+            if (h != null) h( this, new CompanyChangedArgs( c ) );
+        }
+
+        void RaiseShareholdersListChanged()
+        {
+            var h = _shareholdersListChanged;
+            if (h != null) h( this, EventArgs.Empty );
+        }
+
+        void RaiseCompanyListChanged()
+        {
+            var h = _companyListChanged;
+            if (h != null) h( this, EventArgs.Empty );
+        }
 
         public IReadOnlyList<Company> Companies { get { return _companies; } }
 
         public Random Random { get { return _random; } }
+
+        public void Save (string filename)
+        {
+            using (FileStream file = File.Open( filename, FileMode.OpenOrCreate ))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize( file, this );
+            }
+        }
+
+        public Market Load( string filename )
+        {
+            using (FileStream file = File.Open( filename, FileMode.Open ))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                Market market = (Market)formatter.Deserialize( file );
+                return market;
+            }
+        }
 
         public void AlterPortfolio( Market.ActionType actionType, int shareCount, Company firm, Shareholder sh )
         //Called when:
@@ -68,7 +126,7 @@ namespace INTECH_STOCK_EXCHANGE
                 }
                 if(f != -1)
                 {
-                    Shareholder.pItem p = sh._portfolio[f];
+                    Shareholder.PortfolioItem p = sh._portfolio[f];
                     p.shareCount = p.shareCount + shareCount;
                     share.shareLastPurchaseValue = firm.SharePrice;// last purchase price kept
                     share.lastBuyDate = new DateTime();     // last purchase date
@@ -76,7 +134,7 @@ namespace INTECH_STOCK_EXCHANGE
                 }
                 else                 
                 {                   
-                    share = new Shareholder.pItem();
+                    share = new Shareholder.PortfolioItem();
                     share.shareCount = shareCount;
                     share.shareLastPurchaseValue = firm.SharePrice;
                     share.company = firm;
@@ -98,7 +156,7 @@ namespace INTECH_STOCK_EXCHANGE
                 }
                 if(f != -1)
                 {
-                    Shareholder.pItem p = sh._portfolio[f];
+                    Shareholder.PortfolioItem p = sh._portfolio[f];
                     p.shareCount = p.shareCount - shareCount;
                     if(p.shareCount == 0)
                     {
@@ -111,7 +169,7 @@ namespace INTECH_STOCK_EXCHANGE
                 }
                 else           
                 {                   
-                    share = new Shareholder.pItem();
+                    share = new Shareholder.PortfolioItem();
                     share.shareLastPurchaseValue = firm.SharePrice;
                     share.company = firm;
                     share.shareCount = shareCount;
@@ -197,8 +255,7 @@ namespace INTECH_STOCK_EXCHANGE
                     }
                 }
             }
-            var h = CompanyListChanged;
-            if (h != null) h( this, EventArgs.Empty );
+            RaiseCompanyListChanged();
         }
   
         private void MakeTransaction( Order oBuy, Order oSell, int quantity, decimal price )
@@ -259,7 +316,7 @@ namespace INTECH_STOCK_EXCHANGE
             foreach ( Shareholder shareholder in _shareholders )
             {
                 sb.Append( shareholder.Name ).AppendLine();
-                foreach ( Shareholder.pItem share in shareholder._portfolio )
+                foreach ( Shareholder.PortfolioItem share in shareholder._portfolio )
                 {
                     sb.Append("\t").Append( share.company.Name ).Append( " : " ).Append( share.shareCount ).AppendLine();
                 }
@@ -288,36 +345,32 @@ namespace INTECH_STOCK_EXCHANGE
             {
                 c = new Company( this, name, ind, shareValue, sharevolume );
                 _companies.Add( c );
-                var h = CompanyListChanged;
-                if (h != null) h( this, EventArgs.Empty );
+                RaiseCompanyListChanged();
             }
             else if (c.SharePrice != shareValue)
             {
                 c.SharePrice = shareValue;
-                var h = CompanyChanged;
-                if (h != null)
-                {
-                    CompanyChangedArgs e = new CompanyChangedArgs( c );
-                    h( this, e );
-                }
+                RaiseCompanyChanged( c );
             }
         }
 
         public void AddShareholders(List<Shareholder> shareholdersListToAdd)
         {
             _shareholders.AddRange(shareholdersListToAdd);
-            var h = ShareholdersListChanged;
-            if (h != null) h( this, EventArgs.Empty );
+            RaiseShareholdersListChanged();
         }
 
         public void ChangeCompanyName(string oldName, string newName)
         {
             foreach (var c in _companies)
             {
-                if (c.Name == oldName) c.Name = newName;
+                if (c.Name == oldName)
+                {
+                    c.Name = newName;
+                    RaiseCompanyChanged( c );
+                    return;
+                }
             }
-            var h = CompanyListChanged;
-            if (h != null) h( this, EventArgs.Empty );
         }
 
         public bool CheckNameCompany (string Name)
@@ -336,10 +389,13 @@ namespace INTECH_STOCK_EXCHANGE
         {
             foreach (var c in _companies)
             {
-                if (c.Name == name) c.SharePrice = newPrice;
+                if (c.Name == name)
+                {
+                    c.SharePrice = newPrice;
+                    RaiseCompanyChanged( c );
+                    return;
+                }
             }
-            var h = CompanyListChanged;
-            if (h != null) h( this, EventArgs.Empty );
         }
 
         public void AddOrUpdateShareholders( string name, decimal money )
@@ -349,8 +405,7 @@ namespace INTECH_STOCK_EXCHANGE
             {
                 c = new Shareholder( this, name, money );
                 _shareholders.Add( c );
-                var h = ShareholdersListChanged;
-                if (h != null) h( this, EventArgs.Empty );
+                RaiseShareholdersListChanged();
             }
             //else if (c.SharePrice != shareValue)
             //{

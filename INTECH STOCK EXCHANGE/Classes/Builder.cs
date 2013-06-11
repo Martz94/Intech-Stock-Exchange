@@ -9,7 +9,7 @@ namespace INTECH_STOCK_EXCHANGE
 {
     public class Builder
     {
-        public static void CreateAll(Market market, int maxCompanies, int maxShareholders)
+        public static void CreateAll(Market market, int maxCompanies, int maxShareholders )
         {
             market.companyList.Clear();
             market.shareholderList.Clear();
