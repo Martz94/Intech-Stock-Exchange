@@ -19,7 +19,6 @@ namespace INTECH_STOCK_EXCHANGE
         Company _company;
         Order.orderStatus _orderStatus;
         Guid _orderBuyerID;
-        Timer _timer;
         Guid _orderReceiverID;
 
         public Order(orderType orderType, decimal PriceProp, int ShareCount, Company firm, Shareholder Shareholder )
@@ -37,7 +36,7 @@ namespace INTECH_STOCK_EXCHANGE
             _orderID = Guid.NewGuid(); //ID of the order
             _orderReceiverID = Guid.Empty;//ID of the shareholder that got the deal, to be modified when the deal is done (sold/bought)
 
-            _expirationDate = DateTime.Now.AddMilliseconds( 300000 ); //Expiration date set to 30ms  after order's built
+            _expirationDate = DateTime.Now.AddMilliseconds( 30000 ); //Expiration date set to 30ms  after order's built
 
             //(!) (!) (!)
             //Scenario: 1 guy with 100€ cash

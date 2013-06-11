@@ -60,7 +60,11 @@ namespace ISEdesign
 				{
 					i.SubItems[3].ForeColor = System.Drawing.Color.Red;
 				}
-				else i.SubItems[3].ForeColor = System.Drawing.Color.Green;
+                else if ( c.ShareVariation == 0 )
+                {
+                    i.SubItems[3].ForeColor = System.Drawing.Color.Black;
+                }
+                else i.SubItems[3].ForeColor = System.Drawing.Color.Green;
 
 				_listView.Items.Add( i );
 			}

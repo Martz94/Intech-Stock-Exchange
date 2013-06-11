@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoPoco;
+using AutoPoco.Engine;
+using AutoPoco.DataSources;
 
 namespace INTECH_STOCK_EXCHANGE
 {
@@ -43,22 +46,34 @@ namespace INTECH_STOCK_EXCHANGE
 
             List<Shareholder> shareholdersList = new List<Shareholder>();
             // Create shareholders with shareholders' numbers defined by user
+            IGenerationSessionFactory mFactory = AutoPocoContainer.Configure( x =>
+            {
+                x.Conventions( c =>
+                {
+                    c.UseDefaultConventions();
+                });
+                    x.AddFromAssemblyContainingType<SimpleUser>();
+                    x.Include<SimpleUser>()
+                        .Setup( c => c.FirstName ).Use<FirstNameSource>()
+                        .Setup( c => c.LastName ).Use<LastNameSource>();
+            });
+
+            IGenerationSession session = mFactory.CreateSession();
+
+            //SimpleUser userName = session.Single<SimpleUser>().Get();
+            IList<SimpleUser> users = session.List<SimpleUser>( maxShareholders ).Get();
+                
             for (int t = 0; t < maxShareholders; t++)
             {
                 string name;
-                Random rdm = market.Random;
-                //if ( market.GetNameList.Count > 1 )
-                //{
-                //    int k = rdm.Next( market.shareholderNames.Count );
-                //    name = market.shareholderNames[k];
-                //    market.shareholderNames.RemoveAt( k );
+                //Random rdm = market.Random;
+                //name = Path.GetRandomFileName();
+                //name = name.Replace(".", ""); // For Removing the dots and spaces
                 //}
-                //else
-                //{
-                    name = Path.GetRandomFileName();
-                    name = name.Replace(".", ""); // For Removing the dots and spaces
-                //}
-                shareholdersList.Add( new Shareholder( market, name, 20000.0M ) );
+                //shareholdersList.Add( new Shareholder( market, name, 20000.0M ) );
+                SimpleUser user = users.FirstOrDefault();
+                shareholdersList.Add( new Shareholder( market, user.FirstName + " " + user.LastName, 20000.0M ) );
+                users.Remove( user );
             }
 
             market.AddShareholders( shareholdersList );
@@ -86,7 +101,7 @@ namespace INTECH_STOCK_EXCHANGE
                     }
 
                     
-                    if (shareCount != 0 ) market.AlterPortfolio( Market.ActionType.Fill, shareCount, c, s );
+                    if (shareCount != 0 ) s.AlterPortfolio( Market.ActionType.Fill, shareCount, c, s );
                 }
                 
             }

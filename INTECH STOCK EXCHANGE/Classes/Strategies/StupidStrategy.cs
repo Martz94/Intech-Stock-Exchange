@@ -52,20 +52,20 @@ namespace INTECH_STOCK_EXCHANGE
         private Order Sell( Market market, Shareholder shareholder )
         {
             //SELLING
-            List<Shareholder.pItem> targetList = new List<Shareholder.pItem>();
+            List<Shareholder.PortfolioItem> targetList = new List<Shareholder.PortfolioItem>();
             decimal mentalState;
 
-            foreach ( Shareholder.pItem share in shareholder._portfolio )
+            foreach ( Shareholder.PortfolioItem share in shareholder._portfolio )
             {
-                if ( share.company.ShareVariation < -1.0M ) targetList.Add( share );
+                if ( share.Company.ShareVariation < -1.0M ) targetList.Add( share );
             }
             Random y = market.Random;
             if ( targetList.Count > 0 )
             {
                 int index = y.Next( targetList.Count );
-                Shareholder.pItem target = targetList[index];
+                Shareholder.PortfolioItem target = targetList[index];
 
-                decimal priceProp = target.company.SharePrice * ((target.company.ShareVariation / 100) + 1);
+                decimal priceProp = target.Company.SharePrice * ((target.Company.ShareVariation / 100) + 1);
                 if ( shareholder.GetRiskIndex == Shareholder.RiskTaker.Crazy )
                 {
                     mentalState = 0.75M;
@@ -78,8 +78,8 @@ namespace INTECH_STOCK_EXCHANGE
                 {
                     mentalState = 0.50M;
                 }
-                int quantity = (int)(mentalState * (target.shareCount));
-                return new Order( Order.orderType.Sell, priceProp, quantity, target.company, shareholder );
+                int quantity = (int)(mentalState * (target.ShareCount));
+                return new Order( Order.orderType.Sell, priceProp, quantity, target.Company, shareholder );
             }
             else return null;
         }

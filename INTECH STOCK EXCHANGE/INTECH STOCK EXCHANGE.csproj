@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoPoco">
+      <HintPath>..\packages\AutoPoco.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
@@ -51,6 +54,7 @@
     <Compile Include="Classes\Market.cs" />
     <Compile Include="Classes\Order.cs" />
     <Compile Include="Classes\Shareholder.cs" />
+    <Compile Include="Classes\SimpleUser.cs" />
     <Compile Include="Classes\Strategies\RandomStrategy.cs" />
     <Compile Include="Classes\Strategies\SmarterStrategy.cs" />
     <Compile Include="Classes\Strategies\SmartStrategy.cs" />
@@ -98,6 +102,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Ressources\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

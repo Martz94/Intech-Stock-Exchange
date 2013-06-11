@@ -5,6 +5,7 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Collections;
+using System.Diagnostics;
 
 namespace INTECH_STOCK_EXCHANGE
 {
@@ -15,8 +16,8 @@ namespace INTECH_STOCK_EXCHANGE
         private Guid shareholderID; //unique identifier
         List<Shareholder> _shareholders;
         public List<Order> _globalOrderbook;//Orderbook of the market
-        public List<pItem> _portfolio;//company, sharevalue, buydate, sharecount - using a list of structs
-        public pItem share; //Share (struct type)
+        public List<PortfolioItem> _portfolio;//company, sharevalue, buydate, sharecount - using a list of structs
+        public PortfolioItem share; //Share (struct type)
         Order.orderType _orderType;
         private readonly Market market;
         Company firm;
@@ -49,7 +50,7 @@ namespace INTECH_STOCK_EXCHANGE
             Array values2 = Enum.GetValues( typeof( TimeVision ) );
             TimeVision _timeVision = (TimeVision)values2.GetValue( random.Next( values2.Length ) );
 
-            _portfolio = new List<pItem>();
+            _portfolio = new List<PortfolioItem>();
             _displayName = Name;
 
             //Random r = market.Random;
@@ -86,12 +87,12 @@ namespace INTECH_STOCK_EXCHANGE
             set { _cash = value; }
         }
 
-        public struct pItem         //Portfolio Item
+        public class PortfolioItem
         {
-            public Company company { get; set; }
-            public decimal shareLastPurchaseValue { get; set; }
-            public DateTime lastBuyDate { get; set; }
-            public int shareCount { get; set; }
+            public Company Company { get; set; }
+            public decimal ShareLastPurchaseValue { get; set; }
+            public DateTime LastBuyDate { get; set; }
+            public int ShareCount { get; set; }
         }
 
         public IStrategy Strategy 
@@ -124,6 +125,85 @@ namespace INTECH_STOCK_EXCHANGE
         public Guid GetID
         {
             get { return shareholderID; }
-        }        
+        }
+        public void AlterPortfolio( Market.ActionType actionType, int shareCount, Company firm, Shareholder sh )
+        //Called when:
+        //- The market opens for the 1st time,
+        //- Transactions need to be made,
+
+        // (!) automatically creates a new struct in the portfolio if the s/h does not already hold at least 1 action of the firm
+        // (!) automatically removes a struct if the s/h holds 0 action of the firm
+        {
+            Debug.Assert( firm != null );
+
+            if ( actionType == Market.ActionType.Fill )
+            {
+                int i;
+                int f = -1;
+                for ( i = 0; i < sh._portfolio.Count; i++ )
+                {
+                    if ( sh._portfolio[i].Company == firm )
+                    {
+                        f = i;
+                    }
+                }
+                if ( f != -1 )
+                {
+                    Shareholder.PortfolioItem p = sh._portfolio[f];
+                    p.ShareCount = p.ShareCount + shareCount;
+                    p.ShareLastPurchaseValue = firm.SharePrice;// last purchase price kept
+                    p.LastBuyDate = new DateTime();     // last purchase date
+                    sh._portfolio[f] = p;
+                }
+                else
+                {
+                    Shareholder.PortfolioItem x = new Shareholder.PortfolioItem();
+                    x.ShareCount = shareCount;
+                    x.ShareLastPurchaseValue = firm.SharePrice;
+                    x.Company = firm;
+                    x.LastBuyDate = new DateTime();
+                    sh._portfolio.Add( x );
+                }
+            }
+
+            else if ( actionType == Market.ActionType.Empty )
+            {
+                int i;
+                int f = -1;
+                for ( i = 0; i < sh._portfolio.Count; i++ )
+                {
+                    if ( sh._portfolio[i].Company == firm )
+                    {
+                        f = i;
+                    }
+                }
+                if ( f != -1 )
+                {
+                    Shareholder.PortfolioItem p = sh._portfolio[f];
+                    p.ShareCount = p.ShareCount - shareCount;
+                    if ( p.ShareCount == 0 )
+                    {
+                        sh._portfolio.RemoveAt( f );
+                    }
+                    else if ( p.ShareCount > 0 )
+                    {
+                        sh._portfolio[f] = p;
+                    }
+                }
+                else
+                {
+                    Shareholder.PortfolioItem share = new Shareholder.PortfolioItem();
+                    share.ShareLastPurchaseValue = firm.SharePrice;
+                    share.Company = firm;
+                    share.ShareCount = shareCount;
+                    share.LastBuyDate = new DateTime();
+                    sh._portfolio.Add( share );
+                }
+            }
+            else
+            {
+                throw new ArgumentException( "ActionType to portfolio invalid" );
+            }
+        }
     }
 }

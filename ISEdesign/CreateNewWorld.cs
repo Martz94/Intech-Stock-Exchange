@@ -30,16 +30,27 @@ namespace ISEdesign
         private void _okButton_Click( object sender, EventArgs e )
         {
             //Need to :
-            //- Check input numbers,
-            //- Add possibility to press "enter" to validate
+            //- Check input numbers
             DialogResult = DialogResult.OK;
             Close();
         }
-
         private void _cancelButton_Click( object sender, EventArgs e )
         {
             DialogResult = DialogResult.Cancel;
             Close();
+        }
+
+        private void _Button_KeyDown( object sender, KeyEventArgs e )
+        {
+            if ( e.KeyCode == Keys.Enter )
+            {
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            else if ( e.KeyCode == Keys.Escape )
+            {
+                Close();
+            }
         }
 
         //private void textBox1_KeyPress( object sender, KeyPressEventArgs e )

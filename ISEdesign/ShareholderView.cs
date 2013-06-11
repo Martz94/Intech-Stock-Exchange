@@ -46,7 +46,7 @@ namespace ISEdesign
 
                 foreach (var a in c._portfolio)
                 {
-                    shareValue += a.shareCount * a.company.SharePrice;
+                    shareValue += a.ShareCount * a.Company.SharePrice;
                 }
                 i.SubItems.Add( shareValue.ToString( "C" ) );
 
@@ -63,21 +63,21 @@ namespace ISEdesign
 
             foreach (var a in s._portfolio)
             {
-                ListViewItem i = new ListViewItem( a.company.Name );
+                ListViewItem i = new ListViewItem( a.Company.Name );
                 i.UseItemStyleForSubItems = false;
-                i.SubItems.Add( a.shareCount.ToString() );
+                i.SubItems.Add( a.ShareCount.ToString() );
 
-                i.SubItems.Add( a.company.SharePrice.ToString( "#.###" ) );
-                i.SubItems.Add( a.company.ShareVariation.ToString( "N2" ) + " %" );
+                i.SubItems.Add( a.Company.SharePrice.ToString( "#.###" ) );
+                i.SubItems.Add( a.Company.ShareVariation.ToString( "N2" ) + " %" );
 
-                if (a.company.ShareVariation < 0)
+                if (a.Company.ShareVariation < 0)
                 {
                     i.SubItems[3].ForeColor = System.Drawing.Color.Red;
                 }
                 else i.SubItems[3].ForeColor = System.Drawing.Color.Green;
                 TabShareholder.TabPortfolio.Items.Add( i );
 
-                shareValue += a.shareCount * a.company.SharePrice;
+                shareValue += a.ShareCount * a.Company.SharePrice;
             }
 
             foreach (var o in _market.globalOrderbook)
