@@ -20,6 +20,8 @@ namespace ISEdesign
             InitializeComponent();
         }
 
+        public EventHandler<EventArgs> MarketLoad;
+
         internal void SetMarket( Market m )
         {
             _market = m;
@@ -46,6 +48,8 @@ namespace ISEdesign
             if (loadMarket.ShowDialog() == DialogResult.OK)
             {
                 Market market = _market.Load( loadMarket.FileName );
+                var h = MarketLoad;
+                if (h != null) h( this, new EventArgs() );
             }
         }
 
