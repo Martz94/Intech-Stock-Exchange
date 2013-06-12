@@ -14,6 +14,8 @@ namespace ISEdesign
 {
     public partial class TabShareholder : UserControl
     {
+        int sortColumn = -1;
+
         public ListView TabPortfolio
         {
             get { return listView1; }
@@ -35,6 +37,30 @@ namespace ISEdesign
         public TabShareholder()
         {
             InitializeComponent();
+        }
+
+        private void listView1_ColumnClick( object sender, ColumnClickEventArgs e )
+        {
+           
+            // Determine whether the column is the same as the last column clicked.
+            if ( e.Column != sortColumn )
+            {
+                // Set the sort column to the new column.
+                sortColumn = e.Column;
+                // Set the sort order to ascending by default
+                listView1.Sorting = SortOrder.Ascending;
+            }
+            else
+            {
+                // Determine what the last sort order was and change it
+                if ( listView1.Sorting == SortOrder.Ascending )
+                    listView1.Sorting = SortOrder.Descending;
+                else
+                    listView1.Sorting = SortOrder.Ascending;
+            }
+            // Call the sort method to manually sort
+            listView1.ListViewItemSorter = new _listViewItemComparer( e.Column, listView1.Sorting );
+            listView1.Sort();   
         }
 
     }

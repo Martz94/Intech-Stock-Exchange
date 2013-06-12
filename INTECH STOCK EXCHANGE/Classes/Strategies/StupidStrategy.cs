@@ -13,7 +13,11 @@ namespace INTECH_STOCK_EXCHANGE
         //The stupid strategy consists of buying 1 share of a company that has its share variation superior to 1.0M
         //Checking the cash of the s/h as well
         //Define price proposition according to share variation (buy/sell)
-
+        public override string ToString()
+        {
+            string strat = "Stupid Strategy";
+            return strat.ToString();
+        }
         private Order Buy( Market market, Shareholder shareholder )
         {
             //BUYING

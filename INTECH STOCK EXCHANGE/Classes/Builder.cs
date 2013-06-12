@@ -43,10 +43,9 @@ namespace INTECH_STOCK_EXCHANGE
             for (int t = 0; t < maxShareholders; t++)
             {
                 string name;
-                Random rdm = market.Random;
-                name = Path.GetRandomFileName();
-                name = name.Replace(".", ""); // For Removing the dots and spaces
-                
+                //name = Path.GetRandomFileName();
+                //name = name.Replace(".", ""); // For Removing the dots and spaces
+                name = "Shareholder n°" + t;
                 market.shareholderList.Add( new Shareholder( market, name, 20000.0M ) );
             }
 

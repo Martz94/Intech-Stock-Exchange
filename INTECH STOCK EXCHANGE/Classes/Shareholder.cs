@@ -102,6 +102,7 @@ namespace INTECH_STOCK_EXCHANGE
             get { return _strategy; }
             set { _strategy = value; } 
         }
+        
         public RiskTaker GetRiskIndex
         {
             get { return _riskTaker; }

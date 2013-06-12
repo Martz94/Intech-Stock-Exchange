@@ -15,6 +15,7 @@ namespace ISEdesign
     public partial class ShareholderView : UserControl
     {
         Market _market;
+        private int sortColumn = -1;
 
         public ShareholderView()
         {
@@ -119,9 +120,8 @@ namespace ISEdesign
             foreach (var a in shareholder._portfolio)
             {
                 shareValue += a.ShareCount * a.Company.SharePrice;
-                
-            }
-            serie.Points.Add( (double)shareValue );
+                serie.Points.Add( (double)shareValue );
+            }            
         }
 
         private void _listViewSh_Click( object sender, EventArgs e )
@@ -136,6 +136,6 @@ namespace ISEdesign
                     FillGraphShareholder( c );
                 }
             }
-        }
+        }       
     }
 }
