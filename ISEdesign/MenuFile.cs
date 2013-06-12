@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using INTECH_STOCK_EXCHANGE;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace ISEdesign
 {
@@ -15,6 +18,8 @@ namespace ISEdesign
     {
         Market _market;
 
+
+        public Market Market { get { return _market; } }
         public MenuFile()
         {
             InitializeComponent();
@@ -47,7 +52,7 @@ namespace ISEdesign
 
             if (loadMarket.ShowDialog() == DialogResult.OK)
             {
-                Market market = _market.Load( loadMarket.FileName );
+                _market = _market.Load( loadMarket.FileName );
                 var h = MarketLoad;
                 if (h != null) h( this, new EventArgs() );
             }

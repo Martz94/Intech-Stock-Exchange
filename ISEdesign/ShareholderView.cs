@@ -116,12 +116,12 @@ namespace ISEdesign
             GraphShareholder.Series[0].BorderWidth = 2;
 
             decimal shareValue = 0;
-            foreach (var a in shareholder._portfolio)
+            foreach (var a in shareholder.HistoryPortfolioValue)
             {
-                shareValue += a.ShareCount * a.Company.SharePrice;
-                
+                serie.Points.Add( (double)a );
             }
-            serie.Points.Add( (double)shareValue );
+            serie.Points.Add( (double)shareholder.PortfolioValue );
+            
         }
 
         private void _listViewSh_Click( object sender, EventArgs e )

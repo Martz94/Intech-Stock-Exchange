@@ -275,7 +275,7 @@ namespace INTECH_STOCK_EXCHANGE
 
         public void AddShareholders(List<Shareholder> shareholdersListToAdd)
         {
-            _shareholders.AddRange(shareholdersListToAdd);
+            //_shareholders.AddRange(shareholdersListToAdd);
             RaiseShareholdersListChanged();
         }
 
@@ -286,7 +286,7 @@ namespace INTECH_STOCK_EXCHANGE
                 if (c.Name == oldName)
                 {
                     c.Name = newName;
-                    RaiseCompanyChanged( c );
+                    RaiseCompanyListChanged();
                     return;
                 }
             }

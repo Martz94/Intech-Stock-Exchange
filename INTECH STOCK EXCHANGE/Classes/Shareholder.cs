@@ -30,6 +30,21 @@ namespace INTECH_STOCK_EXCHANGE
         RiskTaker _riskTaker;
         TimeVision _timeVision;
         decimal shareVariation;
+        public List<decimal> HistoryPortfolioValue = new List<decimal>();
+
+
+        public decimal PortfolioValue
+        {
+            get
+            {
+                decimal result = 0;
+                foreach (var a in _portfolio)
+                {
+                    result += a.ShareCount * a.Company.SharePrice;
+                }
+                return result;
+            }
+        }
 
         public Shareholder(Market marketPlace, string Name, decimal Money)
         {

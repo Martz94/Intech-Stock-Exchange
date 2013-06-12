@@ -50,8 +50,10 @@ namespace ISEdesign
                 if (numberRound == 0) GoTimer.Stop();
             }
 
+
             foreach (Shareholder sh in _market.shareholderList)
             {
+                sh.HistoryPortfolioValue.Add(sh.PortfolioValue);
                 Order newOrder = sh.MakeDecision( _market, sh );
                 if (newOrder != null) _market.globalOrderbook.Add( newOrder );
             }
