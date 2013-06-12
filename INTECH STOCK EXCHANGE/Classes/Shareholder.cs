@@ -12,26 +12,64 @@ namespace INTECH_STOCK_EXCHANGE
     [Serializable()]
     public class Shareholder //: IShareholder, IEnumerable
     {
+        readonly Market _market;
         //Profil
-        private string _displayName;
-        private Guid shareholderID; //unique identifier
+        string _displayName;
+        readonly Guid _shareholderID; //unique identifier
         List<Shareholder> _shareholders;
-        public List<Order> _globalOrderbook;//Orderbook of the market
-        public List<PortfolioItem> _portfolio;//company, sharevalue, buydate, sharecount - using a list of structs
-        public PortfolioItem share; //Share (struct type)
+        List<Order> _globalOrderbook;//Orderbook of the market
+        List<PortfolioItem> _portfolio;//company, sharevalue, buydate, sharecount - using a list of structs
         Order.orderType _orderType;
-        private readonly Market market;
-        Company firm;
         decimal _cash;
-        decimal _priceProp;
-        int shareCount;//nb of shares the guy wants to buy/sell
-        private IStrategy _strategy;
-        Order order;
+        IStrategy _strategy;
         RiskTaker _riskTaker;
         TimeVision _timeVision;
-        decimal shareVariation;
         public List<decimal> HistoryPortfolioValue = new List<decimal>();
 
+        public Shareholder(Market marketPlace, string name, decimal money)
+        {
+            if ( money < 0 ) throw new ArgumentException( "An investor must have some money at one point!" );
+
+            _market = marketPlace;
+
+            foreach ( Shareholder x in _market.shareholderList )
+            {
+                if ( x.Name == name ) throw new ArgumentException( "A shareholder already exists with that name!" );
+            }
+            //Assign a strategy
+            //Randomly defines riskTaker and timeVision values
+
+            Array values = Enum.GetValues( typeof( RiskTaker ) );
+            Random random = _market.Random;
+            RiskTaker _riskTaker = (RiskTaker)values.GetValue( random.Next( values.Length ) );
+
+            Array values2 = Enum.GetValues( typeof( TimeVision ) );
+            TimeVision _timeVision = (TimeVision)values2.GetValue( random.Next( values2.Length ) );
+
+            _portfolio = new List<PortfolioItem>();
+            _displayName = name;
+
+            //Random r = market.Random;
+            //int i = r.Next( 100 );
+            //if ( i > 50 ) _strategy = new RandomStrategy();
+            if ( _market.Random.Next( 2 ) == 1 ) _strategy = new StupidStrategy();
+            else _strategy = new RandomStrategy();
+
+            _cash = money;          
+            _shareholderID = Guid.NewGuid();
+        }
+
+        public string Name
+        {
+            get { return _displayName; }
+            set { _displayName = value; }
+        }
+
+        public decimal Capital
+        {
+            get { return _cash; }
+            set { _cash = value; }
+        }
 
         public decimal PortfolioValue
         {
@@ -46,39 +84,6 @@ namespace INTECH_STOCK_EXCHANGE
             }
         }
 
-        public Shareholder(Market marketPlace, string Name, decimal Money)
-        {
-            if ( Money < 0 ) throw new ArgumentException( "An investor must have some money at one point!" );
-
-            market = marketPlace;
-
-            foreach ( Shareholder x in market.shareholderList )
-            {
-                if ( x.Name == Name ) throw new ArgumentException( "A shareholder already exists with that name!" );
-            }
-            //Assign a strategy
-            //Randomly defines riskTaker and timeVision values
-
-            Array values = Enum.GetValues( typeof( RiskTaker ) );
-            Random random = market.Random;
-            RiskTaker _riskTaker = (RiskTaker)values.GetValue( random.Next( values.Length ) );
-
-            Array values2 = Enum.GetValues( typeof( TimeVision ) );
-            TimeVision _timeVision = (TimeVision)values2.GetValue( random.Next( values2.Length ) );
-
-            _portfolio = new List<PortfolioItem>();
-            _displayName = Name;
-
-            //Random r = market.Random;
-            //int i = r.Next( 100 );
-            //if ( i > 50 ) _strategy = new RandomStrategy();
-            if ( market.Random.Next( 2 ) == 1 ) _strategy = new StupidStrategy();
-            else _strategy = new RandomStrategy();
-
-            _cash = Money;
-           
-            shareholderID = Guid.NewGuid();
-        }
         public Order MakeDecision( Market market, Shareholder shareholder )
         {
             //Call an algorithm here taking into account history, industry and strategy to determine:
@@ -91,18 +96,6 @@ namespace INTECH_STOCK_EXCHANGE
             return  _strategy.MakeDecision(market, this);
         }
         
-        public string Name
-        {
-            get { return _displayName; }
-            set { _displayName = value; }
-        }
-
-        public decimal Capital
-        {
-            get { return _cash; }
-            set { _cash = value; }
-        }
-
         [Serializable]
         public class PortfolioItem
         {
@@ -126,31 +119,40 @@ namespace INTECH_STOCK_EXCHANGE
         {
             get { return _timeVision; }
         }
-        public enum RiskTaker
+
+        public enum RiskTaker : int
         {
-            Bold,
-            Cautious,
-            Crazy,
+            Bold = 0,
+            Cautious = 1,
+            Crazy = 2,
+            MaxValue = Crazy
         }
 
-        enum TimeVision
+        public enum TimeVision
         {
-            shortTerm,
-            middleTerm,
-            longTerm,
+            ShortTerm,
+            MiddleTerm,
+            LongTerm,
         }
 
-        public Guid GetID
+        public Guid Id
         {
-            get { return shareholderID; }
+            get { return _shareholderID; }
         }
+
+        /// <summary>
+        /// Called when:
+        /// - The market opens for the 1st time,
+        /// - Transactions need to be made,
+        /// 
+        ///  (!) automatically creates a new struct in the portfolio if the s/h does not already hold at least 1 action of the firm
+        ///  (!) automatically removes a struct if the s/h holds 0 action of the firm
+        /// </summary>
+        /// <param name="actionType"></param>
+        /// <param name="shareCount"></param>
+        /// <param name="firm"></param>
+        /// <param name="sh"></param>
         public void AlterPortfolio( Market.ActionType actionType, int shareCount, Company firm, Shareholder sh )
-        //Called when:
-        //- The market opens for the 1st time,
-        //- Transactions need to be made,
-
-        // (!) automatically creates a new struct in the portfolio if the s/h does not already hold at least 1 action of the firm
-        // (!) automatically removes a struct if the s/h holds 0 action of the firm
         {
             //Debug.Assert( firm != null );
 
@@ -223,5 +225,7 @@ namespace INTECH_STOCK_EXCHANGE
                 throw new ArgumentException( "ActionType to portfolio invalid" );
             }
         }
+
+        public IList<PortfolioItem> Portfolio { get { return _portfolio; } }
     }
 }

@@ -46,11 +46,11 @@ namespace INTECH_STOCK_EXCHANGE
                 foreach ( Shareholder sh in market.shareholderList )
                 {
                     Order newOrder = sh.MakeDecision( market, sh );
-                    if ( newOrder != null ) market.globalOrderbook.Add( newOrder );
+                    if ( newOrder != null ) market.GlobalOrderbook.Add( newOrder );
                 }
                 System.Diagnostics.Debug.WriteLine( market.OrderBookToString() );
                 market.MatchOrders();
-                market.Clear();
+                market.ClearOrderbook();
 
                 //System.Diagnostics.Debug.WriteLine( "after round #" + (i + 1) );
                 //System.Diagnostics.Debug.WriteLine( market.ToString() );

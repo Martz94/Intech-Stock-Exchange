@@ -61,7 +61,7 @@ namespace INTECH_STOCK_EXCHANGE
             List<Shareholder.PortfolioItem> targetList = new List<Shareholder.PortfolioItem>();
             decimal mentalState;
 
-            foreach ( Shareholder.PortfolioItem share in shareholder._portfolio )
+            foreach ( Shareholder.PortfolioItem share in shareholder.Portfolio )
             {
                 if ( share.Company.ShareVariation < -1.0M ) targetList.Add( share );
             }

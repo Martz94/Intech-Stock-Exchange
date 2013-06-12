@@ -47,11 +47,11 @@ namespace INTECH_STOCK_EXCHANGE
             Company firm;
             Shareholder.PortfolioItem share = new Shareholder.PortfolioItem();
             Random r = market.Random;
-            int k = r.Next( shareholder._portfolio.Count );
+            int k = r.Next( shareholder.Portfolio.Count );
 
-            if ( k > -1 && shareholder._portfolio.Count > 0)
+            if ( k > -1 && shareholder.Portfolio.Count > 0)
             {
-                share = shareholder._portfolio[k];
+                share = shareholder.Portfolio[k];
                 priceProp = share.Company.SharePrice * (r.Next( 201 ) + 899) / 1000;
                 //priceProp = share.company.SharePrice + 5;
                 quantity = (int)(0.5 * share.ShareCount);

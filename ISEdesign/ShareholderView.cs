@@ -50,17 +50,10 @@ namespace ISEdesign
             _listViewSh.Items.Clear();
             foreach (var s in _market.shareholderList)
             {
-                decimal shareValue = 0;
 
                 ListViewItem i = new ListViewItem( s.Name );
                 i.SubItems.Add( s.Capital.ToString("C") );
-
-                foreach (var a in s._portfolio)
-                {
-                    shareValue += a.ShareCount * a.Company.SharePrice;
-                }
-                i.SubItems.Add( shareValue.ToString( "C" ) );
-
+                i.SubItems.Add( s.PortfolioValue.ToString( "C" ) );
                 i.SubItems.Add( s.Strategy.ToString() );
                 _listViewSh.Items.Add( i );
             }
@@ -70,9 +63,8 @@ namespace ISEdesign
         {
             TabShareholder.TabPortfolio.Items.Clear();
             TabShareholder.TabOrderBook.Items.Clear();
-            decimal shareValue = 0;
 
-            foreach (var a in s._portfolio)
+            foreach (var a in s.Portfolio)
             {
                 ListViewItem i = new ListViewItem( a.Company.Name );
                 i.UseItemStyleForSubItems = false;
@@ -87,11 +79,9 @@ namespace ISEdesign
                 }
                 else i.SubItems[3].ForeColor = System.Drawing.Color.Green;
                 TabShareholder.TabPortfolio.Items.Add( i );
-
-                shareValue += a.ShareCount * a.Company.SharePrice;
             }
 
-            foreach (var o in _market.globalOrderbook)
+            foreach (var o in _market.GlobalOrderbook)
             {
                 if (o.OrderMaker.Name == s.Name)
                 {
@@ -116,11 +106,10 @@ namespace ISEdesign
             GraphShareholder.Series[0].ChartType = SeriesChartType.FastLine;
             GraphShareholder.Series[0].BorderWidth = 2;
 
-            decimal shareValue = 0;
             foreach (var a in shareholder.HistoryPortfolioValue)
             {
                 serie.Points.Add( (double)a );
-            serie.Points.Add( (double)shareholder.PortfolioValue );
+                //serie.Points.Add( (double)shareholder.PortfolioValue );
             
             }            
         }

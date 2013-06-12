@@ -110,13 +110,14 @@ namespace INTECH_STOCK_EXCHANGE
         {
             get { return _shareholders; }
         }
-        public List<Order> globalOrderbook
+
+        public List<Order> GlobalOrderbook
         {
             get { return _globalOrderbook; }
-            set { _globalOrderbook = value; }
+            internal set { _globalOrderbook = value; }
         }
  
-        public void Clear()
+        public void ClearOrderbook()
         //(!) Keeping track on how many rounds each order undergo before being cleared from the orderbook
         //Clearing: 
         //- The outdated orders (by checking their expiration dates)
@@ -163,7 +164,7 @@ namespace INTECH_STOCK_EXCHANGE
                         exchangeCount = Math.Min(exchangeCount, (int)(oBuy.OrderMaker.Capital / exchangePrice));
                         int nbSellerShares = 0;
 
-                        foreach (var s in oSell.OrderMaker._portfolio)
+                        foreach (var s in oSell.OrderMaker.Portfolio)
                         {
                             if (s.Company == oSell.Company) nbSellerShares = s.ShareCount;
                         }
@@ -235,7 +236,7 @@ namespace INTECH_STOCK_EXCHANGE
             foreach ( Shareholder shareholder in _shareholders )
             {
                 sb.Append( shareholder.Name ).AppendLine();
-                foreach ( Shareholder.PortfolioItem share in shareholder._portfolio )
+                foreach ( Shareholder.PortfolioItem share in shareholder.Portfolio )
                 {
                     sb.Append("\t").Append( share.Company.Name ).Append( " : " ).Append( share.ShareCount ).AppendLine();
                 }
@@ -338,7 +339,7 @@ namespace INTECH_STOCK_EXCHANGE
             //}
         }
 
-        public IList<string> companyNames = new List<string>
+        public List<string> companyNames = new List<string>
         {
             "Lafarge",
             "Safran",
@@ -379,7 +380,17 @@ namespace INTECH_STOCK_EXCHANGE
             "Oracle",
             "Ryanair",
             "SanDisk",
-            "Starbucks"
+            "Starbucks",
+            "LinkedIn",
+            "Invenietis",
+            "Sun",
+            "Oaken",
+            "Atos",
+            "Neurones",
+            "Steria",
+            "TalentSoft",
+            "Thales",
+            "Total"
         };
         public IList<string> GetNameList { get { return shareholderNames; } }
 

@@ -11,9 +11,9 @@ namespace INTECH_STOCK_EXCHANGE
     {
         public static void CreateAll(Market market, int maxCompanies, int maxShareholders )
         {
-            market.companyList.Clear();
-            market.shareholderList.Clear();
-
+            //market.companyList.Clear();
+            //market.shareholderList.Clear();
+            List<string> tmp = market.companyNames;
             // Create companies with companies' numbers defined by user
             for (int i = 0; i < maxCompanies; i++)
             {
@@ -26,20 +26,23 @@ namespace INTECH_STOCK_EXCHANGE
 
                 decimal sharePrice = (decimal)price;
 
-                Random r2 = market.Random;
-                int shareVolume = r2.Next( 500000 );
+                //Random r2 = market.Random;
+                int shareVolume = r.Next( 500000 );
 
                 Array values = Enum.GetValues( typeof( Company.Industry ) );
-                Random random = market.Random;
-                Company.Industry randomInd = (Company.Industry)values.GetValue( random.Next( values.Length ) );
+                //Random random = market.Random;
+                Company.Industry randomInd = (Company.Industry)values.GetValue( r.Next( values.Length ) );
 
-                Random rdm = market.Random;
-                int k = rdm.Next( market.companyNames.Count );
+                //Random rdm = market.Random;
+                int k = r.Next( market.companyNames.Count );
                 string name = market.companyNames[k];
+                
                 market.companyNames.RemoveAt( k );
 
                 market.AddOrUpdateCompany( name, randomInd, sharePrice, shareVolume );
             }
+            market.companyNames = tmp;
+
             for (int t = 0; t < maxShareholders; t++)
             {
                 string name;

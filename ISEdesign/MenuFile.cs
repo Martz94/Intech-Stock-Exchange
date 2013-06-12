@@ -40,7 +40,19 @@ namespace ISEdesign
 
                 if (r == DialogResult.OK)
                 {
-                    Builder.CreateAll( _market, d.CompanyNumber, d.ShareholderNumber );
+                    if (d.CompanyNumber > 0 && d.CompanyNumber <= 50 && d.ShareholderNumber > 0)
+                    {
+                        _market.companyList.Clear();
+                        _market.shareholderList.Clear();
+                        _market.ClearOrderbook();
+
+                        Builder.CreateAll( _market, d.CompanyNumber, d.ShareholderNumber );
+                    }
+                    else
+                    {
+                        MessageBox.Show( "Wrong company or shareholder number input data" );
+                        _initializeMenu_Click (sender, e);
+                    }
                 }
             }
         }
