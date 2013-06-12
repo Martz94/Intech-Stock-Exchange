@@ -136,7 +136,7 @@ namespace INTECH_STOCK_EXCHANGE
         // (!) automatically creates a new struct in the portfolio if the s/h does not already hold at least 1 action of the firm
         // (!) automatically removes a struct if the s/h holds 0 action of the firm
         {
-            Debug.Assert( firm != null );
+            //Debug.Assert( firm != null );
 
             if ( actionType == Market.ActionType.Fill )
             {

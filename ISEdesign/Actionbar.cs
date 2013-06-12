@@ -69,7 +69,7 @@ namespace ISEdesign
 
             if (_market.SuperShareholder != null)
             {
-                ShareholderView.fillShareholderPortfolio( _market.SuperShareholder );
+                ShareholderView.FillShareholderPortfolio( _market.SuperShareholder );
                 ShareholderView.FillGraphShareholder( _market.SuperShareholder );
             }
                 

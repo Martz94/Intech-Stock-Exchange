@@ -38,18 +38,19 @@
             // 
             // menuStrip1
             // 
-            this.menuStrip1.BackColor = System.Drawing.Color.DarkMagenta;
+            this.menuStrip1.BackColor = System.Drawing.Color.SkyBlue;
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._fileMenu});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(47, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(45, 22);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // _fileMenu
             // 
+            this._fileMenu.BackColor = System.Drawing.Color.SkyBlue;
             this._fileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._initializeMenu,
             this._loadMenu,
@@ -83,9 +84,10 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.Controls.Add(this.menuStrip1);
             this.Name = "MenuFile";
-            this.Size = new System.Drawing.Size(47, 24);
+            this.Size = new System.Drawing.Size(45, 22);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);

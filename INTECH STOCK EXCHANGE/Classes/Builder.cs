@@ -4,9 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AutoPoco;
-using AutoPoco.Engine;
-using AutoPoco.DataSources;
 
 namespace INTECH_STOCK_EXCHANGE
 {
@@ -43,40 +40,17 @@ namespace INTECH_STOCK_EXCHANGE
 
                 market.AddOrUpdateCompany( name, randomInd, sharePrice, shareVolume );
             }
-
-            List<Shareholder> shareholdersList = new List<Shareholder>();
-            // Create shareholders with shareholders' numbers defined by user
-            IGenerationSessionFactory mFactory = AutoPocoContainer.Configure( x =>
-            {
-                x.Conventions( c =>
-                {
-                    c.UseDefaultConventions();
-                });
-                    x.AddFromAssemblyContainingType<SimpleUser>();
-                    x.Include<SimpleUser>()
-                        .Setup( c => c.FirstName ).Use<FirstNameSource>()
-                        .Setup( c => c.LastName ).Use<LastNameSource>();
-            });
-
-            IGenerationSession session = mFactory.CreateSession();
-
-            //SimpleUser userName = session.Single<SimpleUser>().Get();
-            IList<SimpleUser> users = session.List<SimpleUser>( maxShareholders ).Get();
-                
             for (int t = 0; t < maxShareholders; t++)
             {
                 string name;
-                //Random rdm = market.Random;
-                //name = Path.GetRandomFileName();
-                //name = name.Replace(".", ""); // For Removing the dots and spaces
-                //}
-                //shareholdersList.Add( new Shareholder( market, name, 20000.0M ) );
-                SimpleUser user = users.FirstOrDefault();
-                shareholdersList.Add( new Shareholder( market, user.FirstName + " " + user.LastName, 20000.0M ) );
-                users.Remove( user );
+                Random rdm = market.Random;
+                name = Path.GetRandomFileName();
+                name = name.Replace(".", ""); // For Removing the dots and spaces
+                
+                market.shareholderList.Add( new Shareholder( market, name, 20000.0M ) );
             }
 
-            market.AddShareholders( shareholdersList );
+            market.AddShareholders( market.shareholderList );
 
             // Filling the shareholders portfolios
             foreach (Shareholder s in market.shareholderList)

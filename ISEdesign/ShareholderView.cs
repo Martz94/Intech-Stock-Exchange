@@ -47,25 +47,25 @@ namespace ISEdesign
         public void FillShareholdersList()
         {
             _listViewSh.Items.Clear();
-            foreach (var c in _market.shareholderList)
+            foreach (var s in _market.shareholderList)
             {
                 decimal shareValue = 0;
 
-                ListViewItem i = new ListViewItem( c.Name );
-                i.SubItems.Add( c.Capital.ToString("C") );
+                ListViewItem i = new ListViewItem( s.Name );
+                i.SubItems.Add( s.Capital.ToString("C") );
 
-                foreach (var a in c._portfolio)
+                foreach (var a in s._portfolio)
                 {
                     shareValue += a.ShareCount * a.Company.SharePrice;
                 }
                 i.SubItems.Add( shareValue.ToString( "C" ) );
 
-                i.SubItems.Add( c.Strategy.ToString() );
+                i.SubItems.Add( s.Strategy.ToString() );
                 _listViewSh.Items.Add( i );
             }
         }
 
-        public void fillShareholderPortfolio( Shareholder s )
+        public void FillShareholderPortfolio( Shareholder s )
         {
             TabShareholder.TabPortfolio.Items.Clear();
             TabShareholder.TabOrderBook.Items.Clear();
@@ -118,10 +118,10 @@ namespace ISEdesign
             decimal shareValue = 0;
             foreach (var a in shareholder._portfolio)
             {
-                shareValue += a.shareCount * a.company.SharePrice;
-                serie.Points.Add( (double)shareValue );
+                shareValue += a.ShareCount * a.Company.SharePrice;
+                
             }
-            
+            serie.Points.Add( (double)shareValue );
         }
 
         private void _listViewSh_Click( object sender, EventArgs e )
@@ -132,7 +132,7 @@ namespace ISEdesign
                 if (c.Name == i.Text)
                 {
                     _market.SuperShareholder = c;
-                    fillShareholderPortfolio( c );
+                    FillShareholderPortfolio( c );
                     FillGraphShareholder( c );
                 }
             }
