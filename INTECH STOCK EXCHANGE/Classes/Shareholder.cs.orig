@@ -5,7 +5,11 @@ using System.Text;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using System.Collections;
+<<<<<<< HEAD
 using System.Runtime.Serialization;
+=======
+using System.Diagnostics;
+>>>>>>> origin/develop
 
 namespace INTECH_STOCK_EXCHANGE
 {
@@ -88,7 +92,10 @@ namespace INTECH_STOCK_EXCHANGE
             set { _cash = value; }
         }
 
+<<<<<<< HEAD
         [Serializable]
+=======
+>>>>>>> origin/develop
         public class PortfolioItem
         {
             public Company Company { get; set; }

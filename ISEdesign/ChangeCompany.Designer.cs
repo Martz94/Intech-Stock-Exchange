@@ -79,7 +79,7 @@
             this._companyNameTextBox.Location = new System.Drawing.Point(102, 16);
             this._companyNameTextBox.Name = "_companyNameTextBox";
             this._companyNameTextBox.Size = new System.Drawing.Size(114, 20);
-            this._companyNameTextBox.TabIndex = 4;
+            this._companyNameTextBox.TabIndex = 0;
             // 
             // _shareValueTextBox
             // 
@@ -87,6 +87,7 @@
             this._shareValueTextBox.Name = "_shareValueTextBox";
             this._shareValueTextBox.Size = new System.Drawing.Size(45, 20);
             this._shareValueTextBox.TabIndex = 5;
+            this._shareValueTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this._okButton_KeyDown);
             // 
             // ChangeCompany
             // 
@@ -101,6 +102,7 @@
             this.Controls.Add(this.label1);
             this.Name = "ChangeCompany";
             this.Text = "ChangeCompany";
+            this.Enter += new System.EventHandler(this.ChangeCompany_Enter);
             this.ResumeLayout(false);
             this.PerformLayout();
 

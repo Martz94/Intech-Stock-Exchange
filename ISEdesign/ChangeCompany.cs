@@ -15,6 +15,7 @@ namespace ISEdesign
         public ChangeCompany()
         {
             InitializeComponent();
+            this._companyNameTextBox.Focus();
         }
 
         public string CompanyName
@@ -34,6 +35,8 @@ namespace ISEdesign
 
         private void _buttonOk_Click( object sender, EventArgs e )
         {
+            //Need to :
+            //- Check input numbers,           
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -42,6 +45,20 @@ namespace ISEdesign
         {
             DialogResult = DialogResult.Cancel;
             Close();
+        }
+
+        private void _okButton_KeyDown( object sender, KeyEventArgs e )
+        {
+            if ( e.KeyCode == Keys.Enter )
+            {
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+        }
+
+        private void ChangeCompany_Enter( object sender, EventArgs e )
+        {
+            _companyNameTextBox.Focus();
         }
     }
 }

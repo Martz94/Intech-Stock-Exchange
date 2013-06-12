@@ -48,10 +48,10 @@ namespace INTECH_STOCK_EXCHANGE
             if ( k > -1 && shareholder._portfolio.Count > 0)
             {
                 share = shareholder._portfolio[k];
-                priceProp = share.company.SharePrice * (r.Next( 201 ) + 899) / 1000;
+                priceProp = share.Company.SharePrice * (r.Next( 201 ) + 899) / 1000;
                 //priceProp = share.company.SharePrice + 5;
-                quantity = (int)(0.5 * share.shareCount);
-                firm = share.company;
+                quantity = (int)(0.5 * share.ShareCount);
+                firm = share.Company;
 
                 return new Order( Order.orderType.Sell, priceProp, quantity, firm, shareholder );
             }

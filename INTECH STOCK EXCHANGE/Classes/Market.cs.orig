@@ -1,22 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace INTECH_STOCK_EXCHANGE
 {
+    [Serializable]
     public class Market
     {
-        bool _orderCount = false;
         List<Shareholder> _shareholders;
         List<Company> _companies;
         List<Order> _globalOrderbook;
-        Order order;
-        Company company;
-        Shareholder.pItem share;
-        int transactionCount = 0;
+        public Company SuperCompany;
+        public Shareholder SuperShareholder;
+<<<<<<< HEAD
+        Shareholder.PortfolioItem share;
+=======
+>>>>>>> origin/develop
+        int _transactionCount = 0;
+        readonly Random _random;
+
+        [NonSerialized]
+        EventHandler<EventArgs> _companyListChanged;
+        [NonSerialized]
+        EventHandler<EventArgs> _shareholdersListChanged;
+        [NonSerialized]
+        EventHandler<CompanyChangedArgs> _companyChanged;
 
         public enum ActionType
         {
@@ -28,8 +43,70 @@ namespace INTECH_STOCK_EXCHANGE
         {
             _globalOrderbook = new List<Order>();
             _shareholders = new List<Shareholder>();
-            _companies = new List<Company>();   
+            _companies = new List<Company>();
+            _random = new Random();
         }
+
+        public event EventHandler<EventArgs> CompanyListChanged
+        {
+            add { _companyListChanged = (EventHandler<EventArgs>)Delegate.Combine( (Delegate)_companyListChanged, (Delegate)value ); }
+            remove { _companyListChanged = (EventHandler<EventArgs>)Delegate.Remove( (Delegate)_companyListChanged, (Delegate)value ); }
+        }
+
+        public event EventHandler<EventArgs> ShareholdersListChanged
+        {
+            add { _shareholdersListChanged = (EventHandler<EventArgs>)Delegate.Combine( (Delegate)_shareholdersListChanged, (Delegate)value ); }
+            remove { _shareholdersListChanged = (EventHandler<EventArgs>)Delegate.Remove( (Delegate)_shareholdersListChanged, (Delegate)value ); }
+        }
+
+        public event EventHandler<CompanyChangedArgs> CompanyChanged
+        {
+            add { _companyChanged = (EventHandler<CompanyChangedArgs>)Delegate.Combine( (Delegate)_companyChanged, (Delegate)value ); }
+            remove { _companyChanged = (EventHandler<CompanyChangedArgs>)Delegate.Remove( (Delegate)_companyChanged, (Delegate)value ); }
+        }
+
+        void RaiseCompanyChanged( Company c )
+        {
+            var h = _companyChanged;
+            if (h != null) h( this, new CompanyChangedArgs( c ) );
+        }
+
+        void RaiseShareholdersListChanged()
+        {
+            var h = _shareholdersListChanged;
+            if (h != null) h( this, EventArgs.Empty );
+        }
+
+        void RaiseCompanyListChanged()
+        {
+            var h = _companyListChanged;
+            if (h != null) h( this, EventArgs.Empty );
+        }
+
+        public IReadOnlyList<Company> Companies { get { return _companies; } }
+
+        public Random Random { get { return _random; } }
+
+<<<<<<< HEAD
+        public void Save (string filename)
+        {
+            using (FileStream file = File.Open( filename, FileMode.OpenOrCreate ))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                formatter.Serialize( file, this );
+            }
+        }
+
+        public Market Load( string filename )
+        {
+            using (FileStream file = File.Open( filename, FileMode.Open ))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                Market market = (Market)formatter.Deserialize( file );
+                return market;
+            }
+        }
+
         public void AlterPortfolio( Market.ActionType actionType, int shareCount, Company firm, Shareholder sh )
         //Called when:
         //- The market opens for the 1st time,
@@ -38,6 +115,8 @@ namespace INTECH_STOCK_EXCHANGE
         // (!) automatically creates a new struct in the portfolio if the s/h does not already hold at least 1 action of the firm
         // (!) automatically removes a struct if the s/h holds 0 action of the firm
         {
+            Debug.Assert( firm != null );
+
             if(actionType == Market.ActionType.Fill)
             {
                 int i;
@@ -51,7 +130,7 @@ namespace INTECH_STOCK_EXCHANGE
                 }
                 if(f != -1)
                 {
-                    Shareholder.pItem p = sh._portfolio[f];
+                    Shareholder.PortfolioItem p = sh._portfolio[f];
                     p.shareCount = p.shareCount + shareCount;
                     share.shareLastPurchaseValue = firm.SharePrice;// last purchase price kept
                     share.lastBuyDate = new DateTime();     // last purchase date
@@ -59,7 +138,7 @@ namespace INTECH_STOCK_EXCHANGE
                 }
                 else                 
                 {                   
-                    share = new Shareholder.pItem();
+                    share = new Shareholder.PortfolioItem();
                     share.shareCount = shareCount;
                     share.shareLastPurchaseValue = firm.SharePrice;
                     share.company = firm;
@@ -81,7 +160,7 @@ namespace INTECH_STOCK_EXCHANGE
                 }
                 if(f != -1)
                 {
-                    Shareholder.pItem p = sh._portfolio[f];
+                    Shareholder.PortfolioItem p = sh._portfolio[f];
                     p.shareCount = p.shareCount - shareCount;
                     if(p.shareCount == 0)
                     {
@@ -94,7 +173,7 @@ namespace INTECH_STOCK_EXCHANGE
                 }
                 else           
                 {                   
-                    share = new Shareholder.pItem();
+                    share = new Shareholder.PortfolioItem();
                     share.shareLastPurchaseValue = firm.SharePrice;
                     share.company = firm;
                     share.shareCount = shareCount;
@@ -107,27 +186,9 @@ namespace INTECH_STOCK_EXCHANGE
                 throw new ArgumentException("ActionType to portfolio invalid");
             }           
         }
-        //public List<MatchOrders> MatchOrders
-        //{
-        //    get
-        //    {
-        //        return _matchOrders;
-        //    }
-        //}
-        public bool minimumOrderCount()
-        {
-            //Checking in the order book whether there is enough potential orders to open the market
-            //If so, then _orderCount goes "true"
-            if ( _globalOrderbook.Count > 20 )
-            {
-                return _orderCount = true;
-            }
-            else
-            {
-                return _orderCount;
-            }
-        }
 
+=======
+>>>>>>> origin/develop
         public List<Company> companyList
         {
             get { return _companies; }
@@ -153,75 +214,85 @@ namespace INTECH_STOCK_EXCHANGE
 
             foreach ( Order o in _globalOrderbook )
             {
-                if ( o.OrderStatus != Order.orderStatus.Dispatched || o.TimedOut == false)
+                if ( o.OrderStatus != Order.orderStatus.Dispatched && o.TimedOut == false)
                 {             
                     tmp.Add( o );                  
                 }
             }
             _globalOrderbook.Clear();
             _globalOrderbook = tmp;
-            tmp.Clear();
         }
         public void MatchOrders()
         //Matching orders algorithm maximalizing transactions:
         //- Set the buyer/seller IDs to both orders properties when a deal's been made,
         //- Mark up the orders that found a match for further removal (Order.orderAvailability.Matched;)
         {
-            foreach ( Order o1 in _globalOrderbook )
+            foreach ( Order oBuy in _globalOrderbook )
             {
-                if ( o1._orderType != Order.orderType.Buy ) continue;
+                if ( oBuy._orderType != Order.orderType.Buy ) continue;
 
-                foreach ( Order o2 in _globalOrderbook )
+                foreach ( Order oSell in _globalOrderbook )
                 {
                     //Checking it is not the same person who made the 2 orders
-                    if ( o1.GetOrderMakerID == o2.GetOrderMakerID ) continue;
+                    if ( oBuy.OrderMaker == oSell.OrderMaker ) continue;
 
-                    if ( o2._orderType != Order.orderType.Sell ) continue;
+                    if ( oSell._orderType != Order.orderType.Sell ) continue;
 
                     // Checking if the orders are about the same company
-                    if ( o1.Company == o2.Company 
-                        && o1.GetOrderSharePriceProposal >= o2.GetOrderSharePriceProposal
-                        && o1.GetOrderShareQuantity <= o2.GetOrderShareQuantity)
-                    {
-                        decimal price = o1.GetOrderSharePriceProposal;    // our decision!
-                        MakeTransaction( o1.GetOrderMakerID, o2.GetOrderMakerID, o1.Company, o1.GetOrderShareQuantity, price );
-                        o1.OrderStatus = Order.orderStatus.Dispatched;
+                    if ( oBuy.Company != oSell.Company) continue;
 
-                        o2.decreaseOrderShareQuantity( o1.GetOrderShareQuantity );
-                        if (o2.GetOrderShareQuantity == 0) o2.OrderStatus = Order.orderStatus.Dispatched;
+                    if (oBuy.OrderShareQuantity == 0 || oSell.OrderShareQuantity == 0) continue;
+
+                    if(oBuy.OrderSharePriceProposal >= oSell.OrderSharePriceProposal )
+                    {
+                        decimal exchangePrice = oBuy.OrderSharePriceProposal;    // our call!
+                        int exchangeCount = Math.Min( oBuy.OrderShareQuantity, oSell.OrderShareQuantity );
+                        exchangeCount = Math.Min(exchangeCount, (int)(oBuy.OrderMaker.Capital / exchangePrice));
+                        int nbSellerShares = 0;
+
+                        foreach (var s in oSell.OrderMaker._portfolio)
+                        {
+                            if (s.Company == oSell.Company) nbSellerShares = s.ShareCount;
+                        }
+
+                        exchangeCount = Math.Min( exchangeCount, nbSellerShares );
+
+                        if(exchangeCount > 0) MakeTransaction( oBuy, oSell, exchangeCount, exchangePrice );
                     }
                 }
             }
-        }
-
-        private Shareholder getShareholderById( Guid id )
-        {
-            foreach ( Shareholder s in _shareholders )
-            {
-                if ( id == s.GetID ) return s;
-            }
-            throw new ArgumentException();
+            RaiseCompanyListChanged();
         }
   
-        private void MakeTransaction( Guid buyerId, Guid sellerId, Company company, int quantity, decimal price )
+        private void MakeTransaction( Order oBuy, Order oSell, int quantity, decimal price )
         {
-            Shareholder buyer = getShareholderById(buyerId);
-            Shareholder seller = getShareholderById(sellerId);
+            Debug.Assert( oBuy.Company == oSell.Company );
+            Debug.Assert( oBuy.OrderMaker != oSell.OrderMaker );
+            Debug.Assert( quantity > 0 );
+
+            Shareholder buyer =  oBuy.OrderMaker;
+            Shareholder seller = oSell.OrderMaker;
+            Company company = oSell.Company;
 
             // Updating buyer info
             buyer.Capital = buyer.Capital - price * quantity;
-            this.AlterPortfolio(Market.ActionType.Fill, quantity, company, buyer);
+            buyer.AlterPortfolio(Market.ActionType.Fill, quantity, company, buyer);
 
             // Updating seller info
             seller.Capital = seller.Capital + price * quantity;
-            this.AlterPortfolio(Market.ActionType.Empty, quantity, company, seller);
+            seller.AlterPortfolio(Market.ActionType.Empty, quantity, company, seller);
 
             // Updating market data
             UpdateMarketData( company, price );
-            transactionCount++;
+            _transactionCount++;
 
-            System.Diagnostics.Debug.WriteLine( "[TRANSACTION] : " + buyer.Name + " baught to " + seller.Name + " " + quantity + " shares of " + company.Name + " at " + price);
-            System.Diagnostics.Debug.WriteLine(transactionCount);
+            System.Diagnostics.Debug.WriteLine( "[TRANSACTION] : " + buyer.Name + " bought to " + seller.Name + " " + quantity + " shares of " + company.Name + " at " + price);
+            System.Diagnostics.Debug.WriteLine("Transaction number : " + _transactionCount);
+            
+            oBuy.DecreaseOrderShareQuantity( quantity );
+            oSell.DecreaseOrderShareQuantity( quantity );
+            if ( oBuy.OrderShareQuantity == 0 ) oBuy.OrderStatus = Order.orderStatus.Dispatched;
+            if ( oSell.OrderShareQuantity == 0 ) oSell.OrderStatus = Order.orderStatus.Dispatched;
         }
 
         //Currently: Defining the new company share price based upon the latest exchange in the market
@@ -229,24 +300,36 @@ namespace INTECH_STOCK_EXCHANGE
         {
             decimal newVariation = ((price - company.SharePrice) / company.SharePrice)*100;
             company.ShareVariation = newVariation;
+
             company.SharePrice = price; 
         }
-
+        public String OrderBookToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach ( Order order in _globalOrderbook )
+            {
+                sb.Append(order._orderType ).AppendLine();
+                sb.Append( "\t" ).Append( order.Company.Name ).AppendLine();
+                sb.Append( "\t" ).Append( "SP : " ).Append( order.Company.SharePrice).AppendLine();
+                sb.Append( "\t" ).Append( "Q : " ).Append( order.OrderShareQuantity ).AppendLine();
+                sb.Append( "\t" ).Append( "Prop : " ).Append( order.OrderSharePriceProposal ).AppendLine();
+            }
+            return sb.ToString();
+        }
         public override String ToString()
         {
             StringBuilder sb = new StringBuilder();
             foreach ( Shareholder shareholder in _shareholders )
             {
                 sb.Append( shareholder.Name ).AppendLine();
-                foreach ( Shareholder.pItem share in shareholder._portfolio )
+                foreach ( Shareholder.PortfolioItem share in shareholder._portfolio )
                 {
-                    sb.Append("\t").Append( share.company.Name ).Append( " : " ).Append( share.shareCount ).AppendLine();
+                    sb.Append("\t").Append( share.Company.Name ).Append( " : " ).Append( share.ShareCount ).AppendLine();
                 }
             }
             return sb.ToString();
         }
 
-<<<<<<< HEAD
         public Order.orderType EstimateOrderbookBalance(Market market)
         {
             int buy = 0;
@@ -260,7 +343,88 @@ namespace INTECH_STOCK_EXCHANGE
             if ( buy > sell ) return Order.orderType.Sell;
             else return Order.orderType.Buy;
         }
-=======
+
+        public void AddOrUpdateCompany( string name, Company.Industry ind, decimal shareValue, int sharevolume )
+        {
+            Company c = _companies.FirstOrDefault( company => company.Name == name );
+            if (c == null)
+            {
+                c = new Company( this, name, ind, shareValue, sharevolume );
+                _companies.Add( c );
+                RaiseCompanyListChanged();
+            }
+            else if (c.SharePrice != shareValue)
+            {
+                c.SharePrice = shareValue;
+                RaiseCompanyChanged( c );
+            }
+        }
+
+        public void AddShareholders(List<Shareholder> shareholdersListToAdd)
+        {
+            _shareholders.AddRange(shareholdersListToAdd);
+            RaiseShareholdersListChanged();
+        }
+
+        public void ChangeCompanyName(string oldName, string newName)
+        {
+            foreach (var c in _companies)
+            {
+                if (c.Name == oldName)
+                {
+                    c.Name = newName;
+                    RaiseCompanyChanged( c );
+                    return;
+                }
+            }
+        }
+
+        public bool CheckNameCompany (string Name)
+        {
+            foreach (var c in _companies)
+            {
+                if (c.Name == Name)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public void UpdateCompanyPrice(string name, decimal newPrice)
+        {
+            foreach (var c in _companies)
+            {
+                if (c.Name == name)
+                {
+                    c.SharePrice = newPrice;
+                    RaiseCompanyChanged( c );
+                    return;
+                }
+            }
+        }
+
+        public void AddOrUpdateShareholders( string name, decimal money )
+        {
+            Shareholder c = _shareholders.FirstOrDefault( company => company.Name == name );
+            if (c == null)
+            {
+                c = new Shareholder( this, name, money );
+                _shareholders.Add( c );
+                RaiseShareholdersListChanged();
+            }
+            //else if (c.SharePrice != shareValue)
+            //{
+            //    c.SharePrice = shareValue;
+            //    var h = CompanyChanged;
+            //    if (h != null)
+            //    {
+            //        CompanyChangedArgs e = new CompanyChangedArgs( c );
+            //        h( this, e );
+            //    }
+            //}
+        }
+
         public IList<string> companyNames = new List<string>
         {
             "Lafarge",
@@ -304,6 +468,7 @@ namespace INTECH_STOCK_EXCHANGE
             "SanDisk",
             "Starbucks"
         };
+        public IList<string> GetNameList { get { return shareholderNames; } }
 
         public IList<string> shareholderNames = new List<string>
        {
@@ -400,6 +565,5 @@ namespace INTECH_STOCK_EXCHANGE
            "Guillaume Tawil",
            "Tomasz Urbanski"
        };
->>>>>>> 0dc5e9a2909606b0de1d4526d77e9ce930eab6a9
     }
 }

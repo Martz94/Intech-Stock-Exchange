@@ -19,7 +19,6 @@ namespace INTECH_STOCK_EXCHANGE
         List<Order> _globalOrderbook;
         public Company SuperCompany;
         public Shareholder SuperShareholder;
-        Shareholder.PortfolioItem share;
         int _transactionCount = 0;
         readonly Random _random;
 
@@ -103,86 +102,6 @@ namespace INTECH_STOCK_EXCHANGE
             }
         }
 
-        public void AlterPortfolio( Market.ActionType actionType, int shareCount, Company firm, Shareholder sh )
-        //Called when:
-        //- The market opens for the 1st time,
-        //- Transactions need to be made,
-
-        // (!) automatically creates a new struct in the portfolio if the s/h does not already hold at least 1 action of the firm
-        // (!) automatically removes a struct if the s/h holds 0 action of the firm
-        {
-            Debug.Assert( firm != null );
-
-            if(actionType == Market.ActionType.Fill)
-            {
-                int i;
-                int f = -1;
-                for(i = 0; i < sh._portfolio.Count; i++)
-                {
-                    if(sh._portfolio[i].company == firm)
-                    {
-                        f = i;
-                    }
-                }
-                if(f != -1)
-                {
-                    Shareholder.PortfolioItem p = sh._portfolio[f];
-                    p.shareCount = p.shareCount + shareCount;
-                    share.shareLastPurchaseValue = firm.SharePrice;// last purchase price kept
-                    share.lastBuyDate = new DateTime();     // last purchase date
-                    sh._portfolio[f] = p;
-                }
-                else                 
-                {                   
-                    share = new Shareholder.PortfolioItem();
-                    share.shareCount = shareCount;
-                    share.shareLastPurchaseValue = firm.SharePrice;
-                    share.company = firm;
-                    share.lastBuyDate = new DateTime(); 
-                    sh._portfolio.Add( share );                
-                }                
-            }
-
-            else if(actionType == Market.ActionType.Empty)
-            {
-                int i;
-                int f = -1;
-                for(i = 0; i < sh._portfolio.Count; i++)
-                {
-                    if(sh._portfolio[i].company == firm)
-                    {
-                        f = i;
-                    }
-                }
-                if(f != -1)
-                {
-                    Shareholder.PortfolioItem p = sh._portfolio[f];
-                    p.shareCount = p.shareCount - shareCount;
-                    if(p.shareCount == 0)
-                    {
-                        sh._portfolio.RemoveAt(f);
-                    }
-                    else if(p.shareCount > 0)
-                    {   
-                        sh._portfolio[f] = p;
-                    }
-                }
-                else           
-                {                   
-                    share = new Shareholder.PortfolioItem();
-                    share.shareLastPurchaseValue = firm.SharePrice;
-                    share.company = firm;
-                    share.shareCount = shareCount;
-                    share.lastBuyDate = new DateTime(); 
-                    sh._portfolio.Add( share );                
-                }                
-            }
-            else
-            {
-                throw new ArgumentException("ActionType to portfolio invalid");
-            }           
-        }
-
         public List<Company> companyList
         {
             get { return _companies; }
@@ -246,7 +165,7 @@ namespace INTECH_STOCK_EXCHANGE
 
                         foreach (var s in oSell.OrderMaker._portfolio)
                         {
-                            if (s.company == oSell.Company) nbSellerShares = s.shareCount;
+                            if (s.Company == oSell.Company) nbSellerShares = s.ShareCount;
                         }
 
                         exchangeCount = Math.Min( exchangeCount, nbSellerShares );
@@ -270,11 +189,11 @@ namespace INTECH_STOCK_EXCHANGE
 
             // Updating buyer info
             buyer.Capital = buyer.Capital - price * quantity;
-            this.AlterPortfolio(Market.ActionType.Fill, quantity, company, buyer);
+            buyer.AlterPortfolio(Market.ActionType.Fill, quantity, company, buyer);
 
             // Updating seller info
             seller.Capital = seller.Capital + price * quantity;
-            this.AlterPortfolio(Market.ActionType.Empty, quantity, company, seller);
+            seller.AlterPortfolio(Market.ActionType.Empty, quantity, company, seller);
 
             // Updating market data
             UpdateMarketData( company, price );
@@ -318,7 +237,7 @@ namespace INTECH_STOCK_EXCHANGE
                 sb.Append( shareholder.Name ).AppendLine();
                 foreach ( Shareholder.PortfolioItem share in shareholder._portfolio )
                 {
-                    sb.Append("\t").Append( share.company.Name ).Append( " : " ).Append( share.shareCount ).AppendLine();
+                    sb.Append("\t").Append( share.Company.Name ).Append( " : " ).Append( share.ShareCount ).AppendLine();
                 }
             }
             return sb.ToString();
