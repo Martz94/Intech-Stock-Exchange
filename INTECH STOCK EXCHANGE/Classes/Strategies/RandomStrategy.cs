@@ -30,7 +30,11 @@ namespace INTECH_STOCK_EXCHANGE
             if(priceProp * quantity < shareholder.Capital) return new Order(Order.orderType.Buy, priceProp, quantity, firm, shareholder); 
             else return null;
         }
-
+        public override string ToString()
+        {
+            string strat = "Random Strategy";
+            return strat.ToString();
+        }
         private Order RandomSell( Market market, Shareholder shareholder )
         {
             //RandomSell Strategy

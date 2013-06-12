@@ -19,10 +19,6 @@ namespace INTECH_STOCK_EXCHANGE
         List<Order> _globalOrderbook;
         public Company SuperCompany;
         public Shareholder SuperShareholder;
-<<<<<<< HEAD
-        Shareholder.PortfolioItem share;
-=======
->>>>>>> origin/develop
         int _transactionCount = 0;
         readonly Random _random;
 
@@ -87,7 +83,6 @@ namespace INTECH_STOCK_EXCHANGE
 
         public Random Random { get { return _random; } }
 
-<<<<<<< HEAD
         public void Save (string filename)
         {
             using (FileStream file = File.Open( filename, FileMode.OpenOrCreate ))
@@ -107,88 +102,6 @@ namespace INTECH_STOCK_EXCHANGE
             }
         }
 
-        public void AlterPortfolio( Market.ActionType actionType, int shareCount, Company firm, Shareholder sh )
-        //Called when:
-        //- The market opens for the 1st time,
-        //- Transactions need to be made,
-
-        // (!) automatically creates a new struct in the portfolio if the s/h does not already hold at least 1 action of the firm
-        // (!) automatically removes a struct if the s/h holds 0 action of the firm
-        {
-            Debug.Assert( firm != null );
-
-            if(actionType == Market.ActionType.Fill)
-            {
-                int i;
-                int f = -1;
-                for(i = 0; i < sh._portfolio.Count; i++)
-                {
-                    if(sh._portfolio[i].company == firm)
-                    {
-                        f = i;
-                    }
-                }
-                if(f != -1)
-                {
-                    Shareholder.PortfolioItem p = sh._portfolio[f];
-                    p.shareCount = p.shareCount + shareCount;
-                    share.shareLastPurchaseValue = firm.SharePrice;// last purchase price kept
-                    share.lastBuyDate = new DateTime();     // last purchase date
-                    sh._portfolio[f] = p;
-                }
-                else                 
-                {                   
-                    share = new Shareholder.PortfolioItem();
-                    share.shareCount = shareCount;
-                    share.shareLastPurchaseValue = firm.SharePrice;
-                    share.company = firm;
-                    share.lastBuyDate = new DateTime(); 
-                    sh._portfolio.Add( share );                
-                }                
-            }
-
-            else if(actionType == Market.ActionType.Empty)
-            {
-                int i;
-                int f = -1;
-                for(i = 0; i < sh._portfolio.Count; i++)
-                {
-                    if(sh._portfolio[i].company == firm)
-                    {
-                        f = i;
-                    }
-                }
-                if(f != -1)
-                {
-                    Shareholder.PortfolioItem p = sh._portfolio[f];
-                    p.shareCount = p.shareCount - shareCount;
-                    if(p.shareCount == 0)
-                    {
-                        sh._portfolio.RemoveAt(f);
-                    }
-                    else if(p.shareCount > 0)
-                    {   
-                        sh._portfolio[f] = p;
-                    }
-                }
-                else           
-                {                   
-                    share = new Shareholder.PortfolioItem();
-                    share.shareLastPurchaseValue = firm.SharePrice;
-                    share.company = firm;
-                    share.shareCount = shareCount;
-                    share.lastBuyDate = new DateTime(); 
-                    sh._portfolio.Add( share );                
-                }                
-            }
-            else
-            {
-                throw new ArgumentException("ActionType to portfolio invalid");
-            }           
-        }
-
-=======
->>>>>>> origin/develop
         public List<Company> companyList
         {
             get { return _companies; }
@@ -362,7 +275,7 @@ namespace INTECH_STOCK_EXCHANGE
 
         public void AddShareholders(List<Shareholder> shareholdersListToAdd)
         {
-            _shareholders.AddRange(shareholdersListToAdd);
+            //_shareholders.AddRange(shareholdersListToAdd);
             RaiseShareholdersListChanged();
         }
 
@@ -373,7 +286,7 @@ namespace INTECH_STOCK_EXCHANGE
                 if (c.Name == oldName)
                 {
                     c.Name = newName;
-                    RaiseCompanyChanged( c );
+                    RaiseCompanyListChanged();
                     return;
                 }
             }

@@ -119,10 +119,16 @@ namespace ISEdesign
             decimal shareValue = 0;
             foreach (var a in shareholder.HistoryPortfolioValue)
             {
+<<<<<<< HEAD
                 serie.Points.Add( (double)a );
+            }
             serie.Points.Add( (double)shareholder.PortfolioValue );
             
+=======
+                shareValue += a.ShareCount * a.Company.SharePrice;
+                serie.Points.Add( (double)shareValue );
             }            
+>>>>>>> origin/develop
         }
 
         private void _listViewSh_Click( object sender, EventArgs e )

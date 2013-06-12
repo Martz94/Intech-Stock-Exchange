@@ -148,7 +148,6 @@ namespace ISEdesign
                 {
                     if (c.Name == i.Text) company = c;
                 }
-
                 _market.SuperCompany = company;
                 FillGraphCompany( company );
             }

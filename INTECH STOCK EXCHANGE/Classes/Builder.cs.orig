@@ -9,15 +9,10 @@ namespace INTECH_STOCK_EXCHANGE
 {
     public class Builder
     {
-        public static void CreateAll(Market market, int maxCompanies, int maxShareholders)
+        public static void CreateAll(Market market, int maxCompanies, int maxShareholders )
         {
-<<<<<<< HEAD
             market.companyList.Clear();
             market.shareholderList.Clear();
-=======
-            int _maxCompanies = 30;
-            int _maxShareholders = 1000;
->>>>>>> origin/develop
 
             // Create companies with companies' numbers defined by user
             for (int i = 0; i < maxCompanies; i++)
@@ -45,28 +40,24 @@ namespace INTECH_STOCK_EXCHANGE
 
                 market.AddOrUpdateCompany( name, randomInd, sharePrice, shareVolume );
             }
-
-            List<Shareholder> shareholdersList = new List<Shareholder>();
-            // Create shareholders with shareholders' numbers defined by user
             for (int t = 0; t < maxShareholders; t++)
             {
                 string name;
-                Random rdm = market.Random;
-                //if ( market.GetNameList.Count > 1 )
-                //{
-                //    int k = rdm.Next( market.shareholderNames.Count );
-                //    name = market.shareholderNames[k];
-                //    market.shareholderNames.RemoveAt( k );
-                //}
-                //else
-                //{
-                    name = Path.GetRandomFileName();
-                    name = name.Replace(".", ""); // For Removing the dots and spaces
-                //}
-                shareholdersList.Add( new Shareholder( market, name, 20000.0M ) );
+<<<<<<< HEAD
+                name = "Shareholder n°" + t;
+                //Random rdm = market.Random;
+                //name = Path.GetRandomFileName();
+                //name = name.Replace(".", ""); // For Removing the dots and spaces
+                
+=======
+                //name = Path.GetRandomFileName();
+                //name = name.Replace(".", ""); // For Removing the dots and spaces
+                name = "Shareholder n°" + t;
+>>>>>>> origin/develop
+                market.shareholderList.Add( new Shareholder( market, name, 20000.0M ) );
             }
 
-            market.AddShareholders( shareholdersList );
+            market.AddShareholders( market.shareholderList );
 
             // Filling the shareholders portfolios
             foreach (Shareholder s in market.shareholderList)
@@ -89,9 +80,7 @@ namespace INTECH_STOCK_EXCHANGE
                     {
                         shareCount = random.Next(c.GetTotalShareCount / market.shareholderList.Count * 16);
                     }
-
-                    
-                    if (shareCount != 0 ) market.AlterPortfolio( Market.ActionType.Fill, shareCount, c, s );
+                    if (shareCount != 0 ) s.AlterPortfolio( Market.ActionType.Fill, shareCount, c, s );
                 }
                 
             }
