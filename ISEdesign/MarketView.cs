@@ -62,7 +62,7 @@ namespace ISEdesign
             {
                 ListViewItem i = new ListViewItem( c.Name );
                 i.UseItemStyleForSubItems = false;
-                i.SubItems.Add( c.SharePrice.ToString( "#.###" ) );
+                i.SubItems.Add( c.SharePrice.ToString( "C" ) );
                 i.SubItems.Add( c.ShareVolume.ToString() );
                 i.SubItems.Add( c.ShareVariation.ToString( "N2" ) +" %");
 

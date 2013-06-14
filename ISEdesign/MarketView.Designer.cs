@@ -47,6 +47,7 @@
             // 
             // _listView
             // 
+            this._listView.Alignment = System.Windows.Forms.ListViewAlignment.SnapToGrid;
             this._listView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this._columnHeaderName,
             this._columnHeaderValue,
@@ -75,15 +76,18 @@
             // _columnHeaderValue
             // 
             this._columnHeaderValue.Text = "Share Value";
+            this._columnHeaderValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this._columnHeaderValue.Width = 82;
             // 
             // columnHeaderVolume
             // 
             this.columnHeaderVolume.Text = "Volume";
+            this.columnHeaderVolume.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // columnHeaderVariation
             // 
             this.columnHeaderVariation.Text = "Variation";
+            this.columnHeaderVariation.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // MarketView
             // 

@@ -15,7 +15,6 @@ namespace ISEdesign
     public partial class ShareholderView : UserControl
     {
         Market _market;
-        private int sortColumn = -1;
 
         public ShareholderView()
         {

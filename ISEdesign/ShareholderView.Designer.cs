@@ -61,16 +61,19 @@
             // columnCashSh
             // 
             this.columnCashSh.Text = "Cash";
+            this.columnCashSh.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.columnCashSh.Width = 81;
             // 
             // columnTotalPortfolio
             // 
             this.columnTotalPortfolio.Text = "Total Portfolio Value";
+            this.columnTotalPortfolio.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.columnTotalPortfolio.Width = 110;
             // 
             // columnStrategy
             // 
             this.columnStrategy.Text = "Strategy";
+            this.columnStrategy.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // ShareholderView
             // 
