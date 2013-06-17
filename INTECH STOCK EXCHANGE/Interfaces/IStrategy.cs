@@ -8,7 +8,7 @@ namespace INTECH_STOCK_EXCHANGE
 {
     public interface IStrategy
     {
-        // return null when no ivestment is required
+        // return null when no investment is required
         Order MakeDecision( Market market, Shareholder shareholder );      
     }
 }

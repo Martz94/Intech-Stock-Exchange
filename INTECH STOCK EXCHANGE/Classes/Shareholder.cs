@@ -16,10 +16,7 @@ namespace INTECH_STOCK_EXCHANGE
         //Profil
         string _displayName;
         readonly Guid _shareholderID; //unique identifier
-        List<Shareholder> _shareholders;
-        List<Order> _globalOrderbook;//Orderbook of the market
         List<PortfolioItem> _portfolio;//company, sharevalue, buydate, sharecount - using a list of structs
-        Order.orderType _orderType;
         decimal _cash;
         IStrategy _strategy;
         RiskTaker _riskTaker;
