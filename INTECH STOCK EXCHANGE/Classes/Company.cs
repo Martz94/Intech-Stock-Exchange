@@ -12,14 +12,12 @@ namespace INTECH_STOCK_EXCHANGE
     {
         string name;                    //Company name
         decimal sharePrice;             //starting price for 1 action
-        decimal currentSharePrice;      //share price updated by event
         decimal sharePriceVariation;    //action price's variations updated by event
         public List<int> HistoryNbTransactions = new List<int>();
         public int NbTransaction = 0;
         public List<double> HistoryLastPrice = new List<double>();
         int shareVolume;                 //Quantity of its own shares the company still detains updated by event
   
-        Guid companyID;
         private readonly Market market;
         
         Industry TheIndustry;
@@ -45,7 +43,6 @@ namespace INTECH_STOCK_EXCHANGE
             double tmp = -5 + r.NextDouble() * 15;
             sharePriceVariation = (decimal)tmp;
             shareVolume = ShareVolume;
-            companyID = Guid.NewGuid();
         }
 
         public enum Industry
@@ -55,12 +52,7 @@ namespace INTECH_STOCK_EXCHANGE
             Pharmaceuticals,
             Insurance,
             RealEstate,
-        }
-
-        public Guid GetID
-        {
-            get { return companyID; }
-        }
+        }       
 
         public decimal SharePrice
         {

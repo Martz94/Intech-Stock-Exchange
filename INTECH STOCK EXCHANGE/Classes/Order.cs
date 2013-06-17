@@ -16,12 +16,11 @@ namespace INTECH_STOCK_EXCHANGE
         int shareCount; //Total count of actions in this order
         decimal _sharePriceProposal; //Price proposal for 1 action
         decimal _totalOrderPriceProposal;//Total price of 1 order = _sharePriceProposal * _shareQuantity
-        Guid _orderID;
+        
         Shareholder _shareholder;//Need to check whether the shareholder is of type "shareholder" or "company"
         Company _company;
         Order.orderStatus _orderStatus;
-        Guid _orderBuyerID;
-        Guid _orderReceiverID;
+        
 
         public Order(orderType orderType, decimal PriceProp, int ShareCount, Company firm, Shareholder Shareholder )
         {
@@ -35,8 +34,6 @@ namespace INTECH_STOCK_EXCHANGE
             _orderStatus = Order.orderStatus.ReadyForDispatch;
             _sharePriceProposal = PriceProp;//Unit price proposal
             _totalOrderPriceProposal = PriceProp * ShareCount;//Order's total price proposal
-            _orderID = Guid.NewGuid(); //ID of the order
-            _orderReceiverID = Guid.Empty;//ID of the shareholder that got the deal, to be modified when the deal is done (sold/bought)
 
             _expirationDate = DateTime.Now.AddMilliseconds( 30000 ); //Expiration date set to 30ms  after order's built
 
@@ -48,12 +45,7 @@ namespace INTECH_STOCK_EXCHANGE
 
             //Some more checking needed... (timer etc)
         }
-
-        
-        public Guid GetOrderId
-        {
-            get { return _orderID; }
-        }
+       
         public bool TimedOut
         {
             get { return (DateTime.Now > _expirationDate); }
@@ -69,11 +61,7 @@ namespace INTECH_STOCK_EXCHANGE
         public void DecreaseOrderShareQuantity(int quantity)
         {
             shareCount = shareCount - quantity; 
-        }
-        public Guid GetSharesCompanyID
-        {
-            get { return _company.GetID; }
-        }
+        }       
         public Shareholder OrderMaker
         {
             get { return _shareholder; }
@@ -85,17 +73,12 @@ namespace INTECH_STOCK_EXCHANGE
         public decimal GetOrderTotalPriceProposal
         {
             get { return _totalOrderPriceProposal; }
-        }
-       
+        }      
         public Order.orderStatus OrderStatus
         {
             get { return _orderStatus; }
             set { _orderStatus = value; }
-        }
-        public Guid OrderReceiverID
-        {
-            get { return _orderReceiverID; }
-        }
+        }        
         public Company Company
         {
             get { return _company; }
@@ -104,8 +87,7 @@ namespace INTECH_STOCK_EXCHANGE
         {
             Buy,
             Sell,
-        }
-       
+        }      
         public enum orderStatus
         {
             Dispatched,
