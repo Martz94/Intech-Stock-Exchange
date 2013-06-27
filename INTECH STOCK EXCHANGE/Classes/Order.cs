@@ -19,7 +19,7 @@ namespace INTECH_STOCK_EXCHANGE
         
         Shareholder _shareholder;//Need to check whether the shareholder is of type "shareholder" or "company"
         Company _company;
-        Order.orderStatus _orderStatus;
+        Order.Status _orderStatus;
         
 
         public Order(orderType orderType, decimal PriceProp, int ShareCount, Company firm, Shareholder Shareholder )
@@ -31,7 +31,7 @@ namespace INTECH_STOCK_EXCHANGE
             _shareholder = Shareholder;
             _company = firm;//Company's share
             shareCount = ShareCount;
-            _orderStatus = Order.orderStatus.ReadyForDispatch;
+            _orderStatus = Order.Status.ReadyForDispatch;
             _sharePriceProposal = PriceProp;//Unit price proposal
             _totalOrderPriceProposal = PriceProp * ShareCount;//Order's total price proposal
 
@@ -74,7 +74,7 @@ namespace INTECH_STOCK_EXCHANGE
         {
             get { return _totalOrderPriceProposal; }
         }      
-        public Order.orderStatus OrderStatus
+        public Order.Status OrderStatus
         {
             get { return _orderStatus; }
             set { _orderStatus = value; }
@@ -88,7 +88,7 @@ namespace INTECH_STOCK_EXCHANGE
             Buy,
             Sell,
         }      
-        public enum orderStatus
+        public enum Status
         {
             Dispatched,
             ReadyForDispatch,

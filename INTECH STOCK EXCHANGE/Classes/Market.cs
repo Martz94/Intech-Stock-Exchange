@@ -118,7 +118,6 @@ namespace INTECH_STOCK_EXCHANGE
         }
  
         public void ClearOrderbook()
-        //(!) Keeping track on how many rounds each order undergo before being cleared from the orderbook
         //Clearing: 
         //- The outdated orders (by checking their expiration dates)
         //- The orders that found a match
@@ -128,7 +127,7 @@ namespace INTECH_STOCK_EXCHANGE
 
             foreach ( Order o in _globalOrderbook )
             {
-                if ( o.OrderStatus != Order.orderStatus.Dispatched && o.TimedOut == false)
+                if ( o.OrderStatus != Order.Status.Dispatched && o.TimedOut == false)
                 {             
                     tmp.Add( o );                  
                 }
@@ -205,8 +204,8 @@ namespace INTECH_STOCK_EXCHANGE
             
             oBuy.DecreaseOrderShareQuantity( quantity );
             oSell.DecreaseOrderShareQuantity( quantity );
-            if ( oBuy.OrderShareQuantity == 0 ) oBuy.OrderStatus = Order.orderStatus.Dispatched;
-            if ( oSell.OrderShareQuantity == 0 ) oSell.OrderStatus = Order.orderStatus.Dispatched;
+            if ( oBuy.OrderShareQuantity == 0 ) oBuy.OrderStatus = Order.Status.Dispatched;
+            if ( oSell.OrderShareQuantity == 0 ) oSell.OrderStatus = Order.Status.Dispatched;
         }
 
         //Currently: Defining the new company share price based upon the latest exchange in the market
@@ -391,102 +390,5 @@ namespace INTECH_STOCK_EXCHANGE
             "Thales",
             "Total"
         };
-        public IList<string> GetNameList { get { return shareholderNames; } }
-
-        public IList<string> shareholderNames = new List<string>
-       {
-           "Martin Finkel",
-           "Vincent Dufrasnes",
-           "Johan Rain",
-           "Martin Lavie",
-           "Corentin Broux",
-           "Nicolas Beuzart",
-           "Camille Colin",
-           "Brice Hoffmann",
-           "Christie Bunlon",
-           "Eric Lalitte",
-           "Olivier Spinelli",
-           "Damien Goldenberg",
-           "Catherine Dorignac",
-           "Corinne Thomas",
-           "Alexis Boulanger",
-           "Christophe Mortelette",
-           "Julien Bernard",
-           "Valentin Beuzart",
-           "Franck Bontemps",
-           "Jules Bourreau",
-           "Benjamin Gratade",
-           "Vincent Ricard",
-           "Etienne Rocipon",
-           "Ludovic Tresson",
-           "Salman Alamdar",
-           "Alexandre Arnal",
-           "Nicolas Chatelain",
-           "Stéphane Gereme",
-           "Michel Gille",
-           "Alban Inquel",
-           "Silvja Jung",
-           "Maxime Pavaut",
-           "Thomas Rempenault",
-           "Guillaume Roux",
-           "Florian Thorreau",
-           "Sabrina Mustafic",
-           "Stéphane Mougel",
-           "Adeline Martin",
-           "Lucas Souppe",
-           "Patrice Thiré",
-           "Valéry Farcy",
-           "Joel Goy",
-           "Thomas Barach",
-           "Antoine Bibes",
-           "Riwan Bodereau",
-           "Julien Cartier",
-           "Anthony Chami",
-           "Alain Cheung",
-           "David Cingala",
-           "Margot Filleton",
-           "Kevin Guyoton",
-           "Simon Hallay",
-           "Charles Jarre",
-           "Guillaume Noel",
-           "Stéphane Pourrier",
-           "François Proust",
-           "Thomas Bouzou",
-           "Yoel Marciano",
-           "Nathan Gatti",
-           "Antoine Chwalek",
-           "Arthur Caron",
-           "Kévin Defarge",
-           "Bruno Paty",
-           "Bessalel Cohen",
-           "Adrien Dumont",
-           "Christophe Hermer",
-           "Raphael Costet",
-           "Joshua Molinier",
-           "Rami Morri",
-           "Clément Rousseau",
-           "Tristan Letrou",
-           "Christine Brouste",
-           "Mazen Dekhil",
-           "Clémence Enault",
-           "Clément Gaillardot",
-           "Pierre Houdyer",
-           "Stéphane Miginiac",
-           "Jessica Ndjiki",
-           "Timothée Pillard",
-           "Axel Riffard",
-           "Cédric Sika",
-           "Xavier Diaz",
-           "Etienne Got",
-           "Brice Guégan",
-           "Adrien Kasse",
-           "Thomas Michau",
-           "Mathieu Quioc",
-           "Aurélien Roose",
-           "Antoine Meunier",
-           "Benoit Sturzer",
-           "Guillaume Tawil",
-           "Tomasz Urbanski"
-       };
     }
 }
