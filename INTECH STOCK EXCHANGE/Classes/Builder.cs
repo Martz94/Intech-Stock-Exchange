@@ -53,6 +53,26 @@ namespace INTECH_STOCK_EXCHANGE
                 market.shareholderList.Add( new Shareholder( market, name, 20000.0M ) );
             }
 
+            //parameters entered by the user in the Initialize UI window:
+            //int nbOfRandom;
+            //int nbOfStupid;
+            //int nbOfSmart;
+
+            //Assigning user-defined strategies to s/h
+
+            //for( int i = 0; i < nbOfRandom; i++ )
+            //{
+            //    if ( market.shareholderList[i].Strategy == null ) market.shareholderList[i].Strategy = new RandomStrategy();  
+            //}
+            //for ( int y = nbOfRandom; y < nbOfStupid + nbOfRandom; y++)
+            //{
+            //    if ( market.shareholderList[y].Strategy == null ) market.shareholderList[y].Strategy = new StupidStrategy();
+            //}
+            //for( int z = nbOfRandom + nbOfStupid; z < market.shareholderList.Count; z++)
+            //{
+            //    if ( market.shareholderList[z].Strategy == null ) market.shareholderList[z].Strategy = new SmartStrategy();
+            //}
+
             market.AddShareholders( market.shareholderList );
 
             // Filling the shareholders portfolios

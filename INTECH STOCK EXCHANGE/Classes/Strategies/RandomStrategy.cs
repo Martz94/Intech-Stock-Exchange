@@ -15,7 +15,6 @@ namespace INTECH_STOCK_EXCHANGE
             // RandomBuy Strategy:
             //- Pick the company randomly,
             //- Pick a quantity according to the priceProp and initial firm share price.
-            //- Pick the company price - 5
 
             Random properties = market.Random;
             double q = properties.NextDouble();
@@ -25,7 +24,6 @@ namespace INTECH_STOCK_EXCHANGE
             decimal priceProp = firm.SharePrice * (properties.Next( 201 ) + 899) / 1000;
             double max = (int)(q * (double)shareholder.Capital);
             int quantity = properties.Next( Math.Abs((int)((max / (double)priceProp))) );
-            //decimal priceProp = (decimal)(max / (double)quantity);
 
             if(priceProp * quantity < shareholder.Capital) return new Order(Order.orderType.Buy, priceProp, quantity, firm, shareholder); 
             else return null;
@@ -40,7 +38,6 @@ namespace INTECH_STOCK_EXCHANGE
             //RandomSell Strategy
             //- Pick a company in the portfolio,
             //- Pick a random number of share count to sell,
-            //- Pick the company share price + 5.
 
             decimal priceProp;
             int quantity;
@@ -53,7 +50,6 @@ namespace INTECH_STOCK_EXCHANGE
             {
                 share = shareholder.Portfolio[k];
                 priceProp = share.Company.SharePrice * (r.Next( 201 ) + 899) / 1000;
-                //priceProp = share.company.SharePrice + 5;
                 quantity = (int)(0.5 * share.ShareCount);
                 firm = share.Company;
 
