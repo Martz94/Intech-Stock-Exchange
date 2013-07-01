@@ -58,17 +58,23 @@ namespace ISEdesign
             }
         }
 
-       
-        //private void textBox1_KeyPress( object sender, KeyPressEventArgs e )
-        //{
-        //    if (!char.IsControl( e.KeyChar ) && !char.IsDigit( e.KeyChar ))
-        //    {
-        //        e.Handled = true;
-        //    }
-        //    else
-        //    {
-        //        e.Handled = false;
-        //    }
-        //}
+        private void UpdateTotalShareholders()
+        {
+            int total = RandomTrackBar.Value + StupidTrackBar.Value + SmartTrackBar.Value;
+            _nbShareholderTextBox.Text = total.ToString();
+        }
+
+        private void RandomTrackBar_ValueChanged( object sender, EventArgs e )
+        {
+            UpdateTotalShareholders();
+        }
+        private void StupidTrackBar_ValueChanged( object sender, EventArgs e )
+        {
+            UpdateTotalShareholders();
+        }
+        private void SmartTrackBar_ValueChanged( object sender, EventArgs e )
+        {
+            UpdateTotalShareholders();            
+        }
     }
 }

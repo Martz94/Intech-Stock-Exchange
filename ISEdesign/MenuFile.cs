@@ -46,8 +46,8 @@ namespace ISEdesign
                         _market.shareholderList.Clear();
                         _market.ClearOrderbook();
                         //Builder.CreateAll( _market, d.CompanyNumber, d.ShareholderNumber );
+                        
                         Builder.CreateAll( _market, d.CompanyNumber, d.ShareOfRandoms, d.ShareOfStupids, d.ShareOfSmarts );
-
                     }
                     else
                     {
