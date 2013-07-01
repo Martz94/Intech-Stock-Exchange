@@ -81,9 +81,9 @@
             // 
             this._nbShareholderTextBox.Location = new System.Drawing.Point(168, 229);
             this._nbShareholderTextBox.Name = "_nbShareholderTextBox";
-            this._nbShareholderTextBox.ReadOnly = true;
             this._nbShareholderTextBox.Size = new System.Drawing.Size(38, 20);
             this._nbShareholderTextBox.TabIndex = 3;
+            this._nbShareholderTextBox.ReadOnly = true;
             this._nbShareholderTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this._Button_KeyDown);
             // 
             // _okButton
@@ -134,12 +134,13 @@
             // RandomTrackBar
             // 
             this.RandomTrackBar.Location = new System.Drawing.Point(458, 224);
-            this.RandomTrackBar.Maximum = 100;
             this.RandomTrackBar.Name = "RandomTrackBar";
             this.RandomTrackBar.Size = new System.Drawing.Size(135, 45);
             this.RandomTrackBar.TabIndex = 9;
+            this.RandomTrackBar.Maximum = 100;
+            this.RandomTrackBar.Minimum = 0;
             this.RandomTrackBar.TickFrequency = 10;
-            this.RandomTrackBar.ValueChanged += new System.EventHandler(this.RandomTrackBar_ValueChanged);
+            this.RandomTrackBar.ValueChanged += new System.EventHandler( this.RandomTrackBar_ValueChanged );
             // 
             // market_stability
             // 
@@ -158,22 +159,24 @@
             // StupidTrackBar
             // 
             this.StupidTrackBar.Location = new System.Drawing.Point(458, 288);
-            this.StupidTrackBar.Maximum = 100;
             this.StupidTrackBar.Name = "StupidTrackBar";
             this.StupidTrackBar.Size = new System.Drawing.Size(135, 45);
             this.StupidTrackBar.TabIndex = 11;
+            this.StupidTrackBar.Maximum = 100;
+            this.StupidTrackBar.Minimum = 0;
             this.StupidTrackBar.TickFrequency = 10;
-            this.StupidTrackBar.ValueChanged += new System.EventHandler(this.StupidTrackBar_ValueChanged);
+            this.StupidTrackBar.ValueChanged += new System.EventHandler( this.StupidTrackBar_ValueChanged );
             // 
             // SmartTrackBar
             // 
             this.SmartTrackBar.Location = new System.Drawing.Point(458, 352);
-            this.SmartTrackBar.Maximum = 100;
             this.SmartTrackBar.Name = "SmartTrackBar";
             this.SmartTrackBar.Size = new System.Drawing.Size(135, 45);
             this.SmartTrackBar.TabIndex = 12;
+            this.SmartTrackBar.Maximum = 100;
+            this.SmartTrackBar.Minimum = 0;
             this.SmartTrackBar.TickFrequency = 10;
-            this.SmartTrackBar.ValueChanged += new System.EventHandler(this.SmartTrackBar_ValueChanged);
+            this.SmartTrackBar.ValueChanged += new System.EventHandler( this.SmartTrackBar_ValueChanged );
             // 
             // label3
             // 

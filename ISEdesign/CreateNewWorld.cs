@@ -74,7 +74,7 @@ namespace ISEdesign
         }
         private void SmartTrackBar_ValueChanged( object sender, EventArgs e )
         {
-            UpdateTotalShareholders();            
-        }
+            UpdateTotalShareholders();
+        }      
     }
 }
