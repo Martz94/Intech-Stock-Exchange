@@ -30,9 +30,13 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer4 = new System.Windows.Forms.SplitContainer();
+            this.label1 = new System.Windows.Forms.Label();
+            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer5 = new System.Windows.Forms.SplitContainer();
+            this.label2 = new System.Windows.Forms.Label();
             this._marketView = new ISEdesign.MarketView();
             this.graph1 = new ISEdesign.Graph();
-            this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.shareholderView1 = new ISEdesign.ShareholderView();
             this.tabShareholder1 = new ISEdesign.TabShareholder();
             this._actionBar = new ISEdesign.Actionbar();
@@ -45,10 +49,18 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).BeginInit();
+            this.splitContainer4.Panel1.SuspendLayout();
+            this.splitContainer4.Panel2.SuspendLayout();
+            this.splitContainer4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
             this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).BeginInit();
+            this.splitContainer5.Panel1.SuspendLayout();
+            this.splitContainer5.Panel2.SuspendLayout();
+            this.splitContainer5.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -77,7 +89,7 @@
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this._marketView);
+            this.splitContainer2.Panel1.Controls.Add(this.splitContainer4);
             // 
             // splitContainer2.Panel2
             // 
@@ -86,21 +98,35 @@
             this.splitContainer2.SplitterDistance = 213;
             this.splitContainer2.TabIndex = 0;
             // 
-            // _marketView
+            // splitContainer4
             // 
-            this._marketView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._marketView.Location = new System.Drawing.Point(0, 0);
-            this._marketView.Name = "_marketView";
-            this._marketView.Size = new System.Drawing.Size(346, 213);
-            this._marketView.TabIndex = 1;
+            this.splitContainer4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer4.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer4.Name = "splitContainer4";
+            this.splitContainer4.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
-            // graph1
+            // splitContainer4.Panel1
             // 
-            this.graph1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.graph1.Location = new System.Drawing.Point(0, 0);
-            this.graph1.Name = "graph1";
-            this.graph1.Size = new System.Drawing.Size(346, 218);
-            this.graph1.TabIndex = 5;
+            this.splitContainer4.Panel1.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.splitContainer4.Panel1.Controls.Add(this.label1);
+            // 
+            // splitContainer4.Panel2
+            // 
+            this.splitContainer4.Panel2.Controls.Add(this._marketView);
+            this.splitContainer4.Size = new System.Drawing.Size(346, 213);
+            this.splitContainer4.SplitterDistance = 25;
+            this.splitContainer4.TabIndex = 2;
+            // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(130, 3);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(70, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "COMPANIES";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // splitContainer3
             // 
@@ -111,7 +137,7 @@
             // 
             // splitContainer3.Panel1
             // 
-            this.splitContainer3.Panel1.Controls.Add(this.shareholderView1);
+            this.splitContainer3.Panel1.Controls.Add(this.splitContainer5);
             // 
             // splitContainer3.Panel2
             // 
@@ -120,12 +146,58 @@
             this.splitContainer3.SplitterDistance = 212;
             this.splitContainer3.TabIndex = 0;
             // 
+            // splitContainer5
+            // 
+            this.splitContainer5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer5.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer5.Name = "splitContainer5";
+            this.splitContainer5.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer5.Panel1
+            // 
+            this.splitContainer5.Panel1.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.splitContainer5.Panel1.Controls.Add(this.label2);
+            // 
+            // splitContainer5.Panel2
+            // 
+            this.splitContainer5.Panel2.Controls.Add(this.shareholderView1);
+            this.splitContainer5.Size = new System.Drawing.Size(451, 212);
+            this.splitContainer5.SplitterDistance = 25;
+            this.splitContainer5.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(156, 3);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(96, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "SHAREHOLDERS";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _marketView
+            // 
+            this._marketView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._marketView.Location = new System.Drawing.Point(0, 0);
+            this._marketView.Name = "_marketView";
+            this._marketView.Size = new System.Drawing.Size(346, 184);
+            this._marketView.TabIndex = 1;
+            // 
+            // graph1
+            // 
+            this.graph1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.graph1.Location = new System.Drawing.Point(0, 0);
+            this.graph1.Name = "graph1";
+            this.graph1.Size = new System.Drawing.Size(346, 218);
+            this.graph1.TabIndex = 5;
+            // 
             // shareholderView1
             // 
             this.shareholderView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.shareholderView1.Location = new System.Drawing.Point(0, 0);
             this.shareholderView1.Name = "shareholderView1";
-            this.shareholderView1.Size = new System.Drawing.Size(451, 212);
+            this.shareholderView1.Size = new System.Drawing.Size(451, 183);
             this.shareholderView1.TabIndex = 7;
             this.shareholderView1.TabShareholder = null;
             // 
@@ -139,7 +211,7 @@
             // 
             // _actionBar
             // 
-            this._actionBar.BackColor = System.Drawing.Color.SkyBlue;
+            this._actionBar.BackColor = System.Drawing.Color.DeepSkyBlue;
             this._actionBar.Dock = System.Windows.Forms.DockStyle.Top;
             this._actionBar.Location = new System.Drawing.Point(0, 25);
             this._actionBar.MarketView = null;
@@ -151,7 +223,7 @@
             // 
             // _menuFile
             // 
-            this._menuFile.BackColor = System.Drawing.Color.Indigo;
+            this._menuFile.BackColor = System.Drawing.Color.DeepSkyBlue;
             this._menuFile.Dock = System.Windows.Forms.DockStyle.Top;
             this._menuFile.Location = new System.Drawing.Point(0, 0);
             this._menuFile.Name = "_menuFile";
@@ -176,10 +248,20 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.splitContainer4.Panel1.ResumeLayout(false);
+            this.splitContainer4.Panel1.PerformLayout();
+            this.splitContainer4.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer4)).EndInit();
+            this.splitContainer4.ResumeLayout(false);
             this.splitContainer3.Panel1.ResumeLayout(false);
             this.splitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
+            this.splitContainer5.Panel1.ResumeLayout(false);
+            this.splitContainer5.Panel1.PerformLayout();
+            this.splitContainer5.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer5)).EndInit();
+            this.splitContainer5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -195,6 +277,10 @@
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.SplitContainer splitContainer3;
         private MenuFile _menuFile;
+        private System.Windows.Forms.SplitContainer splitContainer4;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.SplitContainer splitContainer5;
+        private System.Windows.Forms.Label label2;
     }
 }
 

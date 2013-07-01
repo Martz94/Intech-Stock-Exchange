@@ -38,7 +38,7 @@
             // 
             // menuStrip1
             // 
-            this.menuStrip1.BackColor = System.Drawing.Color.SkyBlue;
+            this.menuStrip1.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._fileMenu});
@@ -50,7 +50,7 @@
             // 
             // _fileMenu
             // 
-            this._fileMenu.BackColor = System.Drawing.Color.MediumSlateBlue;
+            this._fileMenu.BackColor = System.Drawing.Color.LightSteelBlue;
             this._fileMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this._initializeMenu,
             this._loadMenu,
@@ -62,21 +62,21 @@
             // _initializeMenu
             // 
             this._initializeMenu.Name = "_initializeMenu";
-            this._initializeMenu.Size = new System.Drawing.Size(152, 22);
+            this._initializeMenu.Size = new System.Drawing.Size(126, 22);
             this._initializeMenu.Text = "Initialize...";
             this._initializeMenu.Click += new System.EventHandler(this._initializeMenu_Click);
             // 
             // _loadMenu
             // 
             this._loadMenu.Name = "_loadMenu";
-            this._loadMenu.Size = new System.Drawing.Size(152, 22);
+            this._loadMenu.Size = new System.Drawing.Size(126, 22);
             this._loadMenu.Text = "Open...";
             this._loadMenu.Click += new System.EventHandler(this._loadMenu_Click);
             // 
             // _saveMenu
             // 
             this._saveMenu.Name = "_saveMenu";
-            this._saveMenu.Size = new System.Drawing.Size(152, 22);
+            this._saveMenu.Size = new System.Drawing.Size(126, 22);
             this._saveMenu.Text = "Save...";
             this._saveMenu.Click += new System.EventHandler(this._saveMenu_Click);
             // 

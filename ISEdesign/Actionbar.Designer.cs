@@ -32,6 +32,7 @@
             this._round = new System.Windows.Forms.Label();
             this._roundNumber = new System.Windows.Forms.TextBox();
             this._goButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // _stepByStep
@@ -71,17 +72,28 @@
             this._goButton.UseVisualStyleBackColor = true;
             this._goButton.Click += new System.EventHandler(this._goButtonClick);
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(282, 6);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(43, 37);
+            this.button1.TabIndex = 7;
+            this.button1.Text = "Stop";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Actionbar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SkyBlue;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this._goButton);
             this.Controls.Add(this._roundNumber);
             this.Controls.Add(this._round);
             this.Controls.Add(this._stepByStep);
             this.Name = "Actionbar";
-            this.Size = new System.Drawing.Size(248, 53);
+            this.Size = new System.Drawing.Size(364, 53);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -93,5 +105,6 @@
         private System.Windows.Forms.Label _round;
         private System.Windows.Forms.TextBox _roundNumber;
         private System.Windows.Forms.Button _goButton;
+        private System.Windows.Forms.Button button1;
     }
 }

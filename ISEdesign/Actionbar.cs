@@ -75,6 +75,11 @@ namespace ISEdesign
             }
                 
             if (_market.SuperCompany != null) MarketView.FillGraphCompany( _market.SuperCompany );           
+        }
+
+        private void button1_Click( object sender, EventArgs e )
+        {
+            GoTimer.Stop();
         }   
     }
 }
