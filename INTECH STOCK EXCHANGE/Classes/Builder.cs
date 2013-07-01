@@ -47,10 +47,8 @@ namespace INTECH_STOCK_EXCHANGE
             {
                 string name;
                 name = "Shareholder n°" + t;
-                //Random rdm = market.Random;
-                //name = Path.GetRandomFileName();
-                //name = name.Replace(".", ""); // For Removing the dots and spaces
-                market.shareholderList.Add( new Shareholder( market, name, 20000.0M ) );
+                //market.shareholderList.Add( new Shareholder( market, name, 20000.0M ) );
+                market.shareholderList.Add( new Shareholder( market, name, 2000.0M ) );
             }
 
             //parameters entered by the user in the Initialize UI window:
@@ -76,6 +74,8 @@ namespace INTECH_STOCK_EXCHANGE
             market.AddShareholders( market.shareholderList );
 
             // Filling the shareholders portfolios
+            // (!)(!)(!)
+            // (!) Need an alternative share-distribution system here, everybody is a fucking billionaire at start xD
             foreach (Shareholder s in market.shareholderList)
             {
                 foreach (Company c in market.companyList)
