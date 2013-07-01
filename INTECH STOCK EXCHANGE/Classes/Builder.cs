@@ -9,8 +9,10 @@ namespace INTECH_STOCK_EXCHANGE
 {
     public class Builder
     {
-        public static void CreateAll(Market market, int maxCompanies, int maxShareholders )
+        public static void CreateAll(Market market, int maxCompanies, int nbOfRandoms, int nbOfStupids, int nbOfSmarts )
         {
+            int maxShareholders = nbOfRandoms +  nbOfStupids + nbOfSmarts;
+
             //market.companyList.Clear();
             //market.shareholderList.Clear();
             List<string> tmp = market.companyNames;
@@ -43,7 +45,7 @@ namespace INTECH_STOCK_EXCHANGE
             }
             market.companyNames = tmp;
 
-            for (int t = 0; t < maxShareholders; t++)
+            for ( int t = 0; t < maxShareholders; t++ )
             {
                 string name;
                 name = "Shareholder n°" + t;
@@ -51,25 +53,20 @@ namespace INTECH_STOCK_EXCHANGE
                 market.shareholderList.Add( new Shareholder( market, name, 2000.0M ) );
             }
 
-            //parameters entered by the user in the Initialize UI window:
-            //int nbOfRandom;
-            //int nbOfStupid;
-            //int nbOfSmart;
-
             //Assigning user-defined strategies to s/h
 
-            //for( int i = 0; i < nbOfRandom; i++ )
-            //{
-            //    if ( market.shareholderList[i].Strategy == null ) market.shareholderList[i].Strategy = new RandomStrategy();  
-            //}
-            //for ( int y = nbOfRandom; y < nbOfStupid + nbOfRandom; y++)
-            //{
-            //    if ( market.shareholderList[y].Strategy == null ) market.shareholderList[y].Strategy = new StupidStrategy();
-            //}
-            //for( int z = nbOfRandom + nbOfStupid; z < market.shareholderList.Count; z++)
-            //{
-            //    if ( market.shareholderList[z].Strategy == null ) market.shareholderList[z].Strategy = new SmartStrategy();
-            //}
+            for( int i = 0; i < nbOfRandoms; i++ )
+            {
+                if ( market.shareholderList[i].Strategy == null ) market.shareholderList[i].Strategy = new RandomStrategy();  
+            }
+            for ( int y = nbOfRandoms; y < nbOfStupids + nbOfRandoms; y++)
+            {
+                if ( market.shareholderList[y].Strategy == null ) market.shareholderList[y].Strategy = new StupidStrategy();
+            }
+            for( int z = nbOfRandoms + nbOfStupids; z < market.shareholderList.Count; z++)
+            {
+                if ( market.shareholderList[z].Strategy == null ) market.shareholderList[z].Strategy = new SmartStrategy();
+            }
 
             market.AddShareholders( market.shareholderList );
 

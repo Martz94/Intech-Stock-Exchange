@@ -46,8 +46,8 @@ namespace INTECH_STOCK_EXCHANGE
             _portfolio = new List<PortfolioItem>();
             _displayName = name;
 
-            if ( _market.Random.Next( 2 ) == 1 ) _strategy = new StupidStrategy();
-            else _strategy = new RandomStrategy();
+            //if ( _market.Random.Next( 2 ) == 1 ) _strategy = new StupidStrategy();
+            //else _strategy = new RandomStrategy();
             //2 above lines are to be removed
 
             _cash = money;          

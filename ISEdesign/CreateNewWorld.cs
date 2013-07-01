@@ -27,6 +27,11 @@ namespace ISEdesign
             get { return Convert.ToInt32( _nbShareholderTextBox.Text ); }
         }
 
+        //Share of each strategy amongst shareholders (%)
+        public int ShareOfRandoms { get { return RandomTrackBar.Value; } }
+        public int ShareOfStupids { get { return StupidTrackBar.Value; } }
+        public int ShareOfSmarts { get { return SmartTrackBar.Value; } }
+
         private void _okButton_Click( object sender, EventArgs e )
         {
             //Need to :
@@ -53,7 +58,7 @@ namespace ISEdesign
             }
         }
 
-
+       
         //private void textBox1_KeyPress( object sender, KeyPressEventArgs e )
         //{
         //    if (!char.IsControl( e.KeyChar ) && !char.IsDigit( e.KeyChar ))

@@ -37,7 +37,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.RandomTrackBar = new System.Windows.Forms.TrackBar();
-            this.Regular = new System.Windows.Forms.CheckedListBox();
+            this.market_stability = new System.Windows.Forms.CheckedListBox();
             this.StupidTrackBar = new System.Windows.Forms.TrackBar();
             this.SmartTrackBar = new System.Windows.Forms.TrackBar();
             this.label3 = new System.Windows.Forms.Label();
@@ -136,20 +136,23 @@
             this.RandomTrackBar.Name = "RandomTrackBar";
             this.RandomTrackBar.Size = new System.Drawing.Size(135, 45);
             this.RandomTrackBar.TabIndex = 9;
+            this.RandomTrackBar.Maximum = 100;
+            this.RandomTrackBar.Minimum = 0;
+            this.RandomTrackBar.TickFrequency = 10;
             // 
-            // Regular
+            // market_stability
             // 
-            this.Regular.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.Regular.FormattingEnabled = true;
-            this.Regular.Items.AddRange(new object[] {
+            this.market_stability.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.market_stability.FormattingEnabled = true;
+            this.market_stability.Items.AddRange(new object[] {
             "Regular",
             "Quite stable",
             "Very stable",
             "Very unstable"});
-            this.Regular.Location = new System.Drawing.Point(447, 78);
-            this.Regular.Name = "Regular";
-            this.Regular.Size = new System.Drawing.Size(166, 64);
-            this.Regular.TabIndex = 10;
+            this.market_stability.Location = new System.Drawing.Point(447, 78);
+            this.market_stability.Name = "market_stability";
+            this.market_stability.Size = new System.Drawing.Size(166, 64);
+            this.market_stability.TabIndex = 10;
             // 
             // StupidTrackBar
             // 
@@ -157,6 +160,9 @@
             this.StupidTrackBar.Name = "StupidTrackBar";
             this.StupidTrackBar.Size = new System.Drawing.Size(135, 45);
             this.StupidTrackBar.TabIndex = 11;
+            this.RandomTrackBar.Maximum = 100;
+            this.RandomTrackBar.Minimum = 0;
+            this.RandomTrackBar.TickFrequency = 10;
             // 
             // SmartTrackBar
             // 
@@ -164,6 +170,9 @@
             this.SmartTrackBar.Name = "SmartTrackBar";
             this.SmartTrackBar.Size = new System.Drawing.Size(135, 45);
             this.SmartTrackBar.TabIndex = 12;
+            this.RandomTrackBar.Maximum = 100;
+            this.RandomTrackBar.Minimum = 0;
+            this.RandomTrackBar.TickFrequency = 10;
             // 
             // label3
             // 
@@ -217,7 +226,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.SmartTrackBar);
             this.Controls.Add(this.StupidTrackBar);
-            this.Controls.Add(this.Regular);
+            this.Controls.Add(this.market_stability);
             this.Controls.Add(this.RandomTrackBar);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -248,7 +257,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TrackBar RandomTrackBar;
-        private System.Windows.Forms.CheckedListBox Regular;
+        private System.Windows.Forms.CheckedListBox market_stability;
         private System.Windows.Forms.TrackBar StupidTrackBar;
         private System.Windows.Forms.TrackBar SmartTrackBar;
         private System.Windows.Forms.Label label3;
