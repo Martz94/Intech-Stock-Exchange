@@ -21,6 +21,7 @@ namespace INTECH_STOCK_EXCHANGE
         public Shareholder SuperShareholder;
         int _transactionCount = 0;
         readonly Random _random;
+        int roundCount;
 
         [NonSerialized]
         EventHandler<EventArgs> _companyListChanged;
@@ -336,6 +337,8 @@ namespace INTECH_STOCK_EXCHANGE
             //    }
             //}
         }
+
+        public int RoundCount { get { return roundCount; } set { roundCount += value; } }
 
         public List<string> companyNames = new List<string>
         {

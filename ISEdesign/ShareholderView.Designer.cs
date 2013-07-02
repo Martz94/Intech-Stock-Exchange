@@ -74,6 +74,7 @@
             // 
             this.columnStrategy.Text = "Strategy";
             this.columnStrategy.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            
             // 
             // ShareholderView
             // 

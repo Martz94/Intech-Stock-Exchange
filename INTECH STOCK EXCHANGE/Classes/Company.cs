@@ -16,6 +16,7 @@ namespace INTECH_STOCK_EXCHANGE
         public List<int> HistoryNbTransactions = new List<int>();
         public int NbTransaction = 0;
         public List<double> HistoryLastPrice = new List<double>();
+        List<decimal> _historyVariation = new List<decimal>();
         int shareVolume;                 //Quantity of its own shares the company still detains updated by event
   
         private readonly Market market;
@@ -79,10 +80,16 @@ namespace INTECH_STOCK_EXCHANGE
             shareVolume = shareVolume - Sharecount;
         }
 
+        public List<decimal> VariationHistory { get { return _historyVariation; } }
+
         public decimal ShareVariation
         {
             get { return sharePriceVariation; }
-            set { sharePriceVariation = value; }
+            set 
+            {
+                _historyVariation.Add( sharePriceVariation );
+                sharePriceVariation = value; 
+            }
         }
         
         public string Name

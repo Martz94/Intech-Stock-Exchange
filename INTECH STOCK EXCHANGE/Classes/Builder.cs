@@ -29,7 +29,7 @@ namespace INTECH_STOCK_EXCHANGE
                 decimal sharePrice = (decimal)price;
 
                 //Random r2 = market.Random;
-                int shareVolume = r.Next( 500000 );
+                int shareVolume = r.Next( 5000 );
 
                 Array values = Enum.GetValues( typeof( Company.Industry ) );
                 //Random random = market.Random;

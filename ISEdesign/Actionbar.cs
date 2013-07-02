@@ -34,6 +34,8 @@ namespace ISEdesign
         private void _goButtonClick( object sender, EventArgs e )
         {
             numberRound = Convert.ToInt32(this._roundNumber.Text);
+            _market.RoundCount += numberRound;
+
             int intervalTime = 500;
             GoTimer = new Timer();
 
@@ -43,13 +45,14 @@ namespace ISEdesign
         }
 
         private void _stepByStep_Click( object sender, EventArgs e )
-        {
+        {            
+            _market.RoundCount += 1;
+
             if (GoTimer != null)
             {
                 numberRound--;
                 if (numberRound == 0) GoTimer.Stop();
             }
-
             foreach (Shareholder sh in _market.shareholderList)
             {
                 sh.HistoryPortfolioValue.Add(sh.PortfolioValue);
@@ -66,8 +69,6 @@ namespace ISEdesign
                 c.HistoryNbTransactions.Add( c.NbTransaction );
                 c.NbTransaction = 0;
             }
-
-
             if (_market.SuperShareholder != null)
             {
                 ShareholderView.FillShareholderPortfolio( _market.SuperShareholder );

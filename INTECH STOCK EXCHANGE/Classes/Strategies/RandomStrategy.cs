@@ -31,7 +31,7 @@ namespace INTECH_STOCK_EXCHANGE
         public override string ToString()
         {
             string strat = "Random Strategy";
-            return strat.ToString();
+            return strat;
         }
         private Order RandomSell( Market market, Shareholder shareholder )
         {

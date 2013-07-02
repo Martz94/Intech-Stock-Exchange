@@ -67,14 +67,17 @@ namespace ISEdesign
         private void RandomTrackBar_ValueChanged( object sender, EventArgs e )
         {
             UpdateTotalShareholders();
+            nbRandom.Text = RandomTrackBar.Value.ToString();
         }
         private void StupidTrackBar_ValueChanged( object sender, EventArgs e )
         {
             UpdateTotalShareholders();
+            nbStupid.Text = StupidTrackBar.Value.ToString();
         }
         private void SmartTrackBar_ValueChanged( object sender, EventArgs e )
         {
             UpdateTotalShareholders();
+            nbSmart.Text = SmartTrackBar.Value.ToString();
         }      
     }
 }

@@ -54,6 +54,12 @@ namespace ISEdesign
                 i.SubItems.Add( s.Capital.ToString("C") );
                 i.SubItems.Add( s.PortfolioValue.ToString( "C" ) );
                 i.SubItems.Add( s.Strategy.ToString() );
+                
+                //Coloring strats, not fucking working
+                if ( s.Strategy.ToString() == "Random Strategy" )      i.SubItems[3].ForeColor = System.Drawing.Color.Red;
+                else if ( s.Strategy.ToString() == "Stupid Strategy" ) i.SubItems[3].ForeColor = System.Drawing.Color.Green;
+                else if (s.Strategy.ToString() == "Smart Strategy" )   i.SubItems[3].ForeColor = System.Drawing.Color.Blue;
+
                 _listViewSh.Items.Add( i );
             }
         }

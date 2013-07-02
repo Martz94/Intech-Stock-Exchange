@@ -16,7 +16,7 @@ namespace INTECH_STOCK_EXCHANGE
         public override string ToString()
         {
             string strat = "Stupid Strategy";
-            return strat.ToString();
+            return strat;
         }
         private Order Buy( Market market, Shareholder shareholder )
         {

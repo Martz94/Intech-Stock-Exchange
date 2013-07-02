@@ -19,86 +19,85 @@ namespace INTECH_STOCK_EXCHANGE
     {
         private Order Buy( Market market, Shareholder shareholder )
         {
-            //BUYING
-            int i;
-            List<Company> targetList = new List<Company>();
-            foreach ( Company c in market.companyList )
+            int j = 0;                
+            List<decimal> tmpData = new List<decimal>();
+
+            for(int i = 0; i < market.companyList.Count; i++)
             {
-                if ( c.ShareVariation >= 5.0M ) targetList.Add( c );
+                tmpData = market.companyList[i].VariationHistory.GetRange( market.RoundCount - 5, 4 );
+
+                //Quick'N'Dirty - Needs refactoring
+                for ( int f = 0; f < tmpData.Count; f++ )
+                {
+                    if ( tmpData[f] > 1 ) j++;
+                }
+
+                //For now, buying 10 shares for -5€ the current price), 
+                //company chosen for its consistency during the last 4 rounds regarding its share variation (always > 1)
+                if ( j == tmpData.Count )
+                {
+                    return new Order( Order.orderType.Buy, market.companyList[i].SharePrice - 5, 10, market.companyList[i], shareholder );
+                }
+
+                tmpData.Clear();
             }
-            Random index = market.Random;
-            if ( targetList.Count > 0 )
-            {
-                i = index.Next( targetList.Count );
-                Company target = targetList[i];
-
-                decimal priceProp = target.SharePrice * ((target.ShareVariation / 100) + 1);
-
-                decimal mentalState;
-
-                if ( shareholder.GetRiskIndex == Shareholder.RiskTaker.Crazy )
-                {
-                    mentalState = 0.75M;
-                }
-                else if ( shareholder.GetRiskIndex == Shareholder.RiskTaker.Cautious )
-                {
-                    mentalState = 0.15M;
-                }
-                else
-                {
-                    mentalState = 0.50M;
-                }
-                int max = (int)(mentalState * shareholder.Capital);
-                int quantity = (int)(max / priceProp);
-                return new Order( Order.orderType.Buy, priceProp, quantity, target, shareholder );
-            }
-            else return null;
+            return null;
         }
         private Order Sell( Market market, Shareholder shareholder )
-        {
-            //SELLING
-            List<Shareholder.PortfolioItem> targetList = new List<Shareholder.PortfolioItem>();
-            decimal mentalState;
+        {                
+            List<decimal> tmpData = new List<decimal>();
+            int j = 0;
 
-            foreach ( Shareholder.PortfolioItem share in shareholder.Portfolio )
+            if ( market.RoundCount > 5 )
             {
-                if ( share.Company.ShareVariation < -4.0M ) targetList.Add( share );
-            }
-            Random y = market.Random;
-            if ( targetList.Count > 0 )
-            {
-                int index = y.Next( targetList.Count );
-                Shareholder.PortfolioItem target = targetList[index];
+                for ( int i = 0; i < shareholder.Portfolio.Count; i++ )
+                {
+                    tmpData = shareholder.Portfolio[i].Company.VariationHistory.GetRange( market.RoundCount - 4, 4 );
 
-                decimal priceProp = target.Company.SharePrice * ((target.Company.ShareVariation / 100) + 1);
-                if ( shareholder.GetRiskIndex == Shareholder.RiskTaker.Crazy )
-                {
-                    mentalState = 0.75M;
+                    for ( int f = 0; f < tmpData.Count; f++ )
+                    {
+                        if ( tmpData[f] < -1 ) j++;
+                    }
+
+                    if ( j == tmpData.Count )
+                    {
+                        return new Order( Order.orderType.Sell, shareholder.Portfolio[i].ShareLastPurchaseValue + 5, shareholder.Portfolio[i].ShareCount, shareholder.Portfolio[i].Company, shareholder );
+                    }
                 }
-                else if ( shareholder.GetRiskIndex == Shareholder.RiskTaker.Cautious )
-                {
-                    mentalState = 0.15M;
-                }
-                else
-                {
-                    mentalState = 0.50M;
-                }
-                int quantity = (int)(mentalState * (target.ShareCount));
-                return new Order( Order.orderType.Sell, priceProp, quantity, target.Company, shareholder );
             }
-            else return null;
+            else if(market.RoundCount > 1)
+            {
+                for ( int u = 0; u < shareholder.Portfolio.Count; u++ )
+                {
+                    tmpData = shareholder.Portfolio[u].Company.VariationHistory.GetRange( 0, market.RoundCount - 1 );
+
+                    for ( int x = 0; x < tmpData.Count; x++ )
+                    {
+                        if ( tmpData[x] < -1 ) j++;
+                    }
+
+                    if ( j == tmpData.Count )
+                    {
+                        return new Order( Order.orderType.Sell, shareholder.Portfolio[u].ShareLastPurchaseValue + 5, shareholder.Portfolio[u].ShareCount, shareholder.Portfolio[u].Company, shareholder );
+                    }             
+                }
+            }
             return null;
         }
         public Order MakeDecision( Market market, Shareholder shareholder )
         {
-            if ( market.Random.Next( 2 ) == 1 ) return Buy( market, shareholder );
-            else return Sell( market, shareholder );     
+            if ( market.RoundCount > 5 )
+            {
+                if ( market.Random.Next( 2 ) == 1 ) return Buy( market, shareholder );
+                else return Sell( market, shareholder );
+            }
+            else return Sell( market, shareholder );
         }
 
         public override string ToString()
         {
             string strat = "Smart Strategy";
-            return strat.ToString();
+            return strat;
         }
     }
 }
