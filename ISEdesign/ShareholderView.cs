@@ -51,6 +51,7 @@ namespace ISEdesign
             {
 
                 ListViewItem i = new ListViewItem( s.Name );
+                i.UseItemStyleForSubItems = false;
                 i.SubItems.Add( s.Capital.ToString("C") );
                 i.SubItems.Add( s.PortfolioValue.ToString( "C" ) );
                 i.SubItems.Add( s.Strategy.ToString() );
