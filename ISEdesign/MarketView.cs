@@ -46,8 +46,8 @@ namespace ISEdesign
 
         void _market_CompanyChanged( object sender, CompanyChangedArgs e )
         {
-                ListViewItem item = _listView.Items.Cast<ListViewItem>().First( i => i.Text == e.Company.Name );
-                item.SubItems[1].Text = e.Company.SharePrice.ToString();
+            ListViewItem item = _listView.Items.Cast<ListViewItem>().First( i => i.Text == e.Company.Name );
+            item.SubItems[1].Text = e.Company.SharePrice.ToString();
         }
 
         void _market_CompanyListChanged( object sender, EventArgs e )

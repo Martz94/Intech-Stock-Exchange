@@ -53,7 +53,7 @@
             // 
             this._companyNumber.AutoSize = true;
             this._companyNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._companyNumber.Location = new System.Drawing.Point(12, 99);
+            this._companyNumber.Location = new System.Drawing.Point(25, 85);
             this._companyNumber.Name = "_companyNumber";
             this._companyNumber.Size = new System.Drawing.Size(130, 13);
             this._companyNumber.TabIndex = 0;
@@ -61,7 +61,7 @@
             // 
             // _nbCompanyTextBox
             // 
-            this._nbCompanyTextBox.Location = new System.Drawing.Point(168, 96);
+            this._nbCompanyTextBox.Location = new System.Drawing.Point(168, 82);
             this._nbCompanyTextBox.Name = "_nbCompanyTextBox";
             this._nbCompanyTextBox.Size = new System.Drawing.Size(38, 20);
             this._nbCompanyTextBox.TabIndex = 1;
@@ -71,7 +71,7 @@
             // 
             this._shareholderNumber.AutoSize = true;
             this._shareholderNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this._shareholderNumber.Location = new System.Drawing.Point(12, 232);
+            this._shareholderNumber.Location = new System.Drawing.Point(25, 232);
             this._shareholderNumber.Name = "_shareholderNumber";
             this._shareholderNumber.Size = new System.Drawing.Size(143, 13);
             this._shareholderNumber.TabIndex = 2;
@@ -79,7 +79,7 @@
             // 
             // _nbShareholderTextBox
             // 
-            this._nbShareholderTextBox.Location = new System.Drawing.Point(168, 229);
+            this._nbShareholderTextBox.Location = new System.Drawing.Point(185, 229);
             this._nbShareholderTextBox.Name = "_nbShareholderTextBox";
             this._nbShareholderTextBox.Size = new System.Drawing.Size(38, 20);
             this._nbShareholderTextBox.TabIndex = 3;
@@ -87,7 +87,7 @@
             // 
             // _okButton
             // 
-            this._okButton.Location = new System.Drawing.Point(246, 374);
+            this._okButton.Location = new System.Drawing.Point(131, 358);
             this._okButton.Name = "_okButton";
             this._okButton.Size = new System.Drawing.Size(75, 23);
             this._okButton.TabIndex = 4;
@@ -101,7 +101,7 @@
             // 
             // _cancelButton
             // 
-            this._cancelButton.Location = new System.Drawing.Point(42, 374);
+            this._cancelButton.Location = new System.Drawing.Point(335, 358);
             this._cancelButton.Name = "_cancelButton";
             this._cancelButton.Size = new System.Drawing.Size(75, 23);
             this._cancelButton.TabIndex = 5;
@@ -112,11 +112,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ImageAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.label1.Location = new System.Drawing.Point(242, 18);
+            this.label1.Location = new System.Drawing.Point(213, 19);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(166, 20);
+            this.label1.Size = new System.Drawing.Size(170, 19);
             this.label1.TabIndex = 7;
             this.label1.Text = "Create Your Market";
             // 
@@ -124,7 +124,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(310, 99);
+            this.label2.Location = new System.Drawing.Point(332, 85);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(111, 13);
             this.label2.TabIndex = 8;
@@ -132,12 +132,11 @@
             // 
             // RandomTrackBar
             // 
-            this.RandomTrackBar.Location = new System.Drawing.Point(458, 224);
+            this.RandomTrackBar.Location = new System.Drawing.Point(458, 185);
+            this.RandomTrackBar.Maximum = 100;
             this.RandomTrackBar.Name = "RandomTrackBar";
             this.RandomTrackBar.Size = new System.Drawing.Size(135, 45);
             this.RandomTrackBar.TabIndex = 9;
-            this.RandomTrackBar.Maximum = 100;
-            this.RandomTrackBar.Minimum = 0;
             this.RandomTrackBar.TickFrequency = 10;
             // 
             // market_stability
@@ -149,36 +148,30 @@
             "Quite stable",
             "Very stable",
             "Very unstable"});
-            this.market_stability.Location = new System.Drawing.Point(447, 78);
+            this.market_stability.Location = new System.Drawing.Point(449, 64);
             this.market_stability.Name = "market_stability";
             this.market_stability.Size = new System.Drawing.Size(166, 64);
             this.market_stability.TabIndex = 10;
             // 
             // StupidTrackBar
             // 
-            this.StupidTrackBar.Location = new System.Drawing.Point(458, 288);
+            this.StupidTrackBar.Location = new System.Drawing.Point(458, 245);
             this.StupidTrackBar.Name = "StupidTrackBar";
             this.StupidTrackBar.Size = new System.Drawing.Size(135, 45);
             this.StupidTrackBar.TabIndex = 11;
-            this.RandomTrackBar.Maximum = 100;
-            this.RandomTrackBar.Minimum = 0;
-            this.RandomTrackBar.TickFrequency = 10;
             // 
             // SmartTrackBar
             // 
-            this.SmartTrackBar.Location = new System.Drawing.Point(458, 352);
+            this.SmartTrackBar.Location = new System.Drawing.Point(458, 309);
             this.SmartTrackBar.Name = "SmartTrackBar";
             this.SmartTrackBar.Size = new System.Drawing.Size(135, 45);
             this.SmartTrackBar.TabIndex = 12;
-            this.RandomTrackBar.Maximum = 100;
-            this.RandomTrackBar.Minimum = 0;
-            this.RandomTrackBar.TickFrequency = 10;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label3.Location = new System.Drawing.Point(505, 336);
+            this.label3.Location = new System.Drawing.Point(509, 293);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(39, 13);
             this.label3.TabIndex = 13;
@@ -188,7 +181,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(501, 272);
+            this.label4.Location = new System.Drawing.Point(505, 229);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(43, 13);
             this.label4.TabIndex = 14;
@@ -198,7 +191,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(501, 208);
+            this.label5.Location = new System.Drawing.Point(501, 169);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(53, 13);
             this.label5.TabIndex = 15;
@@ -208,7 +201,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(310, 243);
+            this.label6.Location = new System.Drawing.Point(332, 245);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(84, 13);
             this.label6.TabIndex = 16;
@@ -219,7 +212,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.ClientSize = new System.Drawing.Size(616, 434);
+            this.ClientSize = new System.Drawing.Size(616, 396);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);

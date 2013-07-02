@@ -337,7 +337,7 @@ namespace INTECH_STOCK_EXCHANGE
             //}
         }
 
-        public List<string> companyNames = new List<string>
+        public readonly List<string> companyNames = new List<string>
         {
             "Lafarge",
             "Safran",

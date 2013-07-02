@@ -12,10 +12,13 @@ namespace INTECH_STOCK_EXCHANGE
         public static void CreateAll(Market market, int maxCompanies, int nbOfRandoms, int nbOfStupids, int nbOfSmarts )
         {
             int maxShareholders = nbOfRandoms +  nbOfStupids + nbOfSmarts;
+            List<string> tmp = new List<string>();
 
-            //market.companyList.Clear();
-            //market.shareholderList.Clear();
-            List<string> tmp = market.companyNames;
+            foreach (string name in market.companyNames)
+            {
+                tmp.Add( name );
+            }
+
             // Create companies with companies' numbers defined by user
             for (int i = 0; i < maxCompanies; i++)
             {
@@ -36,14 +39,13 @@ namespace INTECH_STOCK_EXCHANGE
                 Company.Industry randomInd = (Company.Industry)values.GetValue( r.Next( values.Length ) );
 
                 //Random rdm = market.Random;
-                int k = r.Next( market.companyNames.Count );
-                string name = market.companyNames[k];
+                int k = r.Next( tmp.Count );
+                string name = tmp[k];
                 
-                market.companyNames.RemoveAt( k );
+                tmp.RemoveAt( k );
 
                 market.AddOrUpdateCompany( name, randomInd, sharePrice, shareVolume );
             }
-            market.companyNames = tmp;
 
             for ( int t = 0; t < maxShareholders; t++ )
             {
@@ -94,10 +96,8 @@ namespace INTECH_STOCK_EXCHANGE
                         shareCount = random.Next(c.GetTotalShareCount / market.shareholderList.Count * 16);
                     }
                     if (shareCount != 0 ) s.AlterPortfolio( Market.ActionType.Fill, shareCount, c, s );
-                }
-                
+                } 
             }
-       
         }
     }
 }
