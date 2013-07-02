@@ -161,10 +161,13 @@
             this.StupidTrackBar.Name = "StupidTrackBar";
             this.StupidTrackBar.Size = new System.Drawing.Size(135, 45);
             this.StupidTrackBar.TabIndex = 11;
+<<<<<<< HEAD
+=======
             this.StupidTrackBar.Maximum = 100;
             this.StupidTrackBar.Minimum = 0;
             this.StupidTrackBar.TickFrequency = 10;
             this.StupidTrackBar.ValueChanged += new System.EventHandler( this.StupidTrackBar_ValueChanged );
+>>>>>>> origin/develop
             // 
             // SmartTrackBar
             // 
@@ -172,10 +175,13 @@
             this.SmartTrackBar.Name = "SmartTrackBar";
             this.SmartTrackBar.Size = new System.Drawing.Size(135, 45);
             this.SmartTrackBar.TabIndex = 12;
+<<<<<<< HEAD
+=======
             this.SmartTrackBar.Maximum = 100;
             this.SmartTrackBar.Minimum = 0;
             this.SmartTrackBar.TickFrequency = 10;
             this.SmartTrackBar.ValueChanged += new System.EventHandler( this.SmartTrackBar_ValueChanged );
+>>>>>>> origin/develop
             // 
             // label3
             // 
