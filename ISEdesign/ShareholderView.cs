@@ -51,6 +51,7 @@ namespace ISEdesign
             foreach (var s in _market.shareholderList)
             {
                 ListViewItem i = new ListViewItem( s.Name );
+                i.UseItemStyleForSubItems = false;
                 i.SubItems.Add( s.Cash.ToString("N2") );
                 i.SubItems.Add( s.PortfolioValue.ToString("N2") );
                 i.SubItems.Add( s.Capital.ToString( "N2" ) );
