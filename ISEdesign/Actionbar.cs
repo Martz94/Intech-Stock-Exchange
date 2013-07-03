@@ -52,6 +52,7 @@ namespace ISEdesign
 
             foreach (Shareholder sh in _market.shareholderList)
             {
+                sh.HistoryCapital.Add( sh.Cash );
                 sh.HistoryPortfolioValue.Add(sh.PortfolioValue);
                 Order newOrder = sh.MakeDecision( _market, sh );
                 if (newOrder != null) _market.GlobalOrderbook.Add( newOrder );
@@ -64,9 +65,11 @@ namespace ISEdesign
             {
                 c.HistoryLastPrice.Add( (double)c.SharePrice );
                 c.HistoryNbTransactions.Add( c.NbTransaction );
+                c.VolumexVar.Add( c.VolxVar );
                 c.NbTransaction = 0;
             }
 
+            MarketView.FillGraphMarket();
 
             if (_market.SuperShareholder != null)
             {
@@ -79,7 +82,7 @@ namespace ISEdesign
 
         private void button1_Click( object sender, EventArgs e )
         {
-            GoTimer.Stop();
+            if (GoTimer != null) GoTimer.Stop();
         }   
     }
 }

@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this._tabShareholder = new System.Windows.Forms.TabControl();
             this._tabPortfolio = new System.Windows.Forms.TabPage();
             this.listView1 = new System.Windows.Forms.ListView();
@@ -96,22 +96,25 @@
             // columnHeaderCompany
             // 
             this.columnHeaderCompany.Text = "Company";
-            this.columnHeaderCompany.Width = 120;
+            this.columnHeaderCompany.Width = 100;
             // 
             // columnHeaderShareCount
             // 
             this.columnHeaderShareCount.Text = "Share Count";
-            this.columnHeaderShareCount.Width = 77;
+            this.columnHeaderShareCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeaderShareCount.Width = 100;
             // 
             // columnHeaderCurrentSharePrice
             // 
-            this.columnHeaderCurrentSharePrice.Text = "Current Price";
-            this.columnHeaderCurrentSharePrice.Width = 94;
+            this.columnHeaderCurrentSharePrice.Text = "Current Price (€)";
+            this.columnHeaderCurrentSharePrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeaderCurrentSharePrice.Width = 100;
             // 
             // columnHeaderShareVariation
             // 
-            this.columnHeaderShareVariation.Text = "Variation";
-            this.columnHeaderShareVariation.Width = 68;
+            this.columnHeaderShareVariation.Text = "Variation (%)";
+            this.columnHeaderShareVariation.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeaderShareVariation.Width = 100;
             // 
             // _tabOrderbook
             // 
@@ -143,20 +146,25 @@
             // columnHeaderOrderSB
             // 
             this.columnHeaderOrderSB.Text = "Sell / Buy";
+            this.columnHeaderOrderSB.Width = 100;
             // 
             // columnHeaderOrderCompany
             // 
             this.columnHeaderOrderCompany.Text = "Company";
-            this.columnHeaderOrderCompany.Width = 85;
+            this.columnHeaderOrderCompany.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeaderOrderCompany.Width = 100;
             // 
             // columnHeaderOrderQuantity
             // 
             this.columnHeaderOrderQuantity.Text = "Quantity";
-            this.columnHeaderOrderQuantity.Width = 80;
+            this.columnHeaderOrderQuantity.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeaderOrderQuantity.Width = 100;
             // 
             // columnHeaderOrderPrice
             // 
-            this.columnHeaderOrderPrice.Text = "Price";
+            this.columnHeaderOrderPrice.Text = "Price (€)";
+            this.columnHeaderOrderPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeaderOrderPrice.Width = 100;
             // 
             // _tabStats
             // 
@@ -170,17 +178,17 @@
             // 
             // _chartShareholder
             // 
-            chartArea1.Name = "ChartArea1";
-            this._chartShareholder.ChartAreas.Add(chartArea1);
+            chartArea2.Name = "ChartArea1";
+            this._chartShareholder.ChartAreas.Add(chartArea2);
             this._chartShareholder.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend1.Name = "Legend1";
-            this._chartShareholder.Legends.Add(legend1);
+            legend2.Name = "Legend1";
+            this._chartShareholder.Legends.Add(legend2);
             this._chartShareholder.Location = new System.Drawing.Point(0, 0);
             this._chartShareholder.Name = "_chartShareholder";
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this._chartShareholder.Series.Add(series1);
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this._chartShareholder.Series.Add(series2);
             this._chartShareholder.Size = new System.Drawing.Size(388, 136);
             this._chartShareholder.TabIndex = 0;
             this._chartShareholder.Text = "chart1";

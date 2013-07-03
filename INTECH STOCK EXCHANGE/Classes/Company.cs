@@ -16,6 +16,7 @@ namespace INTECH_STOCK_EXCHANGE
         public List<int> HistoryNbTransactions = new List<int>();
         public int NbTransaction = 0;
         public List<double> HistoryLastPrice = new List<double>();
+        public List<decimal> VolumexVar = new List<decimal>();
         int shareVolume;                 //Quantity of its own shares the company still detains updated by event
   
         private readonly Market market;
@@ -62,6 +63,11 @@ namespace INTECH_STOCK_EXCHANGE
                 NbTransaction++;
                 sharePrice = value;
             }
+        }
+
+        public decimal VolxVar
+        {
+            get { return sharePrice * shareVolume; }
         }
 
         public int ShareVolume

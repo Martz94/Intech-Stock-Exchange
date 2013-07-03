@@ -22,10 +22,10 @@ namespace INTECH_STOCK_EXCHANGE
             int i = properties.Next( 0, market.companyList.Count );
             Company firm = market.companyList[i];
             decimal priceProp = firm.SharePrice * (properties.Next( 201 ) + 899) / 1000;
-            double max = (int)(q * (double)shareholder.Capital);
+            double max = (int)(q * (double)shareholder.Cash);
             int quantity = properties.Next( Math.Abs((int)((max / (double)priceProp))) );
 
-            if(priceProp * quantity < shareholder.Capital) return new Order(Order.orderType.Buy, priceProp, quantity, firm, shareholder); 
+            if(priceProp * quantity < shareholder.Cash) return new Order(Order.orderType.Buy, priceProp, quantity, firm, shareholder); 
             else return null;
         }
         public override string ToString()

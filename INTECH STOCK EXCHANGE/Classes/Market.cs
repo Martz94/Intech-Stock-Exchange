@@ -160,7 +160,7 @@ namespace INTECH_STOCK_EXCHANGE
                     {
                         decimal exchangePrice = oBuy.OrderSharePriceProposal;    // our call!
                         int exchangeCount = Math.Min( oBuy.OrderShareQuantity, oSell.OrderShareQuantity );
-                        exchangeCount = Math.Min(exchangeCount, (int)(oBuy.OrderMaker.Capital / exchangePrice));
+                        exchangeCount = Math.Min(exchangeCount, (int)(oBuy.OrderMaker.Cash / exchangePrice));
                         int nbSellerShares = 0;
 
                         foreach (var s in oSell.OrderMaker.Portfolio)
@@ -188,11 +188,11 @@ namespace INTECH_STOCK_EXCHANGE
             Company company = oSell.Company;
 
             // Updating buyer info
-            buyer.Capital = buyer.Capital - price * quantity;
+            buyer.Cash = buyer.Cash - price * quantity;
             buyer.AlterPortfolio(Market.ActionType.Fill, quantity, company, buyer);
 
             // Updating seller info
-            seller.Capital = seller.Capital + price * quantity;
+            seller.Cash = seller.Cash + price * quantity;
             seller.AlterPortfolio(Market.ActionType.Empty, quantity, company, seller);
 
             // Updating market data
@@ -335,6 +335,16 @@ namespace INTECH_STOCK_EXCHANGE
             //        h( this, e );
             //    }
             //}
+        }
+
+        public decimal TotalMarketValue()
+        {
+            decimal total = 0;
+            foreach (var c in this.companyList)
+            {
+                 total = c.VolxVar;
+            }
+            return total;
         }
 
         public readonly List<string> companyNames = new List<string>

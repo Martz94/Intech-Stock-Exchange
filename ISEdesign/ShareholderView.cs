@@ -51,8 +51,8 @@ namespace ISEdesign
             {
 
                 ListViewItem i = new ListViewItem( s.Name );
-                i.SubItems.Add( s.Capital.ToString("C") );
-                i.SubItems.Add( s.PortfolioValue.ToString( "C" ) );
+                i.SubItems.Add( s.Cash.ToString("N2") );
+                i.SubItems.Add( s.PortfolioValue.ToString( "N2" ) );
                 i.SubItems.Add( s.Strategy.ToString() );
                 _listViewSh.Items.Add( i );
             }
@@ -70,7 +70,7 @@ namespace ISEdesign
                 i.SubItems.Add( a.ShareCount.ToString() );
 
                 i.SubItems.Add( a.Company.SharePrice.ToString( "#.###" ) );
-                i.SubItems.Add( a.Company.ShareVariation.ToString( "N2" ) + " %" );
+                i.SubItems.Add( a.Company.ShareVariation.ToString( "N2" ));
 
                 if (a.Company.ShareVariation < 0)
                 {
@@ -101,16 +101,25 @@ namespace ISEdesign
             GraphShareholder.Palette = ChartColorPalette.Berry;
             GraphShareholder.Titles.Add( shareholder.Name );
             Series serie = GraphShareholder.Series.Add( "Portfolio value" );
+            Series serie2 = GraphShareholder.Series.Add( "Cash" );
 
             GraphShareholder.Series[0].ChartType = SeriesChartType.FastLine;
             GraphShareholder.Series[0].BorderWidth = 2;
+            GraphShareholder.Series[0].YAxisType = AxisType.Primary;
+
+            GraphShareholder.Series[1].ChartType = SeriesChartType.FastLine;
+            GraphShareholder.Series[1].BorderWidth = 2;
+            GraphShareholder.Series[1].YAxisType = AxisType.Secondary;
 
             foreach (var a in shareholder.HistoryPortfolioValue)
             {
-                serie.Points.Add( (double)a );
-                //serie.Points.Add( (double)shareholder.PortfolioValue );
-            
-            }            
+                serie.Points.Add( (double)a );            
+            }
+
+            foreach (var s in shareholder.HistoryCapital)
+            {
+                serie2.Points.Add( (double)s );
+            }
         }
 
         private void _listViewSh_Click( object sender, EventArgs e )

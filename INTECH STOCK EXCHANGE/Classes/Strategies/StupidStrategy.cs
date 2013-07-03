@@ -49,7 +49,7 @@ namespace INTECH_STOCK_EXCHANGE
                 {
                     mentalState = 0.50M;
                 }
-                int max = (int)(mentalState * shareholder.Capital);
+                int max = (int)(mentalState * shareholder.Cash);
                 int quantity = (int)(max / priceProp);
                 return new Order( Order.orderType.Buy, priceProp, quantity, target, shareholder );
             }

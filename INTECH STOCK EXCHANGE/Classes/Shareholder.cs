@@ -22,6 +22,7 @@ namespace INTECH_STOCK_EXCHANGE
         RiskTaker _riskTaker;
         TimeVision _timeVision;
         public List<decimal> HistoryPortfolioValue = new List<decimal>();
+        public List<decimal> HistoryCapital = new List<decimal>();
 
         public Shareholder(Market marketPlace, string name, decimal money)
         {
@@ -60,7 +61,7 @@ namespace INTECH_STOCK_EXCHANGE
             set { _displayName = value; }
         }
 
-        public decimal Capital
+        public decimal Cash
         {
             get { return _cash; }
             set { _cash = value; }
