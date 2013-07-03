@@ -50,7 +50,7 @@ namespace INTECH_STOCK_EXCHANGE
                 string name;
                 name = "Shareholder n°" + t;
                 //market.shareholderList.Add( new Shareholder( market, name, 20000.0M ) );
-                market.shareholderList.Add( new Shareholder( market, name, 2000.0M ) );
+                market.shareholderList.Add( new Shareholder( market, name, 20000.0M ) );
             }
 
             //Assigning user-defined strategies to s/h
@@ -70,33 +70,43 @@ namespace INTECH_STOCK_EXCHANGE
 
             market.AddShareholders( market.shareholderList );
 
-            // Filling the shareholders portfolios
-            // (!)(!)(!)
-            // (!) Need an alternative share-distribution system here, everybody is a fucking billionaire at start xD
-            foreach (Shareholder s in market.shareholderList)
+            // Filling the shareholders portfolios           
+            foreach(Shareholder s in market.shareholderList)
             {
-                foreach (Company c in market.companyList)
+                while(s.PortfolioValue < 15000)
                 {
-                    Random random = market.Random;
-                    int shareCount = 0;
-                    int rand = random.Next( 6 );
-
-                    if (rand == 1)
+                    for(int y = 0; y < 15; y++)
                     {
-                        shareCount = random.Next(c.GetTotalShareCount / market.shareholderList.Count * 4 / 4);
+                        Random r = market.Random;
+                        var company = market.companyList[ r.Next( market.companyList.Count ) ];
+                        int shareCount = r.Next(1, company.ConvertValueToShareCount(1000));
+                        s.Cash = s.Cash - company.ConvertShareCountToValue(shareCount);
+                        s.AlterPortfolio( Market.ActionType.Fill, shareCount, company, s ); 
                     }
-                    else if (rand == 2)
-                    {
-                        shareCount = random.Next(c.GetTotalShareCount / market.shareholderList.Count * 4);
-                    }
-                    else if (rand == 3)
-                    {
-                        shareCount = random.Next(c.GetTotalShareCount / market.shareholderList.Count * 16);
-                    }
-                    if (shareCount != 0 ) s.AlterPortfolio( Market.ActionType.Fill, shareCount, c, s );
-                }
-                
+                }               
             }
+                    //foreach (Company c in market.companyList)
+                //{
+                //    Random random = market.Random;
+                //    int sharePrice = 0;
+                //    int rand = random.Next( 6 );
+
+                //    if (rand == 1)
+                //    {
+                //        sharePrice = random.Next(c.GetTotalShareCount / market.shareholderList.Count * 4 / 4); if
+                //   
+                //    }
+                //    else if (rand == 2)
+                //    {
+                //        sharePrice = random.Next(c.GetTotalShareCount / market.shareholderList.Count * 4);
+                //    }
+                //    else if (rand == 3)
+                //    {
+                //        sharePrice = random.Next(c.GetTotalShareCount / market.shareholderList.Count * 16);
+                //    }
+                //    if (sharePrice != 0 ) s.AlterPortfolio( Market.ActionType.Fill, sharePrice, c, s );
+                //}
+            
        
         }
     }

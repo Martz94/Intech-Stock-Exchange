@@ -60,10 +60,15 @@ namespace INTECH_STOCK_EXCHANGE
             set { _displayName = value; }
         }
 
-        public decimal Capital
+        public decimal Cash
         {
             get { return _cash; }
             set { _cash = value; }
+        }
+
+        public decimal Capital
+        {
+            get { return _cash + this.PortfolioValue; }
         }
 
         public decimal PortfolioValue

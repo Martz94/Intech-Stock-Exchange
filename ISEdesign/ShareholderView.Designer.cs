@@ -33,6 +33,7 @@
             this.columnCashSh = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnTotalPortfolio = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnStrategy = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnCapital = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // _listViewSh
@@ -41,17 +42,20 @@
             this.columnNameSh,
             this.columnCashSh,
             this.columnTotalPortfolio,
+            this.columnCapital,
             this.columnStrategy});
             this._listViewSh.Dock = System.Windows.Forms.DockStyle.Fill;
             this._listViewSh.FullRowSelect = true;
             this._listViewSh.GridLines = true;
             this._listViewSh.HideSelection = false;
+            this._listViewSh.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this._listViewSh.Location = new System.Drawing.Point(0, 0);
             this._listViewSh.Name = "_listViewSh";
             this._listViewSh.Size = new System.Drawing.Size(350, 294);
             this._listViewSh.TabIndex = 0;
             this._listViewSh.UseCompatibleStateImageBehavior = false;
             this._listViewSh.View = System.Windows.Forms.View.Details;
+            this._listViewSh.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this._listViewSh_ColumnClick);
             this._listViewSh.Click += new System.EventHandler(this._listViewSh_Click);
             // 
             // columnNameSh
@@ -60,13 +64,13 @@
             // 
             // columnCashSh
             // 
-            this.columnCashSh.Text = "Cash";
+            this.columnCashSh.Text = "Cash (€)";
             this.columnCashSh.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.columnCashSh.Width = 81;
             // 
             // columnTotalPortfolio
             // 
-            this.columnTotalPortfolio.Text = "Total Portfolio Value";
+            this.columnTotalPortfolio.Text = "Portfolio Value (€)";
             this.columnTotalPortfolio.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.columnTotalPortfolio.Width = 110;
             // 
@@ -74,7 +78,10 @@
             // 
             this.columnStrategy.Text = "Strategy";
             this.columnStrategy.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            
+            // 
+            // columnCapital
+            // 
+            this.columnCapital.Text = "Capital (€)";
             // 
             // ShareholderView
             // 
@@ -94,5 +101,6 @@
         private System.Windows.Forms.ColumnHeader columnCashSh;
         private System.Windows.Forms.ColumnHeader columnTotalPortfolio;
         private System.Windows.Forms.ColumnHeader columnStrategy;
+        private System.Windows.Forms.ColumnHeader columnCapital;
     }
 }

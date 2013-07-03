@@ -15,6 +15,7 @@ namespace ISEdesign
     public partial class ShareholderView : UserControl
     {
         Market _market;
+        int sortColumn = -1;
 
         public ShareholderView()
         {
@@ -49,10 +50,10 @@ namespace ISEdesign
             _listViewSh.Items.Clear();
             foreach (var s in _market.shareholderList)
             {
-
                 ListViewItem i = new ListViewItem( s.Name );
-                i.SubItems.Add( s.Capital.ToString("C") );
-                i.SubItems.Add( s.PortfolioValue.ToString( "C" ) );
+                i.SubItems.Add( s.Cash.ToString("N2") );
+                i.SubItems.Add( s.PortfolioValue.ToString("N2") );
+                i.SubItems.Add( s.Capital.ToString( "N2" ) );
                 i.SubItems.Add( s.Strategy.ToString() );
                 
                 //Coloring strats, not fucking working
@@ -76,7 +77,7 @@ namespace ISEdesign
                 i.SubItems.Add( a.ShareCount.ToString() );
 
                 i.SubItems.Add( a.Company.SharePrice.ToString( "#.###" ) );
-                i.SubItems.Add( a.Company.ShareVariation.ToString( "N2" ) + " %" );
+                i.SubItems.Add( a.Company.ShareVariation.ToString( "N2" ));
 
                 if (a.Company.ShareVariation < 0)
                 {
@@ -131,6 +132,29 @@ namespace ISEdesign
                     FillGraphShareholder( c );
                 }
             }
+        }
+
+        private void _listViewSh_ColumnClick( object sender, ColumnClickEventArgs e )
+        {
+            // Determine whether the column is the same as the last column clicked.
+            if ( e.Column != sortColumn )
+            {
+                // Set the sort column to the new column.
+                sortColumn = e.Column;
+                // Set the sort order to ascending by default
+                _listViewSh.Sorting = SortOrder.Ascending;
+            }
+            else
+            {
+                // Determine what the last sort order was and change it
+                if ( _listViewSh.Sorting == SortOrder.Ascending )
+                    _listViewSh.Sorting = SortOrder.Descending;
+                else
+                    _listViewSh.Sorting = SortOrder.Ascending;
+            }
+            // Call the sort method to manually sort
+            _listViewSh.ListViewItemSorter = new _listViewItemComparer( e.Column, _listViewSh.Sorting );
+            _listViewSh.Sort();   
         }       
     }
 }

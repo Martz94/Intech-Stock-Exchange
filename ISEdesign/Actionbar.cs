@@ -34,7 +34,6 @@ namespace ISEdesign
         private void _goButtonClick( object sender, EventArgs e )
         {
             numberRound = Convert.ToInt32(this._roundNumber.Text);
-            _market.RoundCount += numberRound;
 
             int intervalTime = 500;
             GoTimer = new Timer();
@@ -46,8 +45,7 @@ namespace ISEdesign
 
         private void _stepByStep_Click( object sender, EventArgs e )
         {            
-            _market.RoundCount += 1;
-
+            _market.RoundCount++;
             if (GoTimer != null)
             {
                 numberRound--;
@@ -65,6 +63,7 @@ namespace ISEdesign
 
             foreach (var c in _market.Companies)
             {
+                c.VariationHistory.Add( c.ShareVariation );
                 c.HistoryLastPrice.Add( (double)c.SharePrice );
                 c.HistoryNbTransactions.Add( c.NbTransaction );
                 c.NbTransaction = 0;

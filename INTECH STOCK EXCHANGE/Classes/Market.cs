@@ -21,7 +21,7 @@ namespace INTECH_STOCK_EXCHANGE
         public Shareholder SuperShareholder;
         int _transactionCount = 0;
         readonly Random _random;
-        int roundCount;
+        int _roundCount;
 
         [NonSerialized]
         EventHandler<EventArgs> _companyListChanged;
@@ -42,6 +42,7 @@ namespace INTECH_STOCK_EXCHANGE
             _shareholders = new List<Shareholder>();
             _companies = new List<Company>();
             _random = new Random();
+            _roundCount = 0;
         }
 
         public event EventHandler<EventArgs> CompanyListChanged
@@ -161,7 +162,7 @@ namespace INTECH_STOCK_EXCHANGE
                     {
                         decimal exchangePrice = oBuy.OrderSharePriceProposal;    // our call!
                         int exchangeCount = Math.Min( oBuy.OrderShareQuantity, oSell.OrderShareQuantity );
-                        exchangeCount = Math.Min(exchangeCount, (int)(oBuy.OrderMaker.Capital / exchangePrice));
+                        exchangeCount = Math.Min(exchangeCount, (int)(oBuy.OrderMaker.Cash / exchangePrice));
                         int nbSellerShares = 0;
 
                         foreach (var s in oSell.OrderMaker.Portfolio)
@@ -189,11 +190,11 @@ namespace INTECH_STOCK_EXCHANGE
             Company company = oSell.Company;
 
             // Updating buyer info
-            buyer.Capital = buyer.Capital - price * quantity;
+            buyer.Cash = buyer.Cash - price * quantity;
             buyer.AlterPortfolio(Market.ActionType.Fill, quantity, company, buyer);
 
             // Updating seller info
-            seller.Capital = seller.Capital + price * quantity;
+            seller.Cash = seller.Cash + price * quantity;
             seller.AlterPortfolio(Market.ActionType.Empty, quantity, company, seller);
 
             // Updating market data
@@ -338,7 +339,7 @@ namespace INTECH_STOCK_EXCHANGE
             //}
         }
 
-        public int RoundCount { get { return roundCount; } set { roundCount += value; } }
+        public int RoundCount { get { return _roundCount; } set { _roundCount = value; } }
 
         public List<string> companyNames = new List<string>
         {

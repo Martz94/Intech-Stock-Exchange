@@ -44,6 +44,7 @@ namespace INTECH_STOCK_EXCHANGE
             double tmp = -5 + r.NextDouble() * 15;
             sharePriceVariation = (decimal)tmp;
             shareVolume = ShareVolume;
+            _historyVariation.Add( sharePriceVariation );
         }
 
         public enum Industry
@@ -53,7 +54,17 @@ namespace INTECH_STOCK_EXCHANGE
             Pharmaceuticals,
             Insurance,
             RealEstate,
-        }       
+        }
+
+        public decimal ConvertShareCountToValue(int shareCount)
+        {
+            return shareCount * sharePrice;
+        }
+
+        public int ConvertValueToShareCount (decimal value)
+        {
+            return (int)(value / sharePrice);
+        }
 
         public decimal SharePrice
         {
@@ -85,11 +96,7 @@ namespace INTECH_STOCK_EXCHANGE
         public decimal ShareVariation
         {
             get { return sharePriceVariation; }
-            set 
-            {
-                _historyVariation.Add( sharePriceVariation );
-                sharePriceVariation = value; 
-            }
+            set { sharePriceVariation = value; }
         }
         
         public string Name

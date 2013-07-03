@@ -75,7 +75,7 @@
             // 
             // _columnHeaderValue
             // 
-            this._columnHeaderValue.Text = "Share Value";
+            this._columnHeaderValue.Text = "Share Value (€)";
             this._columnHeaderValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this._columnHeaderValue.Width = 82;
             // 
@@ -86,7 +86,7 @@
             // 
             // columnHeaderVariation
             // 
-            this.columnHeaderVariation.Text = "Variation";
+            this.columnHeaderVariation.Text = "Variation (%)";
             this.columnHeaderVariation.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // MarketView

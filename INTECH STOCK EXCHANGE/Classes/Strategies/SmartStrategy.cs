@@ -19,20 +19,24 @@ namespace INTECH_STOCK_EXCHANGE
     {
         private Order Buy( Market market, Shareholder shareholder )
         {
+            //Round count must be over 5
+            //Roundcount == variationhistory.count
             int j = 0;                
             List<decimal> tmpData = new List<decimal>();
 
             for(int i = 0; i < market.companyList.Count; i++)
             {
-                tmpData = market.companyList[i].VariationHistory.GetRange( market.RoundCount - 5, 4 );
+                int f; 
 
+                f = market.companyList[i].VariationHistory.Count;
+                tmpData = market.companyList[i].VariationHistory.GetRange( f - 4, 4 );
                 //Quick'N'Dirty - Needs refactoring
-                for ( int f = 0; f < tmpData.Count; f++ )
+                for ( int d = 0; d < tmpData.Count; d++ )
                 {
-                    if ( tmpData[f] > 1 ) j++;
+                    if ( tmpData[d] > 1 ) j++;
                 }
 
-                //For now, buying 10 shares for -5€ the current price), 
+                //For now, buying 10 shares for -5€ the current price, 
                 //company chosen for its consistency during the last 4 rounds regarding its share variation (always > 1)
                 if ( j == tmpData.Count )
                 {
@@ -52,7 +56,8 @@ namespace INTECH_STOCK_EXCHANGE
             {
                 for ( int i = 0; i < shareholder.Portfolio.Count; i++ )
                 {
-                    tmpData = shareholder.Portfolio[i].Company.VariationHistory.GetRange( market.RoundCount - 4, 4 );
+                    int x = shareholder.Portfolio[i].Company.VariationHistory.Count;
+                    tmpData = shareholder.Portfolio[i].Company.VariationHistory.GetRange( x - 5, 4 );
 
                     for ( int f = 0; f < tmpData.Count; f++ )
                     {
@@ -61,25 +66,18 @@ namespace INTECH_STOCK_EXCHANGE
 
                     if ( j == tmpData.Count )
                     {
-                        return new Order( Order.orderType.Sell, shareholder.Portfolio[i].ShareLastPurchaseValue + 5, shareholder.Portfolio[i].ShareCount, shareholder.Portfolio[i].Company, shareholder );
+                        return new Order( Order.orderType.Sell, shareholder.Portfolio[i].ShareLastPurchaseValue + 5, 10%(shareholder.Portfolio[i].ShareCount), shareholder.Portfolio[i].Company, shareholder );
                     }
                 }
             }
-            else if(market.RoundCount > 1)
+            else
             {
                 for ( int u = 0; u < shareholder.Portfolio.Count; u++ )
                 {
-                    tmpData = shareholder.Portfolio[u].Company.VariationHistory.GetRange( 0, market.RoundCount - 1 );
-
-                    for ( int x = 0; x < tmpData.Count; x++ )
-                    {
-                        if ( tmpData[x] < -1 ) j++;
-                    }
-
-                    if ( j == tmpData.Count )
+                    if ( shareholder.Portfolio[u].Company.ShareVariation < -1 )
                     {
                         return new Order( Order.orderType.Sell, shareholder.Portfolio[u].ShareLastPurchaseValue + 5, shareholder.Portfolio[u].ShareCount, shareholder.Portfolio[u].Company, shareholder );
-                    }             
+                    }
                 }
             }
             return null;
