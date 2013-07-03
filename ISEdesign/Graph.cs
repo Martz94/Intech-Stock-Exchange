@@ -23,5 +23,11 @@ namespace ISEdesign
             get { return _chartCompany; }
             set { _chartCompany = value; }
         }
+
+        public Chart GraphMarket
+        {
+            get { return _chartMarket; }
+            set { _chartMarket = value; }
+        }
     }
 }

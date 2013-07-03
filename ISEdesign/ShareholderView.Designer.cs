@@ -61,23 +61,25 @@
             // columnNameSh
             // 
             this.columnNameSh.Text = "Name";
+            this.columnNameSh.Width = 100;
             // 
             // columnCashSh
             // 
             this.columnCashSh.Text = "Cash (€)";
             this.columnCashSh.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnCashSh.Width = 81;
+            this.columnCashSh.Width = 100;
             // 
             // columnTotalPortfolio
             // 
             this.columnTotalPortfolio.Text = "Portfolio Value (€)";
             this.columnTotalPortfolio.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnTotalPortfolio.Width = 110;
+            this.columnTotalPortfolio.Width = 100;
             // 
             // columnStrategy
             // 
             this.columnStrategy.Text = "Strategy";
-            this.columnStrategy.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnStrategy.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnStrategy.Width = 110;
             // 
             // columnCapital
             // 

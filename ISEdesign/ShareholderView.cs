@@ -109,16 +109,25 @@ namespace ISEdesign
             GraphShareholder.Palette = ChartColorPalette.Berry;
             GraphShareholder.Titles.Add( shareholder.Name );
             Series serie = GraphShareholder.Series.Add( "Portfolio value" );
+            Series serie2 = GraphShareholder.Series.Add( "Cash" );
 
             GraphShareholder.Series[0].ChartType = SeriesChartType.FastLine;
             GraphShareholder.Series[0].BorderWidth = 2;
+            GraphShareholder.Series[0].YAxisType = AxisType.Primary;
+
+            GraphShareholder.Series[1].ChartType = SeriesChartType.FastLine;
+            GraphShareholder.Series[1].BorderWidth = 2;
+            GraphShareholder.Series[1].YAxisType = AxisType.Secondary;
 
             foreach (var a in shareholder.HistoryPortfolioValue)
             {
-                serie.Points.Add( (double)a );
-                //serie.Points.Add( (double)shareholder.PortfolioValue );
-            
-            }            
+                serie.Points.Add( (double)a );            
+            }
+
+            foreach (var s in shareholder.HistoryCapital)
+            {
+                serie2.Points.Add( (double)s );
+            }
         }
 
         private void _listViewSh_Click( object sender, EventArgs e )

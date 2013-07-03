@@ -341,7 +341,17 @@ namespace INTECH_STOCK_EXCHANGE
 
         public int RoundCount { get { return _roundCount; } set { _roundCount = value; } }
 
-        public List<string> companyNames = new List<string>
+        public decimal TotalMarketValue()
+        {
+            decimal total = 0;
+            foreach (var c in this.companyList)
+            {
+                 total = c.VolxVar;
+            }
+            return total;
+        }
+
+        public readonly List<string> companyNames = new List<string>
         {
             "Lafarge",
             "Safran",

@@ -14,17 +14,17 @@ namespace ISEdesign
 
         public _listViewItemComparer() 
         {
-            col=0;
+            col = 0;
             order = SortOrder.Ascending;
         }
         public _listViewItemComparer(int column, SortOrder order) 
         {
-            col=column;
+            col = column;
             this.order = order;
         }
         public int Compare(object x, object y) 
         {
-            int returnVal= -1;
+            int returnVal = -1;
             if ( col == 0 )//Name = string
             {
                 returnVal = String.Compare( ((ListViewItem)x).SubItems[col].Text, ((ListViewItem)y).SubItems[col].Text );

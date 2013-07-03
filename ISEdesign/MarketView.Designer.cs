@@ -71,23 +71,25 @@
             // _columnHeaderName
             // 
             this._columnHeaderName.Text = "Name";
-            this._columnHeaderName.Width = 67;
+            this._columnHeaderName.Width = 100;
             // 
             // _columnHeaderValue
             // 
             this._columnHeaderValue.Text = "Share Value (€)";
             this._columnHeaderValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this._columnHeaderValue.Width = 82;
+            this._columnHeaderValue.Width = 100;
             // 
             // columnHeaderVolume
             // 
             this.columnHeaderVolume.Text = "Volume";
             this.columnHeaderVolume.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeaderVolume.Width = 100;
             // 
             // columnHeaderVariation
             // 
             this.columnHeaderVariation.Text = "Variation (%)";
             this.columnHeaderVariation.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.columnHeaderVariation.Width = 100;
             // 
             // MarketView
             // 

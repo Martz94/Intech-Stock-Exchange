@@ -32,11 +32,11 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer4 = new System.Windows.Forms.SplitContainer();
             this.label1 = new System.Windows.Forms.Label();
+            this._marketView = new ISEdesign.MarketView();
+            this.graph1 = new ISEdesign.Graph();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.splitContainer5 = new System.Windows.Forms.SplitContainer();
             this.label2 = new System.Windows.Forms.Label();
-            this._marketView = new ISEdesign.MarketView();
-            this.graph1 = new ISEdesign.Graph();
             this.shareholderView1 = new ISEdesign.ShareholderView();
             this.tabShareholder1 = new ISEdesign.TabShareholder();
             this._actionBar = new ISEdesign.Actionbar();
@@ -121,12 +121,29 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(130, 3);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(70, 13);
+            this.label1.Size = new System.Drawing.Size(82, 16);
             this.label1.TabIndex = 0;
             this.label1.Text = "COMPANIES";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // _marketView
+            // 
+            this._marketView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._marketView.Location = new System.Drawing.Point(0, 0);
+            this._marketView.Name = "_marketView";
+            this._marketView.Size = new System.Drawing.Size(346, 184);
+            this._marketView.TabIndex = 1;
+            // 
+            // graph1
+            // 
+            this.graph1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.graph1.Location = new System.Drawing.Point(0, 0);
+            this.graph1.Name = "graph1";
+            this.graph1.Size = new System.Drawing.Size(346, 218);
+            this.graph1.TabIndex = 5;
             // 
             // splitContainer3
             // 
@@ -169,28 +186,13 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(156, 3);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(96, 13);
+            this.label2.Size = new System.Drawing.Size(109, 16);
             this.label2.TabIndex = 0;
             this.label2.Text = "SHAREHOLDERS";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // _marketView
-            // 
-            this._marketView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._marketView.Location = new System.Drawing.Point(0, 0);
-            this._marketView.Name = "_marketView";
-            this._marketView.Size = new System.Drawing.Size(346, 184);
-            this._marketView.TabIndex = 1;
-            // 
-            // graph1
-            // 
-            this.graph1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.graph1.Location = new System.Drawing.Point(0, 0);
-            this.graph1.Name = "graph1";
-            this.graph1.Size = new System.Drawing.Size(346, 218);
-            this.graph1.TabIndex = 5;
             // 
             // shareholderView1
             // 

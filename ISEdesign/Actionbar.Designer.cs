@@ -37,7 +37,7 @@
             // 
             // _stepByStep
             // 
-            this._stepByStep.Location = new System.Drawing.Point(13, 6);
+            this._stepByStep.Location = new System.Drawing.Point(81, 6);
             this._stepByStep.Name = "_stepByStep";
             this._stepByStep.Size = new System.Drawing.Size(75, 37);
             this._stepByStep.TabIndex = 1;
@@ -48,7 +48,7 @@
             // _round
             // 
             this._round.AutoSize = true;
-            this._round.Location = new System.Drawing.Point(143, 6);
+            this._round.Location = new System.Drawing.Point(192, 6);
             this._round.Name = "_round";
             this._round.Size = new System.Drawing.Size(45, 13);
             this._round.TabIndex = 2;
@@ -56,7 +56,7 @@
             // 
             // _roundNumber
             // 
-            this._roundNumber.Location = new System.Drawing.Point(146, 23);
+            this._roundNumber.Location = new System.Drawing.Point(195, 23);
             this._roundNumber.Name = "_roundNumber";
             this._roundNumber.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
             this._roundNumber.Size = new System.Drawing.Size(39, 20);
@@ -64,7 +64,7 @@
             // 
             // _goButton
             // 
-            this._goButton.Location = new System.Drawing.Point(194, 6);
+            this._goButton.Location = new System.Drawing.Point(259, 6);
             this._goButton.Name = "_goButton";
             this._goButton.Size = new System.Drawing.Size(43, 37);
             this._goButton.TabIndex = 6;
@@ -74,7 +74,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(282, 6);
+            this.button1.Location = new System.Drawing.Point(370, 6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(43, 37);
             this.button1.TabIndex = 7;
@@ -93,7 +93,7 @@
             this.Controls.Add(this._round);
             this.Controls.Add(this._stepByStep);
             this.Name = "Actionbar";
-            this.Size = new System.Drawing.Size(364, 53);
+            this.Size = new System.Drawing.Size(448, 53);
             this.ResumeLayout(false);
             this.PerformLayout();
 

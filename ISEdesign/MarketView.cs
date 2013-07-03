@@ -25,6 +25,7 @@ namespace ISEdesign
         
         public int listViewHeight { get { return _listView.Height; } }
         public Chart GraphCompany;
+        public Chart GraphMarket;
 
         internal void SetMarket (Market m)
         {
@@ -46,8 +47,8 @@ namespace ISEdesign
 
         void _market_CompanyChanged( object sender, CompanyChangedArgs e )
         {
-                ListViewItem item = _listView.Items.Cast<ListViewItem>().First( i => i.Text == e.Company.Name );
-                item.SubItems[1].Text = e.Company.SharePrice.ToString();
+            ListViewItem item = _listView.Items.Cast<ListViewItem>().First( i => i.Text == e.Company.Name );
+            item.SubItems[1].Text = e.Company.SharePrice.ToString();
         }
 
         void _market_CompanyListChanged( object sender, EventArgs e )
@@ -136,6 +137,34 @@ namespace ISEdesign
             {
                 series2.Points.Add( d );
             }
+        }
+
+        public void FillGraphMarket()
+        {
+            GraphMarket.Series.Clear();
+            GraphMarket.Titles.Clear();
+
+            GraphMarket.Palette = ChartColorPalette.Fire;
+            GraphMarket.Titles.Add( "Market" );
+            Series series = GraphMarket.Series.Add( "Variation" );
+
+            GraphMarket.Series[0].ChartType = SeriesChartType.Line;
+            GraphMarket.Series[0].BorderWidth = 2;
+            
+            //for (int x = 0; x < ; x++)
+            {
+                decimal i = _market.TotalMarketValue();
+                List<decimal> MarketDataPoints = new List<decimal>();
+                MarketDataPoints.Add(i);
+                
+                for (int j = 0; j < MarketDataPoints.Count; j++)
+                {
+                    series.Points.Add( (double)MarketDataPoints[j] );
+                }
+            }
+            
+
+            
         }
 
         private void _listView_Click( object sender, EventArgs e )
