@@ -26,7 +26,7 @@ namespace ISEdesign
             shareholderView1.TabShareholder = tabShareholder1;
             shareholderView1.GraphShareholder = tabShareholder1.GraphShareholder;
             shareholderView1.GraphStrat = tabShareholder1.GraphStrat;
-            _menuFile.MarketLoad += _market_Load;
+            _actionBar.MarketLoad += _market_Load;
         }
 
         protected override void OnLoad( EventArgs e )
@@ -41,12 +41,12 @@ namespace ISEdesign
             _actionBar.SetMarket( _market );
             shareholderView1.SetMarket( _market );
             _marketView.SetMarket( _market );
-            _menuFile.SetMarket( _market );
+            //_menuFile.SetMarket( _market );
         }
 
         void _market_Load( object sender, EventArgs e )
         {
-            BindToMarket( _menuFile.Market );
+            BindToMarket( _actionBar.Market );
         }
     }
 }

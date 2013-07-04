@@ -104,25 +104,25 @@
             // columnHeaderCompany
             // 
             this.columnHeaderCompany.Text = "Company";
-            this.columnHeaderCompany.Width = 100;
+            this.columnHeaderCompany.Width = 130;
             // 
             // columnHeaderShareCount
             // 
             this.columnHeaderShareCount.Text = "Share Count";
             this.columnHeaderShareCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeaderShareCount.Width = 100;
+            this.columnHeaderShareCount.Width = 130;
             // 
             // columnHeaderCurrentSharePrice
             // 
             this.columnHeaderCurrentSharePrice.Text = "Current Price (€)";
             this.columnHeaderCurrentSharePrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeaderCurrentSharePrice.Width = 100;
+            this.columnHeaderCurrentSharePrice.Width = 130;
             // 
             // columnHeaderShareVariation
             // 
             this.columnHeaderShareVariation.Text = "Variation (%)";
             this.columnHeaderShareVariation.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeaderShareVariation.Width = 100;
+            this.columnHeaderShareVariation.Width = 130;
             // 
             // _tabOrderbook
             // 
@@ -154,25 +154,25 @@
             // columnHeaderOrderSB
             // 
             this.columnHeaderOrderSB.Text = "Sell / Buy";
-            this.columnHeaderOrderSB.Width = 100;
+            this.columnHeaderOrderSB.Width = 130;
             // 
             // columnHeaderOrderCompany
             // 
             this.columnHeaderOrderCompany.Text = "Company";
             this.columnHeaderOrderCompany.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeaderOrderCompany.Width = 100;
+            this.columnHeaderOrderCompany.Width = 130;
             // 
             // columnHeaderOrderQuantity
             // 
             this.columnHeaderOrderQuantity.Text = "Quantity";
             this.columnHeaderOrderQuantity.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeaderOrderQuantity.Width = 100;
+            this.columnHeaderOrderQuantity.Width = 130;
             // 
             // columnHeaderOrderPrice
             // 
             this.columnHeaderOrderPrice.Text = "Price (€)";
             this.columnHeaderOrderPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnHeaderOrderPrice.Width = 100;
+            this.columnHeaderOrderPrice.Width = 130;
             // 
             // _tabStats
             // 
@@ -221,6 +221,7 @@
             this._chartStrat.Location = new System.Drawing.Point(0, 0);
             this._chartStrat.Name = "_chartStrat";
             series2.ChartArea = "ChartArea1";
+            series2.IsValueShownAsLabel = true;
             series2.Legend = "Legend1";
             series2.Name = "Series1";
             this._chartStrat.Series.Add(series2);

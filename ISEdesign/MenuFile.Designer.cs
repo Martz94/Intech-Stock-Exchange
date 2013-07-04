@@ -30,9 +30,9 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this._fileMenu = new System.Windows.Forms.ToolStripMenuItem();
-            this._initializeMenu = new System.Windows.Forms.ToolStripMenuItem();
             this._loadMenu = new System.Windows.Forms.ToolStripMenuItem();
             this._saveMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this._initializeMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -59,26 +59,26 @@
             this._fileMenu.Size = new System.Drawing.Size(37, 20);
             this._fileMenu.Text = "File";
             // 
-            // _initializeMenu
-            // 
-            this._initializeMenu.Name = "_initializeMenu";
-            this._initializeMenu.Size = new System.Drawing.Size(126, 22);
-            this._initializeMenu.Text = "Initialize...";
-            this._initializeMenu.Click += new System.EventHandler(this._initializeMenu_Click);
-            // 
             // _loadMenu
             // 
             this._loadMenu.Name = "_loadMenu";
-            this._loadMenu.Size = new System.Drawing.Size(126, 22);
+            this._loadMenu.Size = new System.Drawing.Size(152, 22);
             this._loadMenu.Text = "Open...";
             this._loadMenu.Click += new System.EventHandler(this._loadMenu_Click);
             // 
             // _saveMenu
             // 
             this._saveMenu.Name = "_saveMenu";
-            this._saveMenu.Size = new System.Drawing.Size(126, 22);
+            this._saveMenu.Size = new System.Drawing.Size(152, 22);
             this._saveMenu.Text = "Save...";
             this._saveMenu.Click += new System.EventHandler(this._saveMenu_Click);
+            // 
+            // _initializeMenu
+            // 
+            this._initializeMenu.Name = "_initializeMenu";
+            this._initializeMenu.Size = new System.Drawing.Size(152, 22);
+            this._initializeMenu.Text = "Initialize...";
+            this._initializeMenu.Click += new System.EventHandler(this._initializeMenu_Click);
             // 
             // MenuFile
             // 
@@ -98,8 +98,8 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem _fileMenu;
-        private System.Windows.Forms.ToolStripMenuItem _initializeMenu;
         private System.Windows.Forms.ToolStripMenuItem _loadMenu;
         private System.Windows.Forms.ToolStripMenuItem _saveMenu;
+        private System.Windows.Forms.ToolStripMenuItem _initializeMenu;
     }
 }

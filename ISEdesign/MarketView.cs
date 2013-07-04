@@ -40,6 +40,7 @@ namespace ISEdesign
             {
                 _market = m;
                 FillCompanyList();
+                FillGraphMarket();
                 _market.CompanyListChanged += _market_CompanyListChanged;
                 _market.CompanyChanged += _market_CompanyChanged;
             }            
@@ -150,6 +151,7 @@ namespace ISEdesign
 
             GraphMarket.Series[0].ChartType = SeriesChartType.Line;
             GraphMarket.Series[0].BorderWidth = 2;
+
             List<decimal> MarketDataPoints = new List<decimal>();
 
             foreach ( decimal d in _market.HistoryMarketValue)

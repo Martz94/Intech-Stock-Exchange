@@ -24,7 +24,7 @@ namespace ISEdesign
 
         public int ShareholderNumber
         {
-            get { return Convert.ToInt32( _nbShareholderTextBox.Text ); }
+            get { return Convert.ToInt32( _labelNbSh.Text ); }
         }
 
         //Share of each strategy amongst shareholders (%)
@@ -61,7 +61,7 @@ namespace ISEdesign
         private void UpdateTotalShareholders()
         {
             int total = RandomTrackBar.Value + StupidTrackBar.Value + SmartTrackBar.Value;
-            _nbShareholderTextBox.Text = total.ToString();
+            _labelNbSh.Text = total.ToString();
         }
 
         private void RandomTrackBar_ValueChanged( object sender, EventArgs e )

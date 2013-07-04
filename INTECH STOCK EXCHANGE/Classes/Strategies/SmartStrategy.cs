@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace INTECH_STOCK_EXCHANGE
 {
@@ -15,6 +16,7 @@ namespace INTECH_STOCK_EXCHANGE
     /// Not easy to build something that is supposed to be "smarter" or at least "smart" when playing with randomly defined data!
     /// Implement history in Companies objects for tracking feature(!)
     /// </summary>
+    [Serializable()]
     public class SmartStrategy : IStrategy
     {
         private Order Buy( Market market, Shareholder shareholder )

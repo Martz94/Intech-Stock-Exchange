@@ -32,8 +32,8 @@
             this.columnNameSh = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnCashSh = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnTotalPortfolio = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnStrategy = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnCapital = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnStrategy = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // _listViewSh
@@ -61,29 +61,30 @@
             // columnNameSh
             // 
             this.columnNameSh.Text = "Name";
-            this.columnNameSh.Width = 100;
+            this.columnNameSh.Width = 130;
             // 
             // columnCashSh
             // 
             this.columnCashSh.Text = "Cash (€)";
             this.columnCashSh.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnCashSh.Width = 100;
+            this.columnCashSh.Width = 130;
             // 
             // columnTotalPortfolio
             // 
             this.columnTotalPortfolio.Text = "Portfolio Value (€)";
             this.columnTotalPortfolio.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.columnTotalPortfolio.Width = 100;
+            this.columnTotalPortfolio.Width = 130;
+            // 
+            // columnCapital
+            // 
+            this.columnCapital.Text = "Capital (€)";
+            this.columnCapital.Width = 130;
             // 
             // columnStrategy
             // 
             this.columnStrategy.Text = "Strategy";
             this.columnStrategy.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.columnStrategy.Width = 110;
-            // 
-            // columnCapital
-            // 
-            this.columnCapital.Text = "Capital (€)";
+            this.columnStrategy.Width = 130;
             // 
             // ShareholderView
             // 
