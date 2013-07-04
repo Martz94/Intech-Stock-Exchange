@@ -77,7 +77,7 @@ namespace INTECH_STOCK_EXCHANGE
             }
         }
 
-        public decimal VolxVar
+        public decimal VolxPrice
         {
             get { return sharePrice * shareVolume; }
         }

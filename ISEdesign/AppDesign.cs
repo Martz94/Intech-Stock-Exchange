@@ -25,6 +25,7 @@ namespace ISEdesign
             _marketView.GraphMarket = graph1.GraphMarket;
             shareholderView1.TabShareholder = tabShareholder1;
             shareholderView1.GraphShareholder = tabShareholder1.GraphShareholder;
+            shareholderView1.GraphStrat = tabShareholder1.GraphStrat;
             _menuFile.MarketLoad += _market_Load;
         }
 

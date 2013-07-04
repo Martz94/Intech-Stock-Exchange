@@ -150,18 +150,20 @@ namespace ISEdesign
 
             GraphMarket.Series[0].ChartType = SeriesChartType.Line;
             GraphMarket.Series[0].BorderWidth = 2;
-            
-            //for (int x = 0; x < ; x++)
+            List<decimal> MarketDataPoints = new List<decimal>();
+
+            foreach ( decimal d in _market.HistoryMarketValue)
             {
-                decimal i = _market.TotalMarketValue();
-                List<decimal> MarketDataPoints = new List<decimal>();
-                MarketDataPoints.Add(i);
-                
-                for (int j = 0; j < MarketDataPoints.Count; j++)
-                {
-                    series.Points.Add( (double)MarketDataPoints[j] );
-                }
-            }         
+                MarketDataPoints.Add( d );
+            }
+            MarketDataPoints.Add( _market.TotalMarketValue() );
+            _market.HistoryMarketValue.Add( _market.TotalMarketValue() );
+            for (int j = 0; j < MarketDataPoints.Count; j++)
+            {
+                series.Points.Add( (double)MarketDataPoints[j] );
+            }
+
+
         }
 
         private void _listView_Click( object sender, EventArgs e )

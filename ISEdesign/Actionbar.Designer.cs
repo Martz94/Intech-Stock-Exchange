@@ -33,6 +33,7 @@
             this._roundNumber = new System.Windows.Forms.TextBox();
             this._goButton = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this._autoRefresh = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // _stepByStep
@@ -64,7 +65,7 @@
             // 
             // _goButton
             // 
-            this._goButton.Location = new System.Drawing.Point(259, 6);
+            this._goButton.Location = new System.Drawing.Point(243, 6);
             this._goButton.Name = "_goButton";
             this._goButton.Size = new System.Drawing.Size(43, 37);
             this._goButton.TabIndex = 6;
@@ -74,7 +75,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(370, 6);
+            this.button1.Location = new System.Drawing.Point(426, 6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(43, 37);
             this.button1.TabIndex = 7;
@@ -82,18 +83,29 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // _autoRefresh
+            // 
+            this._autoRefresh.AutoSize = true;
+            this._autoRefresh.Location = new System.Drawing.Point(302, 25);
+            this._autoRefresh.Name = "_autoRefresh";
+            this._autoRefresh.Size = new System.Drawing.Size(83, 17);
+            this._autoRefresh.TabIndex = 8;
+            this._autoRefresh.Text = "Auto refresh";
+            this._autoRefresh.UseVisualStyleBackColor = true;
+            // 
             // Actionbar
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.SkyBlue;
+            this.Controls.Add(this._autoRefresh);
             this.Controls.Add(this.button1);
             this.Controls.Add(this._goButton);
             this.Controls.Add(this._roundNumber);
             this.Controls.Add(this._round);
             this.Controls.Add(this._stepByStep);
             this.Name = "Actionbar";
-            this.Size = new System.Drawing.Size(448, 53);
+            this.Size = new System.Drawing.Size(529, 53);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -106,5 +118,6 @@
         private System.Windows.Forms.TextBox _roundNumber;
         private System.Windows.Forms.Button _goButton;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.CheckBox _autoRefresh;
     }
 }

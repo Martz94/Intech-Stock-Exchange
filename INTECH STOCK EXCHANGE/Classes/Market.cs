@@ -22,6 +22,7 @@ namespace INTECH_STOCK_EXCHANGE
         int _transactionCount = 0;
         readonly Random _random;
         int _roundCount;
+        public List<decimal> HistoryMarketValue = new List<decimal>();
 
         [NonSerialized]
         EventHandler<EventArgs> _companyListChanged;
@@ -129,9 +130,9 @@ namespace INTECH_STOCK_EXCHANGE
 
             foreach ( Order o in _globalOrderbook )
             {
-                if ( o.OrderStatus != Order.Status.Dispatched && o.TimedOut == false)
-                {             
-                    tmp.Add( o );                  
+                if (o.OrderStatus != Order.Status.Dispatched && o.TimedOut == false && o.OrderShareQuantity != 0)
+                {
+                    tmp.Add( o );
                 }
             }
             _globalOrderbook.Clear();
@@ -160,7 +161,7 @@ namespace INTECH_STOCK_EXCHANGE
 
                     if(oBuy.OrderSharePriceProposal >= oSell.OrderSharePriceProposal )
                     {
-                        decimal exchangePrice = oBuy.OrderSharePriceProposal;    // our call!
+                        decimal exchangePrice = (oBuy.OrderSharePriceProposal + oSell.OrderSharePriceProposal) / 2;    // our call!
                         int exchangeCount = Math.Min( oBuy.OrderShareQuantity, oSell.OrderShareQuantity );
                         exchangeCount = Math.Min(exchangeCount, (int)(oBuy.OrderMaker.Cash / exchangePrice));
                         int nbSellerShares = 0;
@@ -346,7 +347,7 @@ namespace INTECH_STOCK_EXCHANGE
             decimal total = 0;
             foreach (var c in this.companyList)
             {
-                 total = c.VolxVar;
+                 total += c.VolxPrice;
             }
             return total;
         }
