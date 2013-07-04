@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
@@ -46,11 +49,15 @@
             this.columnHeaderOrderPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this._tabStats = new System.Windows.Forms.TabPage();
             this._chartShareholder = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.tabStratGraph = new System.Windows.Forms.TabPage();
+            this._chartStrat = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this._tabShareholder.SuspendLayout();
             this._tabPortfolio.SuspendLayout();
             this._tabOrderbook.SuspendLayout();
             this._tabStats.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._chartShareholder)).BeginInit();
+            this.tabStratGraph.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this._chartStrat)).BeginInit();
             this.SuspendLayout();
             // 
             // _tabShareholder
@@ -58,6 +65,7 @@
             this._tabShareholder.Controls.Add(this._tabPortfolio);
             this._tabShareholder.Controls.Add(this._tabOrderbook);
             this._tabShareholder.Controls.Add(this._tabStats);
+            this._tabShareholder.Controls.Add(this.tabStratGraph);
             this._tabShareholder.Dock = System.Windows.Forms.DockStyle.Fill;
             this._tabShareholder.Location = new System.Drawing.Point(0, 0);
             this._tabShareholder.Name = "_tabShareholder";
@@ -173,25 +181,52 @@
             this._tabStats.Name = "_tabStats";
             this._tabStats.Size = new System.Drawing.Size(388, 136);
             this._tabStats.TabIndex = 2;
-            this._tabStats.Text = "Graph";
+            this._tabStats.Text = "Shareholder Graph";
             this._tabStats.UseVisualStyleBackColor = true;
             // 
             // _chartShareholder
             // 
-            chartArea2.Name = "ChartArea1";
-            this._chartShareholder.ChartAreas.Add(chartArea2);
+            chartArea1.Name = "ChartArea1";
+            this._chartShareholder.ChartAreas.Add(chartArea1);
             this._chartShareholder.Dock = System.Windows.Forms.DockStyle.Fill;
-            legend2.Name = "Legend1";
-            this._chartShareholder.Legends.Add(legend2);
+            legend1.Name = "Legend1";
+            this._chartShareholder.Legends.Add(legend1);
             this._chartShareholder.Location = new System.Drawing.Point(0, 0);
             this._chartShareholder.Name = "_chartShareholder";
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this._chartShareholder.Series.Add(series2);
+            series1.ChartArea = "ChartArea1";
+            series1.Legend = "Legend1";
+            series1.Name = "Series1";
+            this._chartShareholder.Series.Add(series1);
             this._chartShareholder.Size = new System.Drawing.Size(388, 136);
             this._chartShareholder.TabIndex = 0;
             this._chartShareholder.Text = "chart1";
+            // 
+            // tabStratGraph
+            // 
+            this.tabStratGraph.Controls.Add(this._chartStrat);
+            this.tabStratGraph.Location = new System.Drawing.Point(4, 22);
+            this.tabStratGraph.Name = "tabStratGraph";
+            this.tabStratGraph.Size = new System.Drawing.Size(388, 136);
+            this.tabStratGraph.TabIndex = 3;
+            this.tabStratGraph.Text = "Strategy Graph";
+            this.tabStratGraph.UseVisualStyleBackColor = true;
+            // 
+            // _chartStrat
+            // 
+            chartArea2.Name = "ChartArea1";
+            this._chartStrat.ChartAreas.Add(chartArea2);
+            this._chartStrat.Dock = System.Windows.Forms.DockStyle.Fill;
+            legend2.Name = "Legend1";
+            this._chartStrat.Legends.Add(legend2);
+            this._chartStrat.Location = new System.Drawing.Point(0, 0);
+            this._chartStrat.Name = "_chartStrat";
+            series2.ChartArea = "ChartArea1";
+            series2.Legend = "Legend1";
+            series2.Name = "Series1";
+            this._chartStrat.Series.Add(series2);
+            this._chartStrat.Size = new System.Drawing.Size(388, 136);
+            this._chartStrat.TabIndex = 0;
+            this._chartStrat.Text = "chart1";
             // 
             // TabShareholder
             // 
@@ -205,6 +240,8 @@
             this._tabOrderbook.ResumeLayout(false);
             this._tabStats.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._chartShareholder)).EndInit();
+            this.tabStratGraph.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this._chartStrat)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -226,5 +263,7 @@
         private System.Windows.Forms.ColumnHeader columnHeaderOrderQuantity;
         private System.Windows.Forms.ColumnHeader columnHeaderOrderPrice;
         private System.Windows.Forms.DataVisualization.Charting.Chart _chartShareholder;
+        private System.Windows.Forms.TabPage tabStratGraph;
+        private System.Windows.Forms.DataVisualization.Charting.Chart _chartStrat;
     }
 }

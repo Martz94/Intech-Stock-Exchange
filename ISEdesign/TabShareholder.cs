@@ -33,6 +33,12 @@ namespace ISEdesign
             get { return _chartShareholder; }
             set { _chartShareholder = value; }
         }
+
+        public Chart GraphStrat
+        {
+            get { return _chartStrat; }
+            set { _chartStrat = value; }
+        }
         
         public TabShareholder()
         {

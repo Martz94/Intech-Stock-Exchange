@@ -35,22 +35,61 @@ namespace ISEdesign
         {
             numberRound = Convert.ToInt32(this._roundNumber.Text);
 
-            int intervalTime = 500;
-            GoTimer = new Timer();
 
-            GoTimer.Interval = intervalTime;
-            GoTimer.Tick += new EventHandler( _stepByStep_Click );
-            GoTimer.Start();
+            if (_autoRefresh.Checked)
+            {
+                for (int i = 0; i < numberRound; i++)
+                {
+                    _market.RoundCount++;
+                    foreach (Shareholder sh in _market.shareholderList)
+                    {
+                        sh.HistoryCapital.Add( sh.Cash );
+                        sh.HistoryPortfolioValue.Add( sh.PortfolioValue );
+                        Order newOrder = sh.MakeDecision( _market, sh );
+                        if (newOrder != null) _market.GlobalOrderbook.Add( newOrder );
+                    }
+                    _market.MatchOrders();
+                    _market.ClearOrderbook();
+                    ShareholderView.FillShareholdersList();
+
+                    foreach (var c in _market.Companies)
+                    {
+                        c.VariationHistory.Add( c.ShareVariation );
+                        c.HistoryLastPrice.Add( (double)c.SharePrice );
+                        c.HistoryNbTransactions.Add( c.NbTransaction );
+                        c.VolumexVar.Add( c.VolxPrice );
+                        c.NbTransaction = 0;
+                    }
+                    MarketView.FillGraphMarket();
+                    ShareholderView.FillGraphStrat();
+                    if (_market.SuperShareholder != null)
+                    {
+                        ShareholderView.FillShareholderPortfolio( _market.SuperShareholder );
+                        ShareholderView.FillGraphShareholder( _market.SuperShareholder );
+                    }
+
+                    if (_market.SuperCompany != null) MarketView.FillGraphCompany( _market.SuperCompany );
+                }
+            }
+            else
+            {
+                int intervalTime = 500;
+                GoTimer = new Timer();
+
+                GoTimer.Interval = intervalTime;
+                GoTimer.Tick += new EventHandler( _stepByStep_Click );
+                GoTimer.Start();
+            }
         }
 
         private void _stepByStep_Click( object sender, EventArgs e )
         {            
-            _market.RoundCount++;
             if (GoTimer != null)
             {
                 numberRound--;
                 if (numberRound == 0) GoTimer.Stop();
             }
+            _market.RoundCount++;
             foreach (Shareholder sh in _market.shareholderList)
             {
                 sh.HistoryCapital.Add( sh.Cash );
@@ -64,13 +103,18 @@ namespace ISEdesign
 
             foreach (var c in _market.Companies)
             {
+                if (c.HistoryLastPrice.Count > 0)
+                {
+                    c.ShareVariation = ((c.SharePrice - (decimal)c.HistoryLastPrice[c.HistoryLastPrice.Count - 1]) / (decimal)c.HistoryLastPrice[c.HistoryLastPrice.Count - 1]) * 100;
+                }
                 c.VariationHistory.Add( c.ShareVariation );
                 c.HistoryLastPrice.Add( (double)c.SharePrice );
                 c.HistoryNbTransactions.Add( c.NbTransaction );
-                c.VolumexVar.Add( c.VolxVar );
+                c.VolumexVar.Add( c.VolxPrice );
                 c.NbTransaction = 0;
             }
             MarketView.FillGraphMarket();
+            ShareholderView.FillGraphStrat();
             if (_market.SuperShareholder != null)
             {
                 ShareholderView.FillShareholderPortfolio( _market.SuperShareholder );

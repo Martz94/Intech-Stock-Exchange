@@ -75,18 +75,19 @@ namespace INTECH_STOCK_EXCHANGE
             // Filling the shareholders portfolios           
             foreach(Shareholder s in market.shareholderList)
             {
-                while(s.PortfolioValue < 15000)
+                Random r = market.Random;
+                int maxPortfolioValue = r.Next(5000, 15000);
+                while(s.PortfolioValue < maxPortfolioValue)
                 {
-                    for(int y = 0; y < 15; y++)
-                    {
-                        Random r = market.Random;
+
                         var company = market.companyList[ r.Next( market.companyList.Count ) ];
                         int shareCount = r.Next(1, company.ConvertValueToShareCount(1000));
                         s.Cash = s.Cash - company.ConvertShareCountToValue(shareCount);
-                        s.AlterPortfolio( Market.ActionType.Fill, shareCount, company, s ); 
-                    }
+                        s.AlterPortfolio( Market.ActionType.Fill, shareCount, company, s );
+
                 }               
             }
+            market.AddShareholders( market.shareholderList );
                     //foreach (Company c in market.companyList)
                 //{
                 //    Random random = market.Random;

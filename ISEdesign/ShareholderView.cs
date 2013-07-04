@@ -24,6 +24,7 @@ namespace ISEdesign
 
         public TabShareholder TabShareholder { get; set; }
         public Chart GraphShareholder;
+        public Chart GraphStrat;
 
         internal void SetMarket( Market m )
         {
@@ -58,9 +59,9 @@ namespace ISEdesign
                 i.SubItems.Add( s.Strategy.ToString() );
                 
                 //Coloring strats, not fucking working
-                if ( s.Strategy.ToString() == "Random Strategy" )      i.SubItems[3].ForeColor = System.Drawing.Color.Red;
-                else if ( s.Strategy.ToString() == "Stupid Strategy" ) i.SubItems[3].ForeColor = System.Drawing.Color.Green;
-                else if (s.Strategy.ToString() == "Smart Strategy" )   i.SubItems[3].ForeColor = System.Drawing.Color.Blue;
+                if ( s.Strategy.ToString() == "Random Strategy" )      i.SubItems[4].ForeColor = System.Drawing.Color.Red;
+                else if ( s.Strategy.ToString() == "Stupid Strategy" ) i.SubItems[4].ForeColor = System.Drawing.Color.Green;
+                else if (s.Strategy.ToString() == "Smart Strategy" )   i.SubItems[4].ForeColor = System.Drawing.Color.Blue;
 
                 _listViewSh.Items.Add( i );
             }
@@ -106,7 +107,7 @@ namespace ISEdesign
             GraphShareholder.Series.Clear();
             GraphShareholder.Titles.Clear();
 
-            GraphShareholder.Palette = ChartColorPalette.Berry;
+            GraphShareholder.Palette = ChartColorPalette.Bright;
             GraphShareholder.Titles.Add( shareholder.Name );
             Series serie = GraphShareholder.Series.Add( "Portfolio value" );
             Series serie2 = GraphShareholder.Series.Add( "Cash" );
@@ -128,6 +129,48 @@ namespace ISEdesign
             {
                 serie2.Points.Add( (double)s );
             }
+        }
+
+        public void FillGraphStrat ()
+        {
+            GraphStrat.Series.Clear();
+            GraphStrat.Titles.Clear();
+
+            GraphStrat.Palette = ChartColorPalette.Bright;
+            GraphStrat.Titles.Add( "Strategies repartition" );
+            Series serie1 = GraphStrat.Series.Add( "Random Strategy" );
+            Series serie2 = GraphStrat.Series.Add( "Stupid Strategy" );
+            Series serie3 = GraphStrat.Series.Add( "Smart Strategy" );
+            serie1.Name = "Random Strategy";
+
+            //GraphStrat.Series[0].ChartType = SeriesChartType.Pie;
+            //GraphStrat.Series[1].ChartType = SeriesChartType.Pie;
+            //GraphStrat.Series[2].ChartType = SeriesChartType.Pie;
+
+            decimal randomStrategyCapital = 0;
+            decimal stupidStrategyCapital = 0;
+            decimal smartStrategyCapital = 0;
+
+            foreach (var s in _market.shareholderList)
+            {
+                if (s.Strategy.ToString() == "Random Strategy")
+                {
+                    randomStrategyCapital += s.Capital;
+                }
+                else if (s.Strategy.ToString() == "Stupid Strategy")
+                {
+                    stupidStrategyCapital += s.Capital;
+                }
+                else
+                {
+                    smartStrategyCapital += s.Capital;
+                }
+            }
+
+            serie1.Points.Add( (double)randomStrategyCapital );
+            serie2.Points.Add( (double)stupidStrategyCapital );
+            serie3.Points.Add( (double)smartStrategyCapital );
+
         }
 
         private void _listViewSh_Click( object sender, EventArgs e )
