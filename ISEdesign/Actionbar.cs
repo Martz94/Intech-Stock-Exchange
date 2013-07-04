@@ -34,13 +34,15 @@ namespace ISEdesign
         private void _goButtonClick( object sender, EventArgs e )
         {
             numberRound = Convert.ToInt32(this._roundNumber.Text);
+            if ( numberRound > 0 && numberRound < 1000 )
+            {
+                int intervalTime = 500;
+                GoTimer = new Timer();
 
-            int intervalTime = 500;
-            GoTimer = new Timer();
-
-            GoTimer.Interval = intervalTime;
-            GoTimer.Tick += new EventHandler( _stepByStep_Click );
-            GoTimer.Start();
+                GoTimer.Interval = intervalTime;
+                GoTimer.Tick += new EventHandler( _stepByStep_Click );
+                GoTimer.Start();
+            }
         }
 
         private void _stepByStep_Click( object sender, EventArgs e )

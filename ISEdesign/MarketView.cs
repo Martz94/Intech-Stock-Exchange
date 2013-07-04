@@ -161,10 +161,7 @@ namespace ISEdesign
                 {
                     series.Points.Add( (double)MarketDataPoints[j] );
                 }
-            }
-            
-
-            
+            }         
         }
 
         private void _listView_Click( object sender, EventArgs e )

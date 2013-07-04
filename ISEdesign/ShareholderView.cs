@@ -58,9 +58,9 @@ namespace ISEdesign
                 i.SubItems.Add( s.Strategy.ToString() );
                 
                 //Coloring strats, not fucking working
-                if ( s.Strategy.ToString() == "Random Strategy" )      i.SubItems[3].ForeColor = System.Drawing.Color.Red;
-                else if ( s.Strategy.ToString() == "Stupid Strategy" ) i.SubItems[3].ForeColor = System.Drawing.Color.Green;
-                else if (s.Strategy.ToString() == "Smart Strategy" )   i.SubItems[3].ForeColor = System.Drawing.Color.Blue;
+                if ( s.Strategy.ToString() == "Random Strategy" )      i.SubItems[4].ForeColor = System.Drawing.Color.Red;
+                else if ( s.Strategy.ToString() == "Stupid Strategy" ) i.SubItems[4].ForeColor = System.Drawing.Color.Green;
+                else if (s.Strategy.ToString() == "Smart Strategy" )   i.SubItems[4].ForeColor = System.Drawing.Color.Blue;
 
                 _listViewSh.Items.Add( i );
             }

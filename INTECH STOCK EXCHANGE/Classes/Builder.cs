@@ -77,14 +77,11 @@ namespace INTECH_STOCK_EXCHANGE
             {
                 while(s.PortfolioValue < 15000)
                 {
-                    for(int y = 0; y < 15; y++)
-                    {
-                        Random r = market.Random;
-                        var company = market.companyList[ r.Next( market.companyList.Count ) ];
-                        int shareCount = r.Next(1, company.ConvertValueToShareCount(1000));
-                        s.Cash = s.Cash - company.ConvertShareCountToValue(shareCount);
-                        s.AlterPortfolio( Market.ActionType.Fill, shareCount, company, s ); 
-                    }
+                    Random r = market.Random;
+                    Company company = market.companyList[ r.Next( market.companyList.Count ) ];
+                    int shareCount = r.Next(1, company.ConvertValueToShareCount(1000));
+                    s.Cash = s.Cash - company.ConvertShareCountToValue(shareCount);
+                    s.AlterPortfolio( Market.ActionType.Fill, shareCount, company, s ); 
                 }               
             }
                     //foreach (Company c in market.companyList)
