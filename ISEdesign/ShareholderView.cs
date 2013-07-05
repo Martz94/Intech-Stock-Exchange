@@ -60,9 +60,9 @@ namespace ISEdesign
                 i.SubItems.Add( s.Strategy.ToString() );
                 
                 //Coloring strats
-                if ( s.Strategy.ToString() == "Random Strategy" )      i.SubItems[4].ForeColor = System.Drawing.Color.Red;
-                else if ( s.Strategy.ToString() == "Stupid Strategy" ) i.SubItems[4].ForeColor = System.Drawing.Color.Green;
-                else if (s.Strategy.ToString() == "Smart Strategy" )   i.SubItems[4].ForeColor = System.Drawing.Color.Blue;
+                if ( s.Strategy.ToString() == "Random Strategy" )      i.SubItems[4].ForeColor = System.Drawing.Color.DarkMagenta;
+                else if ( s.Strategy.ToString() == "Stupid Strategy" ) i.SubItems[4].ForeColor = System.Drawing.Color.DarkRed;
+                else if (s.Strategy.ToString() == "Smart Strategy" )   i.SubItems[4].ForeColor = System.Drawing.Color.DeepSkyBlue;
 
                 _listViewSh.Items.Add( i );
             }
@@ -252,9 +252,9 @@ namespace ISEdesign
             double[] yValues = { (double)randomStrategyCapital, (double)stupidStrategyCapital, (double)smartStrategyCapital };
             serie1.Points.DataBindXY( xValues, yValues );
 
-            serie1.Points[0].Color = Color.MediumSeaGreen;
-            serie1.Points[1].Color = Color.PaleGreen;
-            serie1.Points[2].Color = Color.LawnGreen;
+            serie1.Points[0].Color = Color.DarkMagenta;
+            serie1.Points[1].Color = Color.DarkRed;
+            serie1.Points[2].Color = Color.DeepSkyBlue;
 
             serie1.ChartType = SeriesChartType.Pie;
 
